@@ -40,13 +40,13 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Smart Home Architects — Technology, beautifully resolved",
       description: "A home that notices. Never announces.",
       type: "website",
-      images: [{ url: `${baseUrl}/og.png`, width: 1200, height: 632, alt: "A home that notices. Never announces." }],
+      images: [{ url: `${baseUrl}/og-v2.png`, width: 1200, height: 632, alt: "A home that notices. Never announces." }],
     },
     twitter: {
       card: "summary_large_image",
       title: "Smart Home Architects",
       description: "A home that notices. Never announces.",
-      images: [`${baseUrl}/og.png`],
+      images: [`${baseUrl}/og-v2.png`],
     },
   };
 }

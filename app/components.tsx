@@ -1,33 +1,10 @@
 import Link from "next/link";
 import { LocalTime } from "./LocalTime";
 import { products } from "./data";
+import { MegaNav } from "./MegaNav";
 
 export function SiteHeader() {
-  return (
-    <header className="site-header">
-      <Link className="brand" href="/" aria-label="Smart Home Architects home">
-        <span className="brand-dot" />
-        <span>Smart Home Architects</span>
-      </Link>
-      <nav className="desktop-nav" aria-label="Primary navigation">
-        <Link href="/approach">Approach</Link>
-        <Link href="/projects/vista-house">Projects</Link>
-        <Link href="/products">Collection</Link>
-      </nav>
-      <Link className="header-cta" href="/contact">
-        Start a project <span aria-hidden="true">↗</span>
-      </Link>
-      <details className="mobile-nav">
-        <summary aria-label="Open navigation">Menu</summary>
-        <nav aria-label="Mobile navigation">
-          <Link href="/approach">Approach</Link>
-          <Link href="/projects/vista-house">Projects</Link>
-          <Link href="/products">Collection</Link>
-          <Link href="/contact">Start a project</Link>
-        </nav>
-      </details>
-    </header>
-  );
+  return <MegaNav />;
 }
 
 export function SiteFooter() {
@@ -47,10 +24,17 @@ export function SiteFooter() {
           <a href="mailto:studio@smarthomearchitects.co.za">studio@smarthomearchitects.co.za</a>
         </div>
         <div>
+          <p className="footer-label">Experience</p>
+          <Link href="/services/lighting">Lighting</Link>
+          <Link href="/services/shading">Shading</Link>
+          <Link href="/services/climate">Climate</Link>
+          <Link href="/services/audio">Audio</Link>
+        </div>
+        <div>
           <p className="footer-label">Explore</p>
-          <Link href="/approach">Our approach</Link>
-          <Link href="/projects/vista-house">Selected work</Link>
+          <Link href="/projects">Selected projects</Link>
           <Link href="/products">The collection</Link>
+          <Link href="/professionals">For professionals</Link>
         </div>
         <div>
           <p className="footer-label">Local studio time</p>
@@ -59,7 +43,7 @@ export function SiteFooter() {
       </div>
       <div className="footer-base">
         <span>© {new Date().getFullYear()} Smart Home Architects</span>
-        <span>Designed around life, not devices.</span>
+        <span>40 pages · One connected point of view</span>
       </div>
     </footer>
   );

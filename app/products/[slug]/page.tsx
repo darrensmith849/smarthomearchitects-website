@@ -3,14 +3,18 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ConsultationCta, ProductCollection } from "../../components";
 import { getProduct, products } from "../../data";
+import { CategoryTemplate } from "../../page-templates";
+import { categoryPages, getCategoryPage } from "../../site-map";
 
 export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
+  return [...products.map((product) => ({ slug: product.slug })), ...categoryPages.map((page) => ({ slug: page.slug }))];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
+  const category = getCategoryPage(slug);
+  if (!product && category) return { title: category.title, description: category.intro };
   if (!product) return {};
 
   return {
@@ -22,6 +26,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const product = getProduct(slug);
+  const category = getCategoryPage(slug);
+  if (!product && category) return <CategoryTemplate page={category} />;
   if (!product) notFound();
 
   return (
