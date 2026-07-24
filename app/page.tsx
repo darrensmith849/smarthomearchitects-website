@@ -34,6 +34,18 @@ export default function Home() {
     <>
       <section className="home-hero">
         <img className="hero-image" src="/images/hero.jpg" alt="A calm coastal living room at blue hour" />
+        <video
+          className="hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/images/hero.jpg"
+          aria-hidden="true"
+        >
+          <source src="/video/home-hero-loop.mp4" type="video/mp4" />
+        </video>
         <div className="hero-shade" />
         <div className="hero-copy">
           <p className="eyebrow eyebrow-light">Whole-home intelligence</p>
