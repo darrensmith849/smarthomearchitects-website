@@ -47,6 +47,19 @@ export default function Home() {
           <source src="/video/home-hero-loop.mp4" type="video/mp4" />
         </video>
         <div className="hero-shade" />
+        <div className="hero-live-system" aria-hidden="true">
+          <div className="live-system-panel">
+            <div className="live-system-heading"><span>LIVE / 01</span><span>EVENING</span></div>
+            <div className="live-system-trace"><i /><i /><i /></div>
+            <div className="live-system-readouts">
+              <p className="live-readout live-fire"><span>FIRE</span><b>0.7 HZ</b></p>
+              <p className="live-readout live-light"><span>LIGHT</span><b>2,700 K</b></p>
+              <p className="live-readout live-air"><span>AIR</span><b>22.0 °C</b></p>
+              <p className="live-readout live-shade"><span>SHADE</span><b>18 %</b></p>
+            </div>
+            <div className="live-system-scale"><span>00</span><i /><span>30</span></div>
+          </div>
+        </div>
         <div className="hero-copy">
           <p className="eyebrow eyebrow-light">Whole-home intelligence</p>
           <h1>A home that notices.<br />Never announces.</h1>
