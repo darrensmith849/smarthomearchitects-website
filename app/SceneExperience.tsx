@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type SystemId = "lighting" | "shading" | "climate" | "audio";
 
@@ -59,8 +59,36 @@ const systems: Array<{ id: SystemId; label: string; title: string; href: string;
 export function SceneExperience() {
   const [sceneId, setSceneId] = useState("welcome");
   const [focusedSystem, setFocusedSystem] = useState<SystemId>("lighting");
+  const [isPlaying, setIsPlaying] = useState(false);
   const scene = scenes.find((item) => item.id === sceneId) ?? scenes[1];
   const focused = systems.find((item) => item.id === focusedSystem) ?? systems[0];
+  const sceneIndex = scenes.findIndex((item) => item.id === scene.id);
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    const timer = window.setTimeout(() => {
+      if (sceneIndex === scenes.length - 1) {
+        setIsPlaying(false);
+        return;
+      }
+      setSceneId(scenes[sceneIndex + 1].id);
+    }, 4200);
+    return () => window.clearTimeout(timer);
+  }, [isPlaying, sceneIndex]);
+
+  const chooseScene = (id: string) => {
+    setIsPlaying(false);
+    setSceneId(id);
+  };
+
+  const togglePlayback = () => {
+    if (isPlaying) {
+      setIsPlaying(false);
+      return;
+    }
+    if (sceneIndex === scenes.length - 1) setSceneId(scenes[0].id);
+    setIsPlaying(true);
+  };
 
   return (
     <>
@@ -69,9 +97,12 @@ export function SceneExperience() {
           <p className="eyebrow">Scene lab · 03</p>
           <h1>The room,<br />in rhythm.</h1>
           <p>Choose a moment. Light, shade, comfort and sound change together—leaving the people in the room with one simple feeling instead of four separate controls.</p>
+          <button className={`scene-play${isPlaying ? " is-playing" : ""}`} type="button" onClick={togglePlayback} aria-pressed={isPlaying}>
+            <i aria-hidden="true" /><span>{isPlaying ? "Pause the rhythm" : "Play the rhythm"}</span><b>{isPlaying ? "LIVE" : "17 SEC"}</b>
+          </button>
           <div className="scene-lab-controls" role="group" aria-label="Choose a room moment">
             {scenes.map((item) => (
-              <button className={item.id === scene.id ? "is-active" : ""} type="button" key={item.id} onClick={() => setSceneId(item.id)} aria-pressed={item.id === scene.id}>
+              <button className={item.id === scene.id ? "is-active" : ""} type="button" key={item.id} onClick={() => chooseScene(item.id)} aria-pressed={item.id === scene.id}>
                 <span>{item.time}</span><b>{item.name}</b>
               </button>
             ))}
