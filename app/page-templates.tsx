@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AtlanticRhythm } from "./AtlanticRhythm";
 import { ConsultationCta, ProductCollection } from "./components";
 import { ServicePage, projectPages, servicePages } from "./site-map";
 import { SystemCanvas } from "./SystemCanvas";
@@ -194,6 +195,7 @@ export function ProjectTemplate({ page }: { page: { slug: string; title: string;
         <h2>{page.line}</h2>
         <p>The design brief began with atmosphere, privacy and the natural rhythm of the site. Technology was coordinated into the architecture early, leaving the completed home visually quiet and deeply responsive.</p>
       </section>
+      {page.slug === "atlantic-house" && <AtlanticRhythm />}
       <section className="project-system-story section-pad">
         <div className="project-system-image"><img src={page.image} alt="" /><div className="project-data-overlay"><span>SYSTEM / LIVE</span><i /><i /><i /></div></div>
         <div><p className="eyebrow">Integrated scope</p><h2>Many disciplines.<br />One calm result.</h2><p>{page.systems}</p><dl><div><dt>Experience</dt><dd>Daily scenes composed around the site and household</dd></div><div><dt>Infrastructure</dt><dd>Resilient, local-first and documented for long-term care</dd></div><div><dt>Detail</dt><dd>Controls, apertures and access coordinated with the interior</dd></div></dl></div>
