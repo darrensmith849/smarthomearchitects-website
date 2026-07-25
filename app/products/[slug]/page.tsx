@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ConsultationCta, ProductCollection } from "../../components";
 import { getProduct, products } from "../../data";
 import { CategoryTemplate } from "../../page-templates";
+import { ProductTelemetry } from "../../ProductTelemetry";
 import { categoryPages, getCategoryPage } from "../../site-map";
 
 export function generateStaticParams() {
@@ -43,6 +44,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
         <div className="product-detail-image">
           <img src={product.image} alt={`${product.name} ${product.category}`} />
+          <ProductTelemetry slug={product.slug} number={product.number} name={product.name} />
           <div className="image-corner-meta"><span>{product.category}</span><span>{product.dimensions}</span></div>
         </div>
       </section>
