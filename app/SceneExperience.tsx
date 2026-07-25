@@ -10,6 +10,7 @@ type Scene = {
   time: string;
   name: string;
   line: string;
+  image: string;
   values: Record<SystemId, string>;
 };
 
@@ -19,6 +20,7 @@ const scenes: Scene[] = [
     time: "06:28",
     name: "First light",
     line: "The house begins softly, before the day asks for anything.",
+    image: "/images/scene-morning.jpg",
     values: { lighting: "2,400 K / 18%", shading: "EAST / 26%", climate: "21.2 °C", audio: "QUIET" },
   },
   {
@@ -26,6 +28,7 @@ const scenes: Scene[] = [
     time: "18:42",
     name: "Welcome",
     line: "A warm arrival, composed around the room already waiting.",
+    image: "/images/scene-welcome.jpg",
     values: { lighting: "2,700 K / 42%", shading: "PRIVACY / 48%", climate: "22.0 °C", audio: "FAVOURITES / −28 dB" },
   },
   {
@@ -33,6 +36,7 @@ const scenes: Scene[] = [
     time: "20:08",
     name: "At table",
     line: "The room narrows its focus: people, food, and a slower evening.",
+    image: "/images/scene-dinner.jpg",
     values: { lighting: "2,300 K / 31%", shading: "GARDEN / OPEN", climate: "21.6 °C", audio: "DINING / −36 dB" },
   },
   {
@@ -40,6 +44,7 @@ const scenes: Scene[] = [
     time: "23:10",
     name: "Goodnight",
     line: "The house becomes protective, calm and quietly aware.",
+    image: "/images/scene-night.jpg",
     values: { lighting: "2,200 K / 4%", shading: "SHELL / SECURE", climate: "19.4 °C", audio: "OFF" },
   },
 ];
@@ -74,13 +79,8 @@ export function SceneExperience() {
         </div>
 
         <div className="scene-lab-room">
-          <img src="/images/hero.jpg" alt="A living room responding to a selected home scene" />
-          <div className="scene-room-wash" aria-hidden="true" />
+          <img className="scene-room-image" key={scene.id} src={scene.image} alt={`The coastal living room at ${scene.name.toLowerCase()}`} />
           <div className="scene-room-grid" aria-hidden="true"><i /><i /><i /><i /></div>
-          <div className="scene-room-sun" aria-hidden="true" />
-          <div className="scene-room-shade" aria-hidden="true" />
-          <div className="scene-room-air" aria-hidden="true"><i /><i /><i /></div>
-          <div className="scene-room-sound" aria-hidden="true"><i /><i /><i /></div>
 
           <p className="scene-room-label">LIVING / GROUND FLOOR</p>
           <div className="scene-live-panel" aria-live="polite">
