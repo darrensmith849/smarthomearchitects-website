@@ -24,6 +24,10 @@ const finishes = [
 ];
 
 const sceneLabels = ["Welcome", "Bright", "Relax", "Dine", "Read", "Music", "Movie", "Night", "Away", "All off", "Sheers", "Blackout", "Cool", "Warm", "Garden"];
+const assignmentScenes: Record<string, string> = {
+  Welcome: "relax", Bright: "bright", Relax: "relax", Dine: "entertain", Read: "bright",
+  Music: "entertain", Movie: "night", Night: "night", Cool: "bright", Warm: "relax", Garden: "entertain",
+};
 
 export function LiveResidence() {
   const [mode, setMode] = useState<"scenes" | "designer">("scenes");
@@ -43,6 +47,7 @@ export function LiveResidence() {
   const [specOpen, setSpecOpen] = useState(false);
   const [projectName, setProjectName] = useState("Residence 01");
   const [roomName, setRoomName] = useState("Living gallery");
+  const [roomCommand, setRoomCommand] = useState("WELCOME / SCENE RECALLED");
   const finish = finishes[finishIndex];
   const totalButtons = columns * buttons;
   const selectedIndex = Math.min(selectedButton, totalButtons - 1);
@@ -55,13 +60,21 @@ export function LiveResidence() {
     });
   }, []);
 
-  const chooseScene = (id: string) => {
+  const chooseScene = (id: string, commandLabel?: string) => {
     const next = lightingScenes.find((item) => item.id === id) ?? lightingScenes[0];
     setSceneId(next.id); setLevel(next.level); setWarmth(next.warmth);
+    setRoomCommand(`${(commandLabel ?? next.name).toUpperCase()} / SCENE RECALLED`);
   };
 
   const assignButton = (label: string) => {
     setAssignments((current) => current.map((item, index) => index === selectedIndex ? label : item));
+  };
+
+  const pressKeypadButton = (label: string, index: number) => {
+    setSelectedButton(index);
+    const targetScene = assignmentScenes[label];
+    if (targetScene) chooseScene(targetScene, label);
+    else setRoomCommand(`${label.toUpperCase()} / COMMAND SENT`);
   };
 
   const roomStyle = {
@@ -89,7 +102,7 @@ export function LiveResidence() {
       </div>
 
       {mode === "scenes" ? (
-        <section className={`lighting-scene-screen is-${scene.id}`} style={roomStyle}>
+        <section className={`lighting-scene-screen is-${scene.id}`} style={{ ...roomStyle, ...keypadStyle }}>
           <img key={scene.id} src={scene.image} alt={`Living room in the ${scene.name.toLowerCase()} lighting scene`} />
           <div className="lighting-scene-dim" />
           <div className="lighting-scene-warm" />
@@ -100,6 +113,16 @@ export function LiveResidence() {
             <span>Residence 01 · Ground level</span>
           </div>
           <div className="lighting-screen-status"><span>LOCAL / LIVE</span><b>{scene.time}</b></div>
+
+          <aside className="room-keypad-control" aria-label="Configured wall control">
+            <div className="room-keypad-head"><span>WALL CONTROL / LIVE</span><button type="button" onClick={() => setMode("designer")}>EDIT</button></div>
+            <div className={`room-keypad-plate mount-${mount} type-${controlType}`}>
+              <div className="configured-keypad-surface">
+                {Array.from({ length: totalButtons }, (_, index) => <button type="button" key={index} className={selectedIndex === index ? "is-selected" : ""} aria-label={`Recall ${assignments[index]}`} aria-pressed={selectedIndex === index} onClick={() => pressKeypadButton(assignments[index], index)}><i />{engraving && controlType !== "minimal" ? <span>{controlType === "hybrid" && index % 3 === 1 ? index % 2 ? "+" : "−" : assignments[index]}</span> : null}<b /></button>)}
+              </div>
+            </div>
+            <p><i /><span>{roomCommand}</span></p>
+          </aside>
 
           <aside className="lighting-control-panel" aria-label="Lighting scene controls">
             <div className="lighting-panel-head"><span>ROOM / 01</span><b>SCENES</b></div>
