@@ -15,6 +15,7 @@ function makeStars(count: number, seed: number, depth: number): Star[] {
 }
 
 const starLayers = [makeStars(30, 3, 0.6), makeStars(23, 7, 1), makeStars(16, 11, 1.45)];
+const ceilingStars = starLayers.flat().slice(0, 58);
 
 function starStyle(star: Star): CSSProperties {
   return { left: `${star.x}%`, top: `${star.y}%`, width: `${star.size}px`, height: `${star.size}px`, opacity: star.opacity, animationDelay: `-${star.delay}s` };
@@ -71,7 +72,7 @@ export function CinemaStudy() {
       <div className="cinema-study-console">
         <div className="cinema-room-stage">
           <img src="/images/cinema-room.jpg" alt="Symmetrical private cinema with acoustic fabric, smoked oak and a mechanically masked projection screen" />
-          <div className="cinema-ceiling-stars" aria-hidden="true">{starLayers[0].slice(0, 26).map((star, index) => <i key={index} style={starStyle(star)} />)}</div>
+          <div className="cinema-ceiling-stars" aria-hidden="true">{ceilingStars.map((star, index) => <i key={index} style={starStyle(star)} />)}</div>
           <div className={`cinema-aperture is-${format.id}`} aria-hidden="true"><i className="mask-top" /><i className="mask-right" /><i className="mask-bottom" /><i className="mask-left" /><span /></div>
           <div className="cinema-room-meta"><span>PRIVATE CINEMA / ROOM 06</span><b>MASKING / {format.ratio}</b></div>
           <p className="cinema-room-caption"><i /><span>Screen geometry recalled with projection, light and sound</span><b>{format.time}</b></p>
