@@ -9,6 +9,7 @@ import { categoryPages, getCategoryPage } from "../../site-map";
 import { AxisProductExperience } from "../../AxisProductExperience";
 import { AtlasProductPage } from "../../AtlasProductPage";
 import { AuraProductPage } from "../../AuraProductPage";
+import { VeilProductPage } from "../../VeilProductPage";
 
 export function generateStaticParams() {
   return [...products.map((product) => ({ slug: product.slug })), ...categoryPages.map((page) => ({ slug: page.slug }))];
@@ -35,6 +36,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (!product) notFound();
   if (product.slug === "atlas") return <AtlasProductPage product={product} />;
   if (product.slug === "aura") return <AuraProductPage product={product} />;
+  if (product.slug === "veil") return <VeilProductPage product={product} />;
 
   return (
     <>

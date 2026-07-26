@@ -168,6 +168,57 @@ export const products: Product[] = [
       { name: "Rack black", color: "#151515" },
     ],
   },
+  {
+    slug: "veil",
+    number: "04",
+    name: "Veil",
+    category: "Invisible loudspeaker",
+    line: "Sound, without the object.",
+    description:
+      "A plaster-in planar loudspeaker that fills the room while disappearing completely into the architecture.",
+    longDescription:
+      "Veil turns the finished wall into an expansive acoustic surface. Its mineral face, planar exciter array and sealed backbox are installed before decoration, then measured and voiced in the completed room. Music remains vivid and spatial. The loudspeaker itself leaves no trace.",
+    image: "/images/veil-isolated.png",
+    accent: "#9d835c",
+    startingAt: "Specified per project",
+    dimensions: "420 × 420 × 92 mm",
+    highlights: [
+      { value: "40 Hz", label: "in-room extension" },
+      { value: "160°", label: "planar dispersion" },
+      { value: "109 dB", label: "maximum output" },
+      { value: "0 mm", label: "visible hardware" },
+    ],
+    features: [
+      {
+        title: "One continuous plane",
+        copy: "The mineral acoustic face receives the project skim and coating so the wall remains visually uninterrupted.",
+      },
+      {
+        title: "Sound beyond a point",
+        copy: "A distributed planar array creates a wide, even field with less level change as you move through the room.",
+      },
+      {
+        title: "Voiced in place",
+        copy: "Every channel is measured after furnishing and tuned to the final room rather than a theoretical drawing.",
+      },
+    ],
+    specifications: [
+      { label: "Response", value: "40 Hz–25 kHz, ±3 dB in commissioned room" },
+      { label: "Dispersion", value: "160° horizontal × 160° vertical" },
+      { label: "Sensitivity", value: "87 dB, 2.83 V / 1 m" },
+      { label: "Power", value: "50–200 W continuous, 250 W programme" },
+      { label: "Impedance", value: "6 Ω nominal, 4.8 Ω minimum" },
+      { label: "Installation", value: "Wall or ceiling; sealed 18.6 litre backbox" },
+      { label: "Finish", value: "Approved mineral skim and project coating to 2 mm" },
+      { label: "Support", value: "10-year driver and tuning support" },
+    ],
+    finishes: [
+      { name: "Project plaster", color: "#e9e5dc" },
+      { name: "Mineral paint", color: "#d6d0c4" },
+      { name: "Acoustic clay", color: "#b8aa96" },
+      { name: "Specialist finish", color: "#8b8277" },
+    ],
+  },
 ];
 
 export function getProduct(slug: string) {
