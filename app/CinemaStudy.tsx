@@ -15,7 +15,6 @@ function makeStars(count: number, seed: number, depth: number): Star[] {
 }
 
 const starLayers = [makeStars(30, 3, 0.6), makeStars(23, 7, 1), makeStars(22, 11, 1.45)];
-const ceilingStars = starLayers.flat().slice(0, 58);
 
 function starStyle(star: Star): CSSProperties {
   return { left: `${star.x}%`, top: `${star.y}%`, width: `${star.size}px`, height: `${star.size}px`, opacity: star.opacity, animationDelay: `-${star.delay}s` };
@@ -61,8 +60,18 @@ export function CinemaStudy() {
       if (consoleElement) {
         const consoleRect = consoleElement.getBoundingClientRect();
         const ceilingProgress = Math.max(0, Math.min(1, (window.innerHeight - consoleRect.top) / (window.innerHeight + consoleRect.height)));
-        element.style.setProperty("--stars-ceiling", `${(ceilingProgress - 0.5) * -46}px`);
-        element.style.setProperty("--stars-ceiling-scale", `${0.94 + ceilingProgress * 0.16}`);
+        const roomTravel = ceilingProgress - 0.5;
+        const roomMotion = Math.min(1, Math.max(0.58, window.innerWidth / 1200));
+        element.style.setProperty("--room-stars-far-x", `${roomTravel * 12 * roomMotion}px`);
+        element.style.setProperty("--room-stars-far-y", `${roomTravel * -30 * roomMotion}px`);
+        element.style.setProperty("--room-stars-far-scale", `${0.96 + ceilingProgress * 0.06}`);
+        element.style.setProperty("--room-stars-mid-x", `${roomTravel * -32 * roomMotion}px`);
+        element.style.setProperty("--room-stars-mid-y", `${roomTravel * -88 * roomMotion}px`);
+        element.style.setProperty("--room-stars-mid-scale", `${0.88 + ceilingProgress * 0.26}`);
+        element.style.setProperty("--room-stars-near-x", `${roomTravel * 72 * roomMotion}px`);
+        element.style.setProperty("--room-stars-near-y", `${roomTravel * -184 * roomMotion}px`);
+        element.style.setProperty("--room-stars-near-scale", `${0.72 + ceilingProgress * 0.62}`);
+        element.style.setProperty("--room-stars-near-roll", `${roomTravel * 2.2}deg`);
       }
     };
     const schedule = () => { if (!frame) frame = window.requestAnimationFrame(update); };
@@ -90,7 +99,9 @@ export function CinemaStudy() {
       <div className="cinema-study-console">
         <div className="cinema-room-stage">
           <img src="/images/cinema-room.jpg" alt="Symmetrical private cinema with acoustic fabric, smoked oak and a mechanically masked projection screen" />
-          <div className="cinema-ceiling-stars" aria-hidden="true">{ceilingStars.map((star, index) => <i key={index} style={starStyle(star)} />)}</div>
+          <div className="cinema-room-star-depth" aria-hidden="true">
+            {starLayers.map((stars, layerIndex) => <div className={`cinema-room-star-layer room-layer-${layerIndex + 1}`} key={layerIndex}>{stars.map((star, index) => <i key={index} style={starStyle(star)} />)}</div>)}
+          </div>
           <div className={`cinema-aperture is-${format.id}`} aria-hidden="true"><i className="mask-top" /><i className="mask-right" /><i className="mask-bottom" /><i className="mask-left" /><span /></div>
           <div className="cinema-room-meta"><span>PRIVATE CINEMA / ROOM 06</span><b>MASKING / {format.ratio}</b></div>
           <p className="cinema-room-caption"><i /><span>Screen geometry recalled with projection, light and sound</span><b>{format.time}</b></p>
