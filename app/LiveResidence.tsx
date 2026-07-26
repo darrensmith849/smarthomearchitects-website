@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 
 const lightingScenes = [
   { id: "bright", name: "Bright", image: "/images/scene-morning.jpg", level: 94, warmth: 18, time: "10:20", description: "Clear vertical light for working, choosing materials and seeing colour accurately.", metrics: [["DOWNLIGHT", "92%"], ["PENDANT", "76%"], ["ACCENT", "42%"]] },
-  { id: "relax", name: "Relax", image: "/images/scene-welcome.jpg", level: 54, warmth: 55, time: "18:42", description: "Ambient and decorative layers hold the room while task light recedes.", metrics: [["DOWNLIGHT", "28%"], ["PENDANT", "46%"], ["ACCENT", "68%"]] },
-  { id: "entertain", name: "Entertain", image: "/images/scene-dinner.jpg", level: 34, warmth: 82, time: "20:08", description: "Art, table and landscape light balance around conversation and movement.", metrics: [["DOWNLIGHT", "14%"], ["PENDANT", "34%"], ["ACCENT", "72%"]] },
-  { id: "night", name: "Night", image: "/images/scene-night.jpg", level: 12, warmth: 96, time: "23:36", description: "Low amber paths preserve orientation without waking the whole room.", metrics: [["DOWNLIGHT", "OFF"], ["PENDANT", "8%"], ["ACCENT", "18%"]] },
+  { id: "relax", name: "Relax", image: "/images/scene-studio-relax.jpg", level: 54, warmth: 55, time: "18:42", description: "Cove, curtain and stone light hold the room while task light recedes.", metrics: [["COVE", "42%"], ["CURTAIN", "48%"], ["STONE", "56%"]] },
+  { id: "entertain", name: "Entertain", image: "/images/scene-studio-entertain.jpg", level: 34, warmth: 82, time: "20:08", description: "Stone, seating and low-level light balance around conversation and movement.", metrics: [["COVE", "28%"], ["SEATING", "42%"], ["STONE", "76%"]] },
+  { id: "night", name: "Night", image: "/images/scene-studio-night.jpg", level: 22, warmth: 96, time: "23:36", description: "A shielded reading pool and amber paths keep the room useful after dark.", metrics: [["READING", "32%"], ["PATH", "12%"], ["STONE", "22%"]] },
 ];
 
 const finishes = [
@@ -40,15 +40,23 @@ export function LiveResidence() {
   const [finishIndex, setFinishIndex] = useState(0);
   const finish = finishes[finishIndex];
 
+  useEffect(() => {
+    lightingScenes.forEach((item) => {
+      const sceneImage = new Image();
+      sceneImage.src = item.image;
+    });
+  }, []);
+
   const chooseScene = (id: string) => {
     const next = lightingScenes.find((item) => item.id === id) ?? lightingScenes[0];
     setSceneId(next.id); setLevel(next.level); setWarmth(next.warmth);
   };
 
   const roomStyle = {
-    "--room-level": `${0.42 + level / 105}`,
-    "--room-dim": `${Math.max(0, (70 - level) / 92)}`,
-    "--room-warm": `${warmth / 100 * 0.38}`,
+    "--room-level": `${1 + Math.max(0, level - scene.level) / 285}`,
+    "--room-dim": `${Math.max(0, scene.level - level) / 160}`,
+    "--room-warm": `${Math.max(0, warmth - scene.warmth) / 285}`,
+    "--room-cool": `${Math.max(0, scene.warmth - warmth) / 330}`,
   } as CSSProperties;
   const keypadStyle = {
     "--keypad-finish": finish.color,
@@ -75,6 +83,7 @@ export function LiveResidence() {
           <img key={scene.id} src={scene.image} alt={`Living room in the ${scene.name.toLowerCase()} lighting scene`} />
           <div className="lighting-scene-dim" />
           <div className="lighting-scene-warm" />
+          <div className="lighting-scene-cool" />
           <div className="lighting-screen-title">
             <p>Lighting scenes</p>
             <h1>Living gallery</h1>
