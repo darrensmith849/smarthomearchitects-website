@@ -1,163 +1,145 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import Link from "next/link";
+import { useState, type CSSProperties } from "react";
 
-const moments = [
-  { id: "dawn", time: "06:30", label: "First light", image: "/images/scene-morning.jpg", line: "The house opens gently to the day.", systems: [["LIGHT", "24% / 3200 K"], ["SHADES", "EAST / OPENING"], ["CLIMATE", "21.5 °C"], ["SECURITY", "NIGHT / RELEASE"]] },
-  { id: "arrival", time: "18:12", label: "Welcome", image: "/images/scene-welcome.jpg", line: "Arrival unfolds before the door opens.", systems: [["LIGHT", "38% / 2700 K"], ["SHADES", "COURTYARD / OPEN"], ["CLIMATE", "22.0 °C"], ["AUDIO", "LIVING / RESUME"]] },
-  { id: "dinner", time: "20:04", label: "Dinner", image: "/images/scene-dinner.jpg", line: "The table becomes the centre of the room.", systems: [["LIGHT", "31% / 2400 K"], ["SHADES", "PRIVACY / CLOSED"], ["CLIMATE", "21.0 °C"], ["AUDIO", "DINING / −28 dB"]] },
-  { id: "night", time: "23:36", label: "House at rest", image: "/images/scene-night.jpg", line: "Everything unnecessary becomes still.", systems: [["LIGHT", "PATH / 8%"], ["SHADES", "BLACKOUT / CLOSED"], ["CLIMATE", "19.0 °C"], ["SECURITY", "PERIMETER / SET"]] },
+const lightingScenes = [
+  { id: "bright", name: "Bright", image: "/images/scene-morning.jpg", level: 94, warmth: 18, time: "10:20", description: "Clear vertical light for working, choosing materials and seeing colour accurately.", metrics: [["DOWNLIGHT", "92%"], ["PENDANT", "76%"], ["ACCENT", "42%"]] },
+  { id: "relax", name: "Relax", image: "/images/scene-welcome.jpg", level: 54, warmth: 55, time: "18:42", description: "Ambient and decorative layers hold the room while task light recedes.", metrics: [["DOWNLIGHT", "28%"], ["PENDANT", "46%"], ["ACCENT", "68%"]] },
+  { id: "entertain", name: "Entertain", image: "/images/scene-dinner.jpg", level: 34, warmth: 82, time: "20:08", description: "Art, table and landscape light balance around conversation and movement.", metrics: [["DOWNLIGHT", "14%"], ["PENDANT", "34%"], ["ACCENT", "72%"]] },
+  { id: "night", name: "Night", image: "/images/scene-night.jpg", level: 12, warmth: 96, time: "23:36", description: "Low amber paths preserve orientation without waking the whole room.", metrics: [["DOWNLIGHT", "OFF"], ["PENDANT", "8%"], ["ACCENT", "18%"]] },
 ];
 
-const rooms = [
-  { id: "living", index: "01", name: "Living room", state: "OCCUPIED", note: "The courtyard remains visible while glare is held at the western glass.", values: [["LIGHT", "38% / AMBIENT"], ["SHADE", "WEST / 62%"], ["COMFORT", "22.0 °C"], ["SOUND", "PLAYING / −31 dB"]] },
-  { id: "kitchen", index: "02", name: "Kitchen", state: "READY", note: "Task surfaces are clear; surrounding light stays below the working plane.", values: [["LIGHT", "64% / TASK"], ["SHADE", "NORTH / OPEN"], ["COMFORT", "21.5 °C"], ["AIR", "EXTRACT / IDLE"]] },
-  { id: "suite", index: "03", name: "Principal suite", state: "SETTLED", note: "Warm low-level light and silent air prepare the room without announcing a mode.", values: [["LIGHT", "12% / AMBER"], ["SHADE", "BLACKOUT / OPEN"], ["COMFORT", "20.5 °C"], ["SOUND", "SILENT"]] },
-  { id: "cinema", index: "04", name: "Private cinema", state: "READY", note: "Projection, masking, guide light and reference sound wait behind one action.", values: [["LIGHT", "GUIDE / 6%"], ["MASKING", "2.39:1 / READY"], ["COMFORT", "20.0 °C"], ["SOUND", "REFERENCE / ARMED"]] },
-  { id: "courtyard", index: "05", name: "Courtyard", state: "CLEAR", note: "Landscape light and perimeter awareness protect the view without turning it into a boundary.", values: [["LIGHT", "18% / LANDSCAPE"], ["IRRIGATION", "NEXT / 05:20"], ["WEATHER", "18.4 °C / DRY"], ["PERIMETER", "CLEAR"]] },
+const finishes = [
+  { name: "Architectural bronze", color: "#806046", text: "#f1e8dc" },
+  { name: "Aged brass", color: "#9a7544", text: "#fff4d6" },
+  { name: "Champagne", color: "#b8ad8f", text: "#28251e" },
+  { name: "Smoked nickel", color: "#62615d", text: "#f3f0e8" },
+  { name: "Natural aluminium", color: "#c6c5bf", text: "#252523" },
+  { name: "Satin black", color: "#20201f", text: "#f3eee5" },
+  { name: "Chalk", color: "#e7e4dc", text: "#2c2b28" },
+  { name: "Graphite", color: "#3b3b39", text: "#f3eee6" },
+  { name: "Burnished copper", color: "#965f43", text: "#fff0e7" },
+  { name: "Custom match", color: "#817c70", text: "#f5f1e8" },
 ];
 
-const composerPresets = [
-  { id: "focus", label: "Focus", light: 72, shade: 34, temperature: 3400, sound: 0 },
-  { id: "dine", label: "Dine", light: 31, shade: 8, temperature: 2400, sound: 38 },
-  { id: "unwind", label: "Unwind", light: 18, shade: 0, temperature: 2200, sound: 24 },
-  { id: "clear", label: "Clear room", light: 0, shade: 0, temperature: 2700, sound: 0 },
-];
-
-const arrivalSteps = [
-  ["01", "Perimeter recognises arrival", "Driveway and entry paths rise to eighteen percent."],
-  ["02", "The envelope receives you", "Entry unlocks, blinds hold privacy and comfort returns."],
-  ["03", "The living room gathers", "Courtyard light, ambient scene and preferred audio arrive together."],
-  ["04", "The system disappears", "Temporary guide lights release. Only the intended atmosphere remains."],
-];
+const sceneLabels = ["Welcome", "Bright", "Relax", "Dine", "Read", "Music", "Movie", "Night", "Away", "All off", "Sheers", "Blackout", "Cool", "Warm", "Garden"];
 
 export function LiveResidence() {
-  const [momentIndex, setMomentIndex] = useState(1);
-  const [playing, setPlaying] = useState(false);
-  const [roomId, setRoomId] = useState("living");
-  const [light, setLight] = useState(31);
-  const [shade, setShade] = useState(8);
-  const [temperature, setTemperature] = useState(2400);
-  const [sound, setSound] = useState(38);
-  const [presetId, setPresetId] = useState("dine");
-  const [arrivalStep, setArrivalStep] = useState(-1);
-  const moment = moments[momentIndex];
-  const room = rooms.find((item) => item.id === roomId) ?? rooms[0];
+  const [mode, setMode] = useState<"scenes" | "designer">("scenes");
+  const [sceneId, setSceneId] = useState("relax");
+  const scene = lightingScenes.find((item) => item.id === sceneId) ?? lightingScenes[1];
+  const [level, setLevel] = useState(scene.level);
+  const [warmth, setWarmth] = useState(scene.warmth);
+  const [columns, setColumns] = useState(2);
+  const [buttons, setButtons] = useState(3);
+  const [controlType, setControlType] = useState<"scenes" | "hybrid" | "minimal">("scenes");
+  const [engraving, setEngraving] = useState(true);
+  const [backlight, setBacklight] = useState(68);
+  const [mount, setMount] = useState<"shadow" | "flush" | "floating">("shadow");
+  const [finishIndex, setFinishIndex] = useState(0);
+  const finish = finishes[finishIndex];
 
-  useEffect(() => {
-    if (!playing || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => setMomentIndex((index) => (index + 1) % moments.length), 4200);
-    return () => window.clearInterval(timer);
-  }, [playing]);
-
-  useEffect(() => {
-    if (arrivalStep < 0 || arrivalStep >= arrivalSteps.length - 1) return;
-    const timer = window.setTimeout(() => setArrivalStep((step) => step + 1), 1250);
-    return () => window.clearTimeout(timer);
-  }, [arrivalStep]);
-
-  const chooseMoment = (index: number) => { setMomentIndex(index); setPlaying(false); };
-  const applyPreset = (preset: typeof composerPresets[number]) => {
-    setPresetId(preset.id); setLight(preset.light); setShade(preset.shade); setTemperature(preset.temperature); setSound(preset.sound);
+  const chooseScene = (id: string) => {
+    const next = lightingScenes.find((item) => item.id === id) ?? lightingScenes[0];
+    setSceneId(next.id); setLevel(next.level); setWarmth(next.warmth);
   };
-  const composerStyle = {
-    "--composer-light": `${0.48 + light / 120}`,
-    "--composer-dark": `${Math.max(0, (72 - light) / 100)}`,
-    "--composer-warm": `${Math.max(0, 1 - (temperature - 2200) / 2800) * 0.42}`,
-    "--composer-shade": `${shade - 100}%`,
-    "--composer-sound": `${0.25 + sound / 100}`,
+
+  const roomStyle = {
+    "--room-level": `${0.42 + level / 105}`,
+    "--room-dim": `${Math.max(0, (70 - level) / 92)}`,
+    "--room-warm": `${warmth / 100 * 0.38}`,
   } as CSSProperties;
-  const composerControls: Array<{ label: string; value: number; unit: string; min: number; max: number; set: (value: number) => void }> = [
-    { label: "LIGHT", value: light, unit: "%", min: 0, max: 100, set: setLight },
-    { label: "SHADE", value: shade, unit: "% OPEN", min: 0, max: 100, set: setShade },
-    { label: "WARMTH", value: temperature, unit: " K", min: 2200, max: 5000, set: setTemperature },
-    { label: "SOUND", value: sound, unit: "%", min: 0, max: 70, set: setSound },
-  ];
+  const keypadStyle = {
+    "--keypad-finish": finish.color,
+    "--keypad-text": finish.text,
+    "--keypad-backlight": `${backlight / 100}`,
+    "--keypad-columns": columns,
+    "--keypad-rows": buttons,
+  } as CSSProperties;
+  const totalButtons = columns * buttons;
 
   return (
-    <>
-      <section className={`residence-live-hero is-${moment.id}`}>
-        <img key={moment.id} src={moment.image} alt={`Architectural living space during ${moment.label.toLowerCase()}`} />
-        <div className="residence-hero-wash" />
-        <div className="residence-hero-frame" aria-hidden="true"><i /><i /><i /><i /></div>
-        <div className="residence-hero-copy">
-          <p className="eyebrow eyebrow-light">Interactive residence · Local demonstration</p>
-          <h1>A home<br />in motion.</h1>
-          <p>Move through one day. Enter the rooms. Compose a scene. See how the invisible system turns separate technologies into one calm experience.</p>
+    <div className={`residence-control-suite mode-${mode}`}>
+      <div className="control-suite-topbar">
+        <button className="control-suite-brand" type="button" onClick={() => setMode("scenes")}><i /><span>Smart Home Architects</span></button>
+        <div className="control-suite-switch" role="tablist" aria-label="Interactive experience">
+          <button type="button" role="tab" aria-selected={mode === "scenes"} className={mode === "scenes" ? "is-active" : ""} onClick={() => setMode("scenes")}><span>01</span>Lighting scenes</button>
+          <button type="button" role="tab" aria-selected={mode === "designer"} className={mode === "designer" ? "is-active" : ""} onClick={() => setMode("designer")}><span>02</span>Keypad designer</button>
         </div>
-        <div className="residence-live-readout" aria-live="polite">
-          <div><span>RESIDENCE / 01</span><b>{playing ? "DAY RUNNING" : "LOCAL / LIVE"}</b></div>
-          <strong>{moment.time}</strong>
-          <h2>{moment.label}</h2>
-          <p>{moment.line}</p>
-          <dl key={moment.id}>{moment.systems.map(([label, value], index) => <div key={label} style={{ animationDelay: `${index * 90}ms` }}><dt>{label}</dt><dd>{value}</dd><i /></div>)}</dl>
-        </div>
-        <div className="residence-day-control">
-          <button type="button" className="residence-play" onClick={() => setPlaying((value) => !value)} aria-pressed={playing}><span>{playing ? "PAUSE DAY" : "PLAY THE DAY"}</span><b>{playing ? "Ⅱ" : "▶"}</b></button>
-          <div className="residence-day-line" aria-hidden="true"><i style={{ left: `${(momentIndex / (moments.length - 1)) * 100}%` }} /></div>
-          {moments.map((item, index) => <button type="button" key={item.id} className={index === momentIndex ? "is-active" : ""} onClick={() => chooseMoment(index)} aria-pressed={index === momentIndex}><span>{item.time}</span><strong>{item.label}</strong><i /></button>)}
-        </div>
-      </section>
+        <Link className="control-suite-exit" href="/" aria-label="Close interactive experience">×</Link>
+      </div>
 
-      <section className="residence-room-section section-pad">
-        <div className="residence-section-intro">
-          <div className="section-label"><span>01</span><span>Room intelligence</span></div>
-          <div><p className="eyebrow">The home, organised spatially</p><h2>Start with the room.<br />Not the device.</h2></div>
-          <p>The interface follows the architecture. Select a room to see its current state across every connected discipline.</p>
-        </div>
-        <div className="residence-room-console">
-          <div className="residence-floorplan" aria-label="Residence rooms">
-            <div className="residence-plan-grid" aria-hidden="true"><i /><i /><i /><i /><b /><b /></div>
-            {rooms.map((item) => <button type="button" key={item.id} className={`room-${item.id}${item.id === room.id ? " is-active" : ""}`} onClick={() => setRoomId(item.id)} aria-pressed={item.id === room.id}><span>{item.index}</span><strong>{item.name}</strong><i /></button>)}
-            <p><span>GROUND + LOWER LEVEL / NOT TO SCALE</span><b>LIVE OCCUPANCY MAP</b></p>
+      {mode === "scenes" ? (
+        <section className={`lighting-scene-screen is-${scene.id}`} style={roomStyle}>
+          <img key={scene.id} src={scene.image} alt={`Living room in the ${scene.name.toLowerCase()} lighting scene`} />
+          <div className="lighting-scene-dim" />
+          <div className="lighting-scene-warm" />
+          <div className="lighting-screen-title">
+            <p>Lighting scenes</p>
+            <h1>Living gallery</h1>
+            <span>Residence 01 · Ground level</span>
           </div>
-          <div className="residence-room-readout" aria-live="polite">
-            <div><span>ROOM / {room.index}</span><b>{room.state}</b></div>
-            <strong>{room.name}</strong>
-            <p>{room.note}</p>
-            <dl key={room.id}>{room.values.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd><i /></div>)}</dl>
-          </div>
-        </div>
-        <div className="residence-room-tabs" role="group" aria-label="Choose a room">{rooms.map((item) => <button type="button" key={item.id} className={item.id === room.id ? "is-active" : ""} onClick={() => setRoomId(item.id)}><span>{item.index}</span><strong>{item.name}</strong><i /></button>)}</div>
-      </section>
+          <div className="lighting-screen-status"><span>LOCAL / LIVE</span><b>{scene.time}</b></div>
 
-      <section className="residence-composer section-pad" style={composerStyle}>
-        <div className="residence-composer-intro">
-          <div className="section-label section-label-light"><span>02</span><span>Live scene composer</span></div>
-          <h2>Dial the feeling.<br />Watch the room answer.</h2>
-          <p>Adjust the four human-facing outcomes. The system resolves the technical commands behind them and previews the atmosphere immediately.</p>
-        </div>
-        <div className="residence-composer-console">
-          <div className="residence-composer-visual">
-            <img src="/images/scene-dinner.jpg" alt="Living room used for live scene composition" />
-            <div className="residence-composer-dark" />
-            <div className="residence-composer-warm" />
-            <div className="residence-composer-shade" aria-hidden="true"><i /><i /><i /><i /><i /></div>
-            <div className="residence-composer-sound" aria-hidden="true"><i /><i /><i /></div>
-            <div className="residence-composer-meta"><span>LIVE PREVIEW / LIVING</span><b>{presetId.toUpperCase()} / UNSAVED STUDY</b></div>
-          </div>
-          <div className="residence-composer-panel">
-            <div><span>SCENE PARAMETERS</span><b>LOCAL / PREVIEW</b></div>
-            {composerControls.map((control) => <label key={control.label}><span>{control.label}</span><strong>{control.value}{control.unit}</strong><input type="range" min={control.min} max={control.max} value={control.value} onChange={(event) => { control.set(Number(event.target.value)); setPresetId("custom"); }} /></label>)}
-            <div className="residence-presets">{composerPresets.map((preset) => <button type="button" key={preset.id} className={preset.id === presetId ? "is-active" : ""} onClick={() => applyPreset(preset)}>{preset.label}</button>)}</div>
-          </div>
-        </div>
-      </section>
+          <aside className="lighting-control-panel" aria-label="Lighting scene controls">
+            <div className="lighting-panel-head"><span>ROOM / 01</span><b>SCENES</b></div>
+            <strong>{scene.name}</strong>
+            <p>{scene.description}</p>
+            <div className="lighting-scene-options">
+              {lightingScenes.map((item) => <button type="button" key={item.id} className={item.id === scene.id ? "is-active" : ""} onClick={() => chooseScene(item.id)} aria-pressed={item.id === scene.id}><i /><span>{item.name}</span><b>{String(item.level).padStart(2, "0")}%</b></button>)}
+            </div>
+            <label><span>MASTER LEVEL</span><b>{level}%</b><input type="range" min="0" max="100" value={level} onChange={(event) => setLevel(Number(event.target.value))} /></label>
+            <label><span>WARMTH</span><b>{warmth}%</b><input type="range" min="0" max="100" value={warmth} onChange={(event) => setWarmth(Number(event.target.value))} /></label>
+          </aside>
 
-      <section className={`residence-arrival section-pad step-${arrivalStep}`}>
-        <div className="residence-arrival-visual">
-          <img src="/images/scene-welcome.jpg" alt="Home entrance and living space during an arrival sequence" />
-          <div /><i /><i /><i /><i />
-          <p><span>ARRIVAL SEQUENCE / LOCAL</span><b>{arrivalStep < 0 ? "READY" : arrivalStep >= arrivalSteps.length - 1 ? "COMPLETE" : `STEP 0${arrivalStep + 1}`}</b></p>
-        </div>
-        <div className="residence-arrival-copy">
-          <div className="section-label"><span>03</span><span>Arrival choreography</span></div>
-          <p className="eyebrow">One event · A sequence of considered changes</p>
-          <h2>The home receives you.</h2>
-          <button type="button" onClick={() => setArrivalStep(0)}><span>{arrivalStep >= 0 ? "Run arrival again" : "Run arrival"}</span><b>▶</b></button>
-          <ol>{arrivalSteps.map(([index, title, copy], step) => <li key={index} className={step <= arrivalStep ? "is-active" : ""}><span>{index}</span><div><strong>{title}</strong><p>{copy}</p></div><i /></li>)}</ol>
-        </div>
-      </section>
-    </>
+          <div className="lighting-screen-footer">
+            <div><span>ACTIVE SCENE</span><strong>{scene.name}</strong></div>
+            <dl>{scene.metrics.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+            <button type="button" onClick={() => setMode("designer")}><span>DESIGN THE WALL CONTROL</span><b>→</b></button>
+          </div>
+        </section>
+      ) : (
+        <section className="keypad-designer-screen" style={keypadStyle}>
+          <aside className="keypad-design-controls">
+            <div className="designer-heading"><span>CONTROL / AXIS MODULAR</span><b>LIVE CONFIGURATION</b></div>
+            <h1>Keypad<br />designer.</h1>
+            <div className="designer-control-group">
+              <p>KEYPAD COLUMNS</p>
+              <div className="designer-segments columns">{[1,2,3].map((count) => <button type="button" key={count} className={columns === count ? "is-active" : ""} onClick={() => setColumns(count)} aria-label={`${count} columns`}><span>{Array.from({ length: count }, (_, index) => <i key={index} />)}</span><b>{count}</b></button>)}</div>
+            </div>
+            <div className="designer-control-group">
+              <p>BUTTONS PER COLUMN</p>
+              <div className="designer-segments buttons">{[2,3,4,5].map((count) => <button type="button" key={count} className={buttons === count ? "is-active" : ""} onClick={() => setButtons(count)}><span>{Array.from({ length: count }, (_, index) => <i key={index} />)}</span><b>{count}</b></button>)}</div>
+            </div>
+            <div className="designer-control-group">
+              <p>CONTROL LANGUAGE</p>
+              <div className="designer-text-options">{(["scenes","hybrid","minimal"] as const).map((type) => <button type="button" key={type} className={controlType === type ? "is-active" : ""} onClick={() => setControlType(type)}>{type}</button>)}</div>
+            </div>
+            <div className="designer-toggle-row"><span>ENGRAVING</span><button type="button" className={engraving ? "is-on" : ""} onClick={() => setEngraving((value) => !value)} aria-pressed={engraving}><i /></button></div>
+            <label className="designer-slider"><span>BACKLIGHT</span><b>{backlight}%</b><input type="range" min="0" max="100" value={backlight} onChange={(event) => setBacklight(Number(event.target.value))} /></label>
+            <div className="designer-control-group mount-group"><p>MOUNTING DETAIL</p><div className="designer-text-options">{(["shadow","flush","floating"] as const).map((type) => <button type="button" key={type} className={mount === type ? "is-active" : ""} onClick={() => setMount(type)}>{type}</button>)}</div></div>
+          </aside>
+
+          <div className="keypad-product-stage">
+            <div className="keypad-stage-grid" aria-hidden="true" />
+            <div className={`configured-keypad mount-${mount} type-${controlType}`}>
+              <div className="configured-keypad-surface">
+                {Array.from({ length: totalButtons }, (_, index) => <button type="button" key={index} aria-label={sceneLabels[index % sceneLabels.length]}><i />{engraving && controlType !== "minimal" ? <span>{controlType === "hybrid" && index % 3 === 1 ? index % 2 ? "+" : "−" : sceneLabels[index % sceneLabels.length]}</span> : null}<b /></button>)}
+              </div>
+            </div>
+            <div className="keypad-dimensions" aria-hidden="true"><span>88 MM</span><i /><b>8.6 MM</b></div>
+            <p className="keypad-configuration-summary"><span>{columns} COLUMN{columns > 1 ? "S" : ""} / {totalButtons} BUTTONS / {finish.name.toUpperCase()}</span><b>CONFIGURATION / LIVE</b></p>
+          </div>
+
+          <aside className="keypad-finish-controls">
+            <div><span>MATERIAL / 0{finishIndex + 1}</span><b>{finish.name}</b></div>
+            <h2>Wallplate<br />finish.</h2>
+            <div className="keypad-finish-grid">{finishes.map((item, index) => <button type="button" key={item.name} className={finishIndex === index ? "is-active" : ""} onClick={() => setFinishIndex(index)} aria-pressed={finishIndex === index}><i style={{ background: item.color }} /><span>{item.name}</span></button>)}</div>
+            <button className="keypad-room-preview" type="button" onClick={() => setMode("scenes")}><span>PREVIEW IN THE ROOM</span><b>→</b></button>
+          </aside>
+        </section>
+      )}
+    </div>
   );
 }
