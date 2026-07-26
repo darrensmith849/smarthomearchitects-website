@@ -14,7 +14,7 @@ function makeStars(count: number, seed: number, depth: number): Star[] {
   }));
 }
 
-const starLayers = [makeStars(30, 3, 0.6), makeStars(23, 7, 1), makeStars(16, 11, 1.45)];
+const starLayers = [makeStars(30, 3, 0.6), makeStars(23, 7, 1), makeStars(22, 11, 1.45)];
 const ceilingStars = starLayers.flat().slice(0, 58);
 
 function starStyle(star: Star): CSSProperties {
@@ -32,6 +32,7 @@ export function CinemaStudy() {
   const [formatId, setFormatId] = useState("scope");
   const format = cinemaFormats.find((item) => item.id === formatId) ?? cinemaFormats[3];
   const studyRef = useRef<HTMLElement>(null);
+  const starfieldRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -39,13 +40,30 @@ export function CinemaStudy() {
     const update = () => {
       frame = 0;
       const element = studyRef.current;
-      if (!element) return;
-      const rect = element.getBoundingClientRect();
+      const starfield = starfieldRef.current;
+      if (!element || !starfield) return;
+      const rect = starfield.getBoundingClientRect();
       const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
-      element.style.setProperty("--stars-far", `${progress * -34}px`);
-      element.style.setProperty("--stars-mid", `${progress * -78}px`);
-      element.style.setProperty("--stars-near", `${progress * -128}px`);
-      element.style.setProperty("--stars-ceiling", `${progress * 9}px`);
+      const travel = progress - 0.5;
+      element.style.setProperty("--stars-far-x", `${travel * 18}px`);
+      element.style.setProperty("--stars-far-y", `${travel * -58}px`);
+      element.style.setProperty("--stars-far-scale", `${0.94 + progress * 0.1}`);
+      element.style.setProperty("--stars-mid-x", `${travel * -38}px`);
+      element.style.setProperty("--stars-mid-y", `${travel * -154}px`);
+      element.style.setProperty("--stars-mid-scale", `${0.86 + progress * 0.36}`);
+      element.style.setProperty("--stars-near-x", `${travel * 82}px`);
+      element.style.setProperty("--stars-near-y", `${travel * -326}px`);
+      element.style.setProperty("--stars-near-scale", `${0.68 + progress * 0.78}`);
+      element.style.setProperty("--stars-near-roll", `${travel * 2.4}deg`);
+      element.style.setProperty("--stars-copy-y", `${travel * -28}px`);
+
+      const consoleElement = element.querySelector<HTMLElement>(".cinema-study-console");
+      if (consoleElement) {
+        const consoleRect = consoleElement.getBoundingClientRect();
+        const ceilingProgress = Math.max(0, Math.min(1, (window.innerHeight - consoleRect.top) / (window.innerHeight + consoleRect.height)));
+        element.style.setProperty("--stars-ceiling", `${(ceilingProgress - 0.5) * -46}px`);
+        element.style.setProperty("--stars-ceiling-scale", `${0.94 + ceilingProgress * 0.16}`);
+      }
     };
     const schedule = () => { if (!frame) frame = window.requestAnimationFrame(update); };
     update();
@@ -62,7 +80,7 @@ export function CinemaStudy() {
         <p>A great private cinema is a sequence of physical decisions: proportion, silence, masking, calibration and one effortless beginning.</p>
       </div>
 
-      <div className="cinema-star-descent">
+      <div ref={starfieldRef} className="cinema-star-descent">
         <div className="cinema-star-depth" aria-hidden="true">
           {starLayers.map((stars, layerIndex) => <div className={`cinema-star-layer layer-${layerIndex + 1}`} key={layerIndex}>{stars.map((star, index) => <i key={index} style={starStyle(star)} />)}</div>)}
         </div>
