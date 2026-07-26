@@ -7,6 +7,7 @@ import { CategoryTemplate } from "../../page-templates";
 import { ProductTelemetry } from "../../ProductTelemetry";
 import { categoryPages, getCategoryPage } from "../../site-map";
 import { AxisProductExperience } from "../../AxisProductExperience";
+import { AtlasProductPage } from "../../AtlasProductPage";
 
 export function generateStaticParams() {
   return [...products.map((product) => ({ slug: product.slug })), ...categoryPages.map((page) => ({ slug: page.slug }))];
@@ -31,6 +32,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const category = getCategoryPage(slug);
   if (!product && category) return <CategoryTemplate page={category} />;
   if (!product) notFound();
+  if (product.slug === "atlas") return <AtlasProductPage product={product} />;
 
   return (
     <>

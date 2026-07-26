@@ -129,7 +129,7 @@ export const products: Product[] = [
       "A silent, local-first control processor that keeps the entire residence responsive—even when the internet is not.",
     longDescription:
       "Atlas Core is the calm centre of the system. It coordinates every room, stores every scene and bridges trusted building standards without sending the household to the cloud. A fanless aluminium enclosure, dual-network architecture and monitored power make it fit for homes designed to last for generations.",
-    image: "/images/atlas.jpg",
+    image: "/images/atlas-core-isolated.png",
     accent: "#2a2927",
     startingAt: "Specified per project",
     dimensions: "320 × 240 × 68 mm",
