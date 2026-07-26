@@ -38,10 +38,10 @@ const cityMoments = [
     index: "04",
     time: "23:28",
     name: "Quiet secure",
-    line: "Sound sleeps, glass darkens and a four-percent path remains.",
+    line: "Sound sleeps, glass darkens and layered light keeps the room beautifully usable.",
     image: "/images/city-night.jpg",
     status: "SHELL / SECURE",
-    readings: [["AUDIO", "OFF"], ["PRIVACY", "NIGHT"], ["PATH", "4%"]],
+    readings: [["AUDIO", "OFF"], ["PRIVACY", "NIGHT"], ["READING", "68%"]],
   },
 ];
 
