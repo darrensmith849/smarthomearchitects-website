@@ -30,6 +30,7 @@ export function SiteFooter() {
           <Link href="/experience/climate-atelier">Climate atelier</Link>
           <Link href="/experience/audio-atelier">Audio atelier</Link>
           <Link href="/experience/security-observatory">Security observatory</Link>
+          <Link href="/experience/water-landscape-atelier">Water & landscape atelier</Link>
           <Link href="/services/lighting">Lighting</Link>
           <Link href="/services/shading">Shading</Link>
           <Link href="/services/climate">Climate</Link>
