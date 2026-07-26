@@ -4,12 +4,14 @@ import { CityRhythm } from "./CityRhythm";
 import { ConsultationCta, ProductCollection } from "./components";
 import { ForestRhythm } from "./ForestRhythm";
 import { LightingLayers } from "./LightingLayers";
+import { ShadingStudy } from "./ShadingStudy";
 import { ServicePage, projectPages, servicePages } from "./site-map";
 import { SystemCanvas } from "./SystemCanvas";
 
 export function ServiceTemplate({ page }: { page: ServicePage }) {
   const currentIndex = servicePages.findIndex((item) => item.slug === page.slug);
   const next = servicePages[(currentIndex + 1) % servicePages.length];
+  const hasInteractiveStudy = page.slug === "lighting" || page.slug === "shading";
 
   return (
     <>
@@ -45,10 +47,11 @@ export function ServiceTemplate({ page }: { page: ServicePage }) {
       </section>
 
       {page.slug === "lighting" && <LightingLayers />}
+      {page.slug === "shading" && <ShadingStudy />}
 
       <section className="service-pillars section-pad">
         <div className="section-head">
-          <div className="section-label"><span>{page.slug === "lighting" ? "03" : "02"}</span><span>Designed as a whole</span></div>
+          <div className="section-label"><span>{hasInteractiveStudy ? "03" : "02"}</span><span>Designed as a whole</span></div>
           <h2>Beautifully calm.<br />Technically deep.</h2>
           <p>Architecture and engineering stay in conversation from the first detail through final commissioning.</p>
         </div>
@@ -61,7 +64,7 @@ export function ServiceTemplate({ page }: { page: ServicePage }) {
 
       <section className="scene-section section-pad">
         <div className="scene-intro">
-          <div className="section-label"><span>{page.slug === "lighting" ? "04" : "03"}</span><span>A day in motion</span></div>
+          <div className="section-label"><span>{hasInteractiveStudy ? "04" : "03"}</span><span>A day in motion</span></div>
           <h2>Intelligence<br />as atmosphere.</h2>
           <p>Scroll through three moments. The visible interface stays simple because the system beneath it understands context.</p>
         </div>
