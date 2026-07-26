@@ -248,6 +248,7 @@ export const projectPages = [
 export const architectureLinks: LinkItem[] = [
   { label: "Home", href: "/" },
   { label: "Live Residence", href: "/experience/live-residence" },
+  { label: "Shading Atelier", href: "/experience/shading-atelier" },
   { label: "Approach", href: "/approach" },
   ...studioPages.map((page) => ({ label: page.title, href: `/studio/${page.slug}` })),
   ...servicePages.map((page) => ({ label: page.title, href: `/services/${page.slug}` })),

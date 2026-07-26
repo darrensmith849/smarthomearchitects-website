@@ -26,6 +26,7 @@ export function SiteFooter() {
         <div>
           <p className="footer-label">Experience</p>
           <Link href="/experience/live-residence">Live residence</Link>
+          <Link href="/experience/shading-atelier">Shading atelier</Link>
           <Link href="/services/lighting">Lighting</Link>
           <Link href="/services/shading">Shading</Link>
           <Link href="/services/climate">Climate</Link>
