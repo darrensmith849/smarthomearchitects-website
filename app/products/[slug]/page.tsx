@@ -6,6 +6,7 @@ import { getProduct, products } from "../../data";
 import { CategoryTemplate } from "../../page-templates";
 import { ProductTelemetry } from "../../ProductTelemetry";
 import { categoryPages, getCategoryPage } from "../../site-map";
+import { AxisProductExperience } from "../../AxisProductExperience";
 
 export function generateStaticParams() {
   return [...products.map((product) => ({ slug: product.slug })), ...categoryPages.map((page) => ({ slug: page.slug }))];
@@ -55,42 +56,44 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         ))}
       </section>
 
-      <section className="feature-story section-pad">
-        <div className="section-label"><span>01</span><span>Why it belongs</span></div>
-        <div className="feature-story-head">
-          <p className="eyebrow">Designed for lived experience</p>
-          <h2>{product.line}</h2>
-        </div>
-        <div className="feature-columns">
-          {product.features.map((feature, index) => (
-            <article key={feature.title}>
-              <span>0{index + 1}</span>
-              <h3>{feature.title}</h3>
-              <p>{feature.copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      {product.slug === "axis" ? <AxisProductExperience product={product} /> : <>
+        <section className="feature-story section-pad">
+          <div className="section-label"><span>01</span><span>Why it belongs</span></div>
+          <div className="feature-story-head">
+            <p className="eyebrow">Designed for lived experience</p>
+            <h2>{product.line}</h2>
+          </div>
+          <div className="feature-columns">
+            {product.features.map((feature, index) => (
+              <article key={feature.title}>
+                <span>0{index + 1}</span>
+                <h3>{feature.title}</h3>
+                <p>{feature.copy}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      <section className="finish-section section-pad">
-        <div className="finish-copy">
-          <p className="eyebrow">Material palette</p>
-          <h2>Made to sit<br />with the room.</h2>
-          <p>We sample every visible finish against the interior material board under the project lighting before final sign-off.</p>
-        </div>
-        <div className="finish-product">
-          <img src={product.image} alt={`${product.name} in its studio finish`} />
-        </div>
-        <div className="finish-list">
-          {product.finishes.map((finish) => (
-            <div key={finish.name}><i style={{ background: finish.color }} /><span>{finish.name}</span></div>
-          ))}
-        </div>
-      </section>
+        <section className="finish-section section-pad">
+          <div className="finish-copy">
+            <p className="eyebrow">Material palette</p>
+            <h2>Made to sit<br />with the room.</h2>
+            <p>We sample every visible finish against the interior material board under the project lighting before final sign-off.</p>
+          </div>
+          <div className="finish-product">
+            <img src={product.image} alt={`${product.name} in its studio finish`} />
+          </div>
+          <div className="finish-list">
+            {product.finishes.map((finish) => (
+              <div key={finish.name}><i style={{ background: finish.color }} /><span>{finish.name}</span></div>
+            ))}
+          </div>
+        </section>
+      </>}
 
       <section className="spec-section section-pad">
         <div className="spec-intro">
-          <div className="section-label"><span>02</span><span>Technical detail</span></div>
+          <div className="section-label"><span>{product.slug === "axis" ? "05" : "02"}</span><span>Technical detail</span></div>
           <h2>Every millimetre,<br />accounted for.</h2>
           <p>Indicative studio-series specifications. Final engineering is confirmed for each project, region and integration set.</p>
         </div>
@@ -105,7 +108,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <section className="related-products section-pad">
         <div className="section-head collection-head">
-          <div className="section-label"><span>03</span><span>Explore the system</span></div>
+          <div className="section-label"><span>{product.slug === "axis" ? "06" : "03"}</span><span>Explore the system</span></div>
           <h2>Designed together.</h2>
         </div>
         <ProductCollection compact />
