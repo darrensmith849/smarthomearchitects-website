@@ -251,6 +251,7 @@ export const architectureLinks: LinkItem[] = [
   { label: "Shading Atelier", href: "/experience/shading-atelier" },
   { label: "Climate Atelier", href: "/experience/climate-atelier" },
   { label: "Audio Atelier", href: "/experience/audio-atelier" },
+  { label: "Security Observatory", href: "/experience/security-observatory" },
   { label: "Approach", href: "/approach" },
   ...studioPages.map((page) => ({ label: page.title, href: `/studio/${page.slug}` })),
   ...servicePages.map((page) => ({ label: page.title, href: `/services/${page.slug}` })),
