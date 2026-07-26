@@ -38,7 +38,15 @@ export function LiveResidence() {
   const [backlight, setBacklight] = useState(68);
   const [mount, setMount] = useState<"shadow" | "flush" | "floating">("shadow");
   const [finishIndex, setFinishIndex] = useState(0);
+  const [assignments, setAssignments] = useState(sceneLabels);
+  const [selectedButton, setSelectedButton] = useState(0);
+  const [specOpen, setSpecOpen] = useState(false);
+  const [projectName, setProjectName] = useState("Residence 01");
+  const [roomName, setRoomName] = useState("Living gallery");
   const finish = finishes[finishIndex];
+  const totalButtons = columns * buttons;
+  const selectedIndex = Math.min(selectedButton, totalButtons - 1);
+  const specificationId = `SHA-AX-${columns}${buttons}-${String(finishIndex + 1).padStart(2, "0")}`;
 
   useEffect(() => {
     lightingScenes.forEach((item) => {
@@ -50,6 +58,10 @@ export function LiveResidence() {
   const chooseScene = (id: string) => {
     const next = lightingScenes.find((item) => item.id === id) ?? lightingScenes[0];
     setSceneId(next.id); setLevel(next.level); setWarmth(next.warmth);
+  };
+
+  const assignButton = (label: string) => {
+    setAssignments((current) => current.map((item, index) => index === selectedIndex ? label : item));
   };
 
   const roomStyle = {
@@ -65,8 +77,6 @@ export function LiveResidence() {
     "--keypad-columns": columns,
     "--keypad-rows": buttons,
   } as CSSProperties;
-  const totalButtons = columns * buttons;
-
   return (
     <div className={`residence-control-suite mode-${mode}`}>
       <div className="control-suite-topbar">
@@ -128,13 +138,18 @@ export function LiveResidence() {
             <div className="designer-toggle-row"><span>ENGRAVING</span><button type="button" className={engraving ? "is-on" : ""} onClick={() => setEngraving((value) => !value)} aria-pressed={engraving}><i /></button></div>
             <label className="designer-slider"><span>BACKLIGHT</span><b>{backlight}%</b><input type="range" min="0" max="100" value={backlight} onChange={(event) => setBacklight(Number(event.target.value))} /></label>
             <div className="designer-control-group mount-group"><p>MOUNTING DETAIL</p><div className="designer-text-options">{(["shadow","flush","floating"] as const).map((type) => <button type="button" key={type} className={mount === type ? "is-active" : ""} onClick={() => setMount(type)}>{type}</button>)}</div></div>
+            <div className="designer-control-group assignment-editor">
+              <p>BUTTON ASSIGNMENT</p>
+              <div><span>BUTTON {String(selectedIndex + 1).padStart(2, "0")}</span><select value={assignments[selectedIndex]} onChange={(event) => assignButton(event.target.value)} aria-label={`Assignment for button ${selectedIndex + 1}`}>{sceneLabels.map((label) => <option key={label}>{label}</option>)}</select></div>
+              <small>Select a button on the keypad, then choose the scene or action it should recall.</small>
+            </div>
           </aside>
 
           <div className="keypad-product-stage">
             <div className="keypad-stage-grid" aria-hidden="true" />
             <div className={`configured-keypad mount-${mount} type-${controlType}`}>
               <div className="configured-keypad-surface">
-                {Array.from({ length: totalButtons }, (_, index) => <button type="button" key={index} aria-label={sceneLabels[index % sceneLabels.length]}><i />{engraving && controlType !== "minimal" ? <span>{controlType === "hybrid" && index % 3 === 1 ? index % 2 ? "+" : "−" : sceneLabels[index % sceneLabels.length]}</span> : null}<b /></button>)}
+                {Array.from({ length: totalButtons }, (_, index) => <button type="button" key={index} className={selectedIndex === index ? "is-selected" : ""} aria-label={`Edit button ${index + 1}: ${assignments[index]}`} aria-pressed={selectedIndex === index} onClick={() => setSelectedButton(index)}><i />{engraving && controlType !== "minimal" ? <span>{controlType === "hybrid" && index % 3 === 1 ? index % 2 ? "+" : "−" : assignments[index]}</span> : null}<b /></button>)}
               </div>
             </div>
             <div className="keypad-dimensions" aria-hidden="true"><span>88 MM</span><i /><b>8.6 MM</b></div>
@@ -145,10 +160,56 @@ export function LiveResidence() {
             <div><span>MATERIAL / 0{finishIndex + 1}</span><b>{finish.name}</b></div>
             <h2>Wallplate<br />finish.</h2>
             <div className="keypad-finish-grid">{finishes.map((item, index) => <button type="button" key={item.name} className={finishIndex === index ? "is-active" : ""} onClick={() => setFinishIndex(index)} aria-pressed={finishIndex === index}><i style={{ background: item.color }} /><span>{item.name}</span></button>)}</div>
-            <button className="keypad-room-preview" type="button" onClick={() => setMode("scenes")}><span>PREVIEW IN THE ROOM</span><b>→</b></button>
+            <div className="keypad-designer-actions">
+              <button className="keypad-specification-button" type="button" onClick={() => setSpecOpen(true)}><span>CREATE PROJECT SPECIFICATION</span><b>↗</b></button>
+              <button className="keypad-room-preview" type="button" onClick={() => setMode("scenes")}><span>PREVIEW IN THE ROOM</span><b>→</b></button>
+            </div>
           </aside>
         </section>
       )}
+
+      {specOpen ? (
+        <div className="keypad-spec-overlay" style={keypadStyle} role="dialog" aria-modal="true" aria-labelledby="keypad-spec-title">
+          <div className="keypad-spec-shell">
+            <div className="keypad-spec-toolbar">
+              <div><i /><span>PROJECT DOCUMENT / LIVE CONFIGURATION</span></div>
+              <div><button type="button" onClick={() => window.print()}>PRINT / SAVE PDF</button><button type="button" onClick={() => setSpecOpen(false)} aria-label="Close specification">×</button></div>
+            </div>
+            <article className="keypad-spec-sheet">
+              <header>
+                <div className="keypad-spec-brand"><i /><span>SMART HOME<br />ARCHITECTS</span></div>
+                <div><span>CONTROL SCHEDULE</span><b>{specificationId}</b></div>
+              </header>
+              <section className="keypad-spec-title">
+                <div className="keypad-spec-fields">
+                  <label><span>PROJECT</span><input value={projectName} onChange={(event) => setProjectName(event.target.value)} /></label>
+                  <label><span>ROOM / ZONE</span><input value={roomName} onChange={(event) => setRoomName(event.target.value)} /></label>
+                </div>
+                <h2 id="keypad-spec-title">Architectural<br />keypad schedule.</h2>
+              </section>
+              <section className="keypad-spec-overview">
+                <div className="spec-keypad-render">
+                  <div>{Array.from({ length: totalButtons }, (_, index) => <span key={index}>{assignments[index]}</span>)}</div>
+                </div>
+                <dl>
+                  <div><dt>CONTROL</dt><dd>Axis modular keypad</dd></div>
+                  <div><dt>CONFIGURATION</dt><dd>{columns} column{columns > 1 ? "s" : ""} / {totalButtons} buttons</dd></div>
+                  <div><dt>FINISH</dt><dd><i style={{ background: finish.color }} />{finish.name}</dd></div>
+                  <div><dt>MOUNTING</dt><dd>{mount}</dd></div>
+                  <div><dt>LANGUAGE</dt><dd>{controlType}</dd></div>
+                  <div><dt>ENGRAVING</dt><dd>{engraving ? "Included" : "None"}</dd></div>
+                  <div><dt>BACKLIGHT</dt><dd>{backlight}%</dd></div>
+                </dl>
+              </section>
+              <section className="keypad-spec-schedule">
+                <div><span>BUTTON SCHEDULE</span><b>{totalButtons} ASSIGNMENTS</b></div>
+                <ol>{Array.from({ length: totalButtons }, (_, index) => <li key={index}><span>{String(index + 1).padStart(2, "0")}</span><b>{assignments[index]}</b><em>C{Math.floor(index / buttons) + 1} / P{index % buttons + 1}</em></li>)}</ol>
+              </section>
+              <footer><p>Concept specification. Final electrical loading, compatibility, engraving and finish samples to be confirmed during detailed design.</p><div><span>SMART HOME ARCHITECTS</span><b>CONTROL / LIGHT / ATMOSPHERE</b></div></footer>
+            </article>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
