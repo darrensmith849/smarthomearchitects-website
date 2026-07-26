@@ -14,6 +14,7 @@ const groups = [
     links: [
       ["Live residence", "/experience/live-residence", "Explore the home in motion"],
       ["Shading atelier", "/experience/shading-atelier", "Compose daylight, privacy and view"],
+      ["Climate atelier", "/experience/climate-atelier", "See comfort, air and silence"],
       ["Whole home", "/services/whole-home", "One connected experience"],
       ["Lighting", "/services/lighting", "Light in rhythm with the day"],
       ["Shading", "/services/shading", "Daylight and privacy"],
