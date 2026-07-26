@@ -4,6 +4,7 @@ import { AudioStudy } from "./AudioStudy";
 import { CityRhythm } from "./CityRhythm";
 import { ClimateStudy } from "./ClimateStudy";
 import { ConsultationCta, ProductCollection } from "./components";
+import { EnergyStudy } from "./EnergyStudy";
 import { ForestRhythm } from "./ForestRhythm";
 import { LightingLayers } from "./LightingLayers";
 import { NetworkingStudy } from "./NetworkingStudy";
@@ -15,7 +16,7 @@ import { SystemCanvas } from "./SystemCanvas";
 export function ServiceTemplate({ page }: { page: ServicePage }) {
   const currentIndex = servicePages.findIndex((item) => item.slug === page.slug);
   const next = servicePages[(currentIndex + 1) % servicePages.length];
-  const hasInteractiveStudy = page.slug === "lighting" || page.slug === "shading" || page.slug === "climate" || page.slug === "audio" || page.slug === "security" || page.slug === "networking";
+  const hasInteractiveStudy = page.slug === "lighting" || page.slug === "shading" || page.slug === "climate" || page.slug === "audio" || page.slug === "security" || page.slug === "networking" || page.slug === "energy";
 
   return (
     <>
@@ -56,6 +57,7 @@ export function ServiceTemplate({ page }: { page: ServicePage }) {
       {page.slug === "audio" && <AudioStudy />}
       {page.slug === "security" && <SecurityStudy />}
       {page.slug === "networking" && <NetworkingStudy />}
+      {page.slug === "energy" && <EnergyStudy />}
 
       <section className="service-pillars section-pad">
         <div className="section-head">
