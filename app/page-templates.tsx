@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AtlanticRhythm } from "./AtlanticRhythm";
+import { CityRhythm } from "./CityRhythm";
 import { ConsultationCta, ProductCollection } from "./components";
 import { ForestRhythm } from "./ForestRhythm";
 import { ServicePage, projectPages, servicePages } from "./site-map";
@@ -198,6 +199,7 @@ export function ProjectTemplate({ page }: { page: { slug: string; title: string;
       </section>
       {page.slug === "atlantic-house" && <AtlanticRhythm />}
       {page.slug === "forest-house" && <ForestRhythm />}
+      {page.slug === "city-penthouse" && <CityRhythm />}
       <section className="project-system-story section-pad">
         <div className="project-system-image"><img src={page.image} alt="" /><div className="project-data-overlay"><span>SYSTEM / LIVE</span><i /><i /><i /></div></div>
         <div><p className="eyebrow">Integrated scope</p><h2>Many disciplines.<br />One calm result.</h2><p>{page.systems}</p><dl><div><dt>Experience</dt><dd>Daily scenes composed around the site and household</dd></div><div><dt>Infrastructure</dt><dd>Resilient, local-first and documented for long-term care</dd></div><div><dt>Detail</dt><dd>Controls, apertures and access coordinated with the interior</dd></div></dl></div>
