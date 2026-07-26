@@ -78,7 +78,7 @@ export const products: Product[] = [
       "A discreet multi-sensor that reads presence, light and comfort without cameras or cloud processing.",
     longDescription:
       "Aura gives a home the context to respond naturally. It can detect someone reading quietly, distinguish daylight from electric light and track thermal comfort—entirely on the local network. No camera. No recording. Just a room that knows when to help and when to be still.",
-    image: "/images/aura.jpg",
+    image: "/images/aura-isolated.png",
     accent: "#b5ad9e",
     startingAt: "Specified per project",
     dimensions: "Ø 82 × 18 mm",
