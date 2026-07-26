@@ -10,8 +10,9 @@ const groups = [
     label: "Experience",
     index: "01",
     description: "The systems that shape everyday life.",
-    image: "/images/service-lighting.jpg",
+    image: "/images/scene-welcome.jpg",
     links: [
+      ["Live residence", "/experience/live-residence", "Explore the home in motion"],
       ["Whole home", "/services/whole-home", "One connected experience"],
       ["Lighting", "/services/lighting", "Light in rhythm with the day"],
       ["Shading", "/services/shading", "Daylight and privacy"],
