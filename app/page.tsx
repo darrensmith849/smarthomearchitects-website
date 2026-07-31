@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ConsultationCta, ProductCollection } from "./components";
+import { HeroVideo } from "./HeroVideo";
 import { LocalTime } from "./LocalTime";
 
 const systems = [
@@ -34,18 +35,7 @@ export default function Home() {
     <>
       <section className="home-hero">
         <img className="hero-image" src="/images/hero.jpg" alt="A calm coastal living room at blue hour" />
-        <video
-          className="hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/images/hero.jpg"
-          aria-hidden="true"
-        >
-          <source src="/video/home-hero-loop.mp4" type="video/mp4" />
-        </video>
+        <HeroVideo />
         <div className="hero-shade" />
         <div className="hero-live-system" aria-hidden="true">
           <div className="live-system-panel">

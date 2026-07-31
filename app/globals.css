@@ -417,7 +417,7 @@ button, input, textarea, select { font: inherit; }
   .mobile-nav { display:block; justify-self:end; position:relative; }
   .mobile-nav summary { list-style:none; cursor:pointer; font-size:11px; padding:11px 14px; border:1px solid rgba(255,255,255,.2); border-radius:999px; }
   .mobile-nav summary::-webkit-details-marker { display:none; }
-  .mobile-nav nav { position:absolute; top:48px; right:0; min-width:210px; padding:14px; display:flex; flex-direction:column; gap:4px; background:rgba(12,13,14,.94); border:1px solid rgba(255,255,255,.15); border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,.28); }
+  .mobile-nav nav { position:absolute; top:48px; right:0; width:min(320px,calc(100vw - 40px)); padding:14px; display:flex; flex-direction:column; gap:4px; background:rgba(12,13,14,.94); border:1px solid rgba(255,255,255,.15); border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,.28); }
   .mobile-nav nav a { padding:12px; font-size:13px; border-bottom:1px solid rgba(255,255,255,.08); }
   .section-head,.collection-head { grid-template-columns:.65fr 1.5fr; }
   .section-head > p,.collection-head > p { grid-column:2; }
@@ -569,7 +569,7 @@ button, input, textarea, select { font: inherit; }
 .mega-triggers button span { color:var(--amber); font-family:var(--font-geist-mono),monospace; }
 .site-header.nav-open { border-radius:27px 27px 0 0; background:rgba(9,10,11,.96); }
 .nav-scrim { position:fixed; z-index:43; inset:0; width:100%; height:100%; border:0; background:rgba(6,7,8,.58); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); cursor:default; }
-.mega-panel { position:absolute; z-index:51; top:55px; left:-1px; right:-1px; min-height:520px; display:grid; grid-template-columns:.65fr 1.45fr .75fr; grid-template-rows:1fr auto; gap:38px; padding:48px; color:#fff; background:rgba(9,10,11,.98); border:1px solid rgba(255,255,255,.14); border-top:0; border-radius:0 0 28px 28px; box-shadow:0 38px 90px rgba(0,0,0,.36); overflow:hidden; animation:megaReveal .28s ease both; }
+.mega-panel { position:absolute; z-index:51; top:55px; left:-1px; right:-1px; min-height:520px; display:grid; grid-template-columns:.65fr 1.45fr .75fr; grid-template-rows:1fr auto; gap:38px; padding:48px; color:#fff; background:rgba(9,10,11,.98); border:1px solid rgba(255,255,255,.14); border-top:0; border-radius:0 0 28px 28px; box-shadow:0 38px 90px rgba(0,0,0,.36); max-height:calc(100vh - 96px); overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain; animation:megaReveal .28s ease both; }
 .mega-panel::before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.18; background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px); background-size:64px 64px; mask-image:linear-gradient(90deg,#000,transparent 58%); }
 .mega-panel-intro,.mega-links,.mega-feature,.mega-panel-base { position:relative; z-index:1; }
 .mega-panel-intro > span { font-family:var(--font-geist-mono),monospace; font-size:9px; color:var(--amber); }

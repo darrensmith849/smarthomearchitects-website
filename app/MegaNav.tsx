@@ -121,7 +121,7 @@ export function MegaNav() {
             {groups.map((item) => (
               <div className="mobile-nav-group" key={item.id}>
                 <span>{item.label}</span>
-                {item.links.slice(0, 6).map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
+                {item.links.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
               </div>
             ))}
             <Link className="mobile-project-link" href="/contact">Start a project ↗</Link>
