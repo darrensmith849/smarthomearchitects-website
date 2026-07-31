@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { NavSurface } from "./NavSurface";
 
 const groups = [
   {
@@ -96,6 +97,7 @@ export function MegaNav() {
 
   return (
     <>
+      <NavSurface />
       <header className={`site-header${group ? " nav-open" : ""}`}>
         <Link className="brand" href="/" aria-label="Smart Home Architects home">
           <span className="brand-dot" />
