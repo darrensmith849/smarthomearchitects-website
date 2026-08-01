@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useEffect, useState, type CSSProperties } from "react";
 
 const lightingScenes = [
-  { id: "bright", name: "Bright", image: "/images/scene-morning.jpg", level: 94, warmth: 18, time: "10:20", description: "Clear vertical light for working, choosing materials and seeing colour accurately.", metrics: [["DOWNLIGHT", "92%"], ["PENDANT", "76%"], ["ACCENT", "42%"]] },
-  { id: "relax", name: "Relax", image: "/images/scene-studio-relax.jpg", level: 54, warmth: 55, time: "18:42", description: "Cove, curtain and stone light hold the room while task light recedes.", metrics: [["COVE", "42%"], ["CURTAIN", "48%"], ["STONE", "56%"]] },
-  { id: "entertain", name: "Entertain", image: "/images/scene-studio-entertain.jpg", level: 34, warmth: 82, time: "20:08", description: "Stone, seating and low-level light balance around conversation and movement.", metrics: [["COVE", "28%"], ["SEATING", "42%"], ["STONE", "76%"]] },
-  { id: "night", name: "Night", image: "/images/scene-studio-night.jpg", level: 22, warmth: 96, time: "23:36", description: "A shielded reading pool and amber paths keep the room useful after dark.", metrics: [["READING", "32%"], ["PATH", "12%"], ["STONE", "22%"]] },
+  { id: "bright", name: "Bright", image: "/images/scene-morning.webp", level: 94, warmth: 18, time: "10:20", description: "Clear vertical light for working, choosing materials and seeing colour accurately.", metrics: [["DOWNLIGHT", "92%"], ["PENDANT", "76%"], ["ACCENT", "42%"]] },
+  { id: "relax", name: "Relax", image: "/images/scene-studio-relax.webp", level: 54, warmth: 55, time: "18:42", description: "Cove, curtain and stone light hold the room while task light recedes.", metrics: [["COVE", "42%"], ["CURTAIN", "48%"], ["STONE", "56%"]] },
+  { id: "entertain", name: "Entertain", image: "/images/scene-studio-entertain.webp", level: 34, warmth: 82, time: "20:08", description: "Stone, seating and low-level light balance around conversation and movement.", metrics: [["COVE", "28%"], ["SEATING", "42%"], ["STONE", "76%"]] },
+  { id: "night", name: "Night", image: "/images/scene-studio-night.webp", level: 22, warmth: 96, time: "23:36", description: "A shielded reading pool and amber paths keep the room useful after dark.", metrics: [["READING", "32%"], ["PATH", "12%"], ["STONE", "22%"]] },
 ];
 
 const finishes = [
@@ -103,7 +103,7 @@ export function LiveResidence() {
 
       {mode === "scenes" ? (
         <section className={`lighting-scene-screen is-${scene.id}`} style={{ ...roomStyle, ...keypadStyle }}>
-          <img key={scene.id} src={scene.image} alt={`Living room in the ${scene.name.toLowerCase()} lighting scene`} />
+          <img decoding="async" key={scene.id} src={scene.image} alt={`Living room in the ${scene.name.toLowerCase()} lighting scene`} />
           <div className="lighting-scene-dim" />
           <div className="lighting-scene-warm" />
           <div className="lighting-scene-cool" />

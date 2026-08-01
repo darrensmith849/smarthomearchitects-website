@@ -98,7 +98,7 @@ export function CinemaStudy() {
 
       <div className="cinema-study-console">
         <div className="cinema-room-stage">
-          <img src="/images/cinema-room.jpg" alt="Symmetrical private cinema with acoustic fabric, smoked oak and a mechanically masked projection screen" />
+          <img decoding="async" src="/images/cinema-room.webp" alt="Symmetrical private cinema with acoustic fabric, smoked oak and a mechanically masked projection screen" />
           <div className="cinema-room-star-depth" aria-hidden="true">
             {starLayers.map((stars, layerIndex) => <div className={`cinema-room-star-layer room-layer-${layerIndex + 1}`} key={layerIndex}>{stars.map((star, index) => <i key={index} style={starStyle(star)} />)}</div>)}
           </div>

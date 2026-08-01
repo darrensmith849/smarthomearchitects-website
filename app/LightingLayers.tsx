@@ -10,7 +10,7 @@ const lightingLayers = [
     role: "General light",
     headline: "Comfort without hotspots.",
     description: "A soft, even base gives the eye room to adapt. Circulation is clear, faces feel natural and no single fitting announces itself.",
-    image: "/images/lighting-ambient.jpg",
+    image: "/images/lighting-ambient.webp",
     readings: [["LEVEL", "36%"], ["CCT", "2700 K"], ["UNIFORMITY", "0.42"]],
   },
   {
@@ -20,7 +20,7 @@ const lightingLayers = [
     role: "Useful light",
     headline: "Brightness where life happens.",
     description: "Reading, preparing and working need generous, glare-free light. The rest of the room can remain calm without compromising what you came to do.",
-    image: "/images/lighting-task.jpg",
+    image: "/images/lighting-task.webp",
     readings: [["READING", "320 LX"], ["CRI", "98+"], ["GLARE", "UGR < 16"]],
   },
   {
@@ -30,7 +30,7 @@ const lightingLayers = [
     role: "Visual hierarchy",
     headline: "Light tells the eye where to rest.",
     description: "Controlled beams reveal art, stone, timber and objects. Contrast creates depth; restraint keeps the room from becoming a display window.",
-    image: "/images/lighting-accent.jpg",
+    image: "/images/lighting-accent.webp",
     readings: [["BEAM", "18°"], ["ART", "42%"], ["SHELF", "28%"]],
   },
   {
@@ -40,7 +40,7 @@ const lightingLayers = [
     role: "Integrated light",
     headline: "The building becomes the luminaire.",
     description: "Coves, reveals, wall grazing and floor lines are detailed into the architecture so the source disappears and the composition remains.",
-    image: "/images/service-lighting.jpg",
+    image: "/images/service-lighting.webp",
     readings: [["COVE", "24%"], ["PATH", "6%"], ["SCENE", "BLUE HOUR"]],
   },
 ];
@@ -62,7 +62,7 @@ export function LightingLayers() {
 
       <div className="lighting-study-console">
         <div className="lighting-study-visual">
-          <img key={layer.id} src={layer.image} alt={`${layer.title} lighting in a coastal living gallery at blue hour`} />
+          <img decoding="async" key={layer.id} src={layer.image} alt={`${layer.title} lighting in a coastal living gallery at blue hour`} />
           <div className={`lighting-study-geometry is-${layer.id}`} aria-hidden="true"><i /><i /><i /><i /></div>
           <div className="lighting-study-live"><i /><span>LAYER / {layer.index}</span><b>{layer.role.toUpperCase()}</b></div>
           <p className="lighting-study-location">COASTAL GALLERY / BLUE HOUR</p>

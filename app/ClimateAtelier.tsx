@@ -59,7 +59,7 @@ export function ClimateAtelier() {
       <section className="climate-atelier-stage">
         {view === "room" ? (
           <div className="climate-room-view">
-            <img src="/images/climate-atelier-pavilion.jpg" alt="Serene garden pavilion with concealed climate systems" />
+            <img decoding="async" src="/images/climate-atelier-pavilion.webp" alt="Serene garden pavilion with concealed climate systems" />
             <div className="climate-room-wash" />
             <div className="climate-room-copy"><p>COMFORT / AIR / SILENCE</p><h1>Perfect air.<br />Nothing to see.</h1><span>Garden pavilion · Zone C04</span></div>
             <div className="climate-room-sense"><span>LOCAL SENSOR / 04</span><strong>{temperature.toFixed(1)}<sup>°C</sup></strong><p><i />AIR QUALITY / EXCELLENT</p></div>

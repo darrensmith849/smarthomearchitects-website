@@ -65,7 +65,7 @@ export function AxisProductExperience({ product }: { product: Product }) {
         <div className="axis-lab-console">
           <div className="axis-object-stage">
             <div className="axis-object-grid" aria-hidden="true"><i /><i /><i /><i /></div>
-            <img src={product.image} alt="Axis scene keypad in architectural bronze and smoked glass" />
+            <img decoding="async" src={product.image} alt="Axis scene keypad in architectural bronze and smoked glass" />
             <div className="axis-touch-map" aria-label="Choose an Axis touch zone">
               {axisScenes.map((item) => <button key={item.id} type="button" className={item.id === scene.id ? "is-active" : ""} onClick={() => setSceneId(item.id)} aria-label={`${item.index}: ${item.name}`} aria-pressed={item.id === scene.id}><span>{item.index}</span></button>)}
             </div>

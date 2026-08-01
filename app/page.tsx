@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <>
       <section className="home-hero">
-        <img className="hero-image" src="/images/hero.jpg" alt="A calm coastal living room at blue hour" />
+        <img decoding="async" fetchPriority="high" className="hero-image" src="/images/hero.webp" alt="A calm coastal living room at blue hour" />
         <HeroVideo />
         <div className="hero-shade" />
         <div className="hero-live-system" aria-hidden="true">
@@ -107,7 +107,7 @@ export default function Home() {
       </section>
 
       <section className="case-feature">
-        <img src="/images/courtyard.jpg" alt="A sunlit courtyard home with technology integrated into the architecture" />
+        <img loading="lazy" decoding="async" src="/images/courtyard.webp" alt="A sunlit courtyard home with technology integrated into the architecture" />
         <div className="case-overlay" />
         <div className="case-copy">
           <p className="eyebrow eyebrow-light">Selected residence · Cape Town</p>

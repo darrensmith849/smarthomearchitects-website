@@ -22,7 +22,7 @@ export function ServiceTemplate({ page }: { page: ServicePage }) {
   return (
     <>
       <section className={`service-hero service-${page.overlay}`}>
-        <img src={page.image} alt={page.imageAlt} />
+        <img decoding="async" src={page.image} alt={page.imageAlt} />
         <div className="service-hero-wash" />
         <SystemCanvas variant={page.overlay} />
         <div className="tech-frame" aria-hidden="true"><i /><i /><i /><i /></div>
@@ -107,7 +107,7 @@ export function ServiceTemplate({ page }: { page: ServicePage }) {
       </section>
 
       <section className="service-next">
-        <img src={next.image} alt="" />
+        <img loading="lazy" decoding="async" src={next.image} alt="" />
         <div />
         <p className="eyebrow eyebrow-light">Next system · {next.number}</p>
         <h2>{next.title}</h2>
@@ -139,7 +139,7 @@ export function EditorialTemplate({ section, number, title, headline, intro, ima
           <p>{intro}</p>
         </div>
         <div className="editorial-hero-image">
-          <img src={image} alt={`${title} at Smart Home Architects`} />
+          <img decoding="async" src={image} alt={`${title} at Smart Home Architects`} />
           <div className="editorial-grid" aria-hidden="true"><i /><i /><i /><span>SHA / {number}</span></div>
         </div>
       </section>
@@ -177,7 +177,7 @@ export function CategoryTemplate({ page }: { page: { slug: string; title: string
           <p>{page.intro}</p>
           <Link className="text-link" href="/contact">Request the specification set <span>→</span></Link>
         </div>
-        <div className="category-image"><span>{page.filter}</span><img src={page.image} alt={`${page.title} collection`} /><i /><i /></div>
+        <div className="category-image"><span>{page.filter}</span><img loading="lazy" decoding="async" src={page.image} alt={`${page.title} collection`} /><i /><i /></div>
       </section>
 
       <section className="category-principles section-pad">
@@ -204,7 +204,7 @@ export function ProjectTemplate({ page }: { page: { slug: string; title: string;
   return (
     <>
       <section className="dynamic-project-hero">
-        <img src={page.image} alt={`${page.title}, ${page.location}`} />
+        <img decoding="async" src={page.image} alt={`${page.title}, ${page.location}`} />
         <div />
         <p className="eyebrow eyebrow-light">Residence · {page.location}</p>
         <h1>{page.title}</h1>
@@ -219,11 +219,11 @@ export function ProjectTemplate({ page }: { page: { slug: string; title: string;
       {page.slug === "forest-house" && <ForestRhythm />}
       {page.slug === "city-penthouse" && <CityRhythm />}
       <section className="project-system-story section-pad">
-        <div className="project-system-image"><img src={page.image} alt="" /><div className="project-data-overlay"><span>SYSTEM / LIVE</span><i /><i /><i /></div></div>
+        <div className="project-system-image"><img loading="lazy" decoding="async" src={page.image} alt="" /><div className="project-data-overlay"><span>SYSTEM / LIVE</span><i /><i /><i /></div></div>
         <div><p className="eyebrow">Integrated scope</p><h2>Many disciplines.<br />One calm result.</h2><p>{page.systems}</p><dl><div><dt>Experience</dt><dd>Daily scenes composed around the site and household</dd></div><div><dt>Infrastructure</dt><dd>Resilient, local-first and documented for long-term care</dd></div><div><dt>Detail</dt><dd>Controls, apertures and access coordinated with the interior</dd></div></dl></div>
       </section>
       <section className="project-quote"><blockquote>“The technology never asks to be noticed. The house simply feels ready.”</blockquote><p>Project reflection · Smart Home Architects</p></section>
-      <section className="service-next"><img src={next.image} alt="" /><div /><p className="eyebrow eyebrow-light">Next residence</p><h2>{next.title}</h2><Link href={`/projects/${next.slug}`}>View the project <span>↗</span></Link></section>
+      <section className="service-next"><img loading="lazy" decoding="async" src={next.image} alt="" /><div /><p className="eyebrow eyebrow-light">Next residence</p><h2>{next.title}</h2><Link href={`/projects/${next.slug}`}>View the project <span>↗</span></Link></section>
       <ConsultationCta />
     </>
   );

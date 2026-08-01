@@ -27,7 +27,7 @@ export const products: Product[] = [
       "A precision-machined scene keypad with a smoked-glass surface, quiet haptics and no visual noise.",
     longDescription:
       "Axis turns a wall control into an architectural detail. Four pressure-aware zones can recall lighting, shading, climate and audio together, while its warm pin-light dims itself to the room. Every surface is finished by hand and every scene is programmed around the way you live.",
-    image: "/images/axis.jpg",
+    image: "/images/axis.webp",
     accent: "#9b7251",
     startingAt: "Specified per project",
     dimensions: "88 × 88 × 8.6 mm",
@@ -78,7 +78,7 @@ export const products: Product[] = [
       "A discreet multi-sensor that reads presence, light and comfort without cameras or cloud processing.",
     longDescription:
       "Aura gives a home the context to respond naturally. It can detect someone reading quietly, distinguish daylight from electric light and track thermal comfort—entirely on the local network. No camera. No recording. Just a room that knows when to help and when to be still.",
-    image: "/images/aura-isolated.png",
+    image: "/images/aura-isolated.webp",
     accent: "#b5ad9e",
     startingAt: "Specified per project",
     dimensions: "Ø 82 × 18 mm",
@@ -129,7 +129,7 @@ export const products: Product[] = [
       "A silent, local-first control processor that keeps the entire residence responsive—even when the internet is not.",
     longDescription:
       "Atlas Core is the calm centre of the system. It coordinates every room, stores every scene and bridges trusted building standards without sending the household to the cloud. A fanless aluminium enclosure, dual-network architecture and monitored power make it fit for homes designed to last for generations.",
-    image: "/images/atlas-core-isolated.png",
+    image: "/images/atlas-core-isolated.webp",
     accent: "#2a2927",
     startingAt: "Specified per project",
     dimensions: "320 × 240 × 68 mm",
@@ -178,7 +178,7 @@ export const products: Product[] = [
       "A plaster-in planar loudspeaker that fills the room while disappearing completely into the architecture.",
     longDescription:
       "Veil turns the finished wall into an expansive acoustic surface. Its mineral face, planar exciter array and sealed backbox are installed before decoration, then measured and voiced in the completed room. Music remains vivid and spatial. The loudspeaker itself leaves no trace.",
-    image: "/images/veil-isolated.png",
+    image: "/images/veil-isolated.webp",
     accent: "#9d835c",
     startingAt: "Specified per project",
     dimensions: "420 × 420 × 92 mm",

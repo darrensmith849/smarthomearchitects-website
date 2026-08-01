@@ -10,7 +10,7 @@ const comfortStates = [
     title: "Natural ventilation",
     headline: "Let the weather do the work.",
     description: "Cool garden air moves through open living edges before any mechanical plant is needed. The system watches comfort rather than interrupting it.",
-    image: "/images/forest-dawn.jpg",
+    image: "/images/forest-dawn.webp",
     temperature: "20.8°",
     load: 0,
     readings: [["OUTSIDE", "17.6 °C"], ["AIR PATH", "OPEN"], ["MECHANICAL", "OFF"]],
@@ -22,7 +22,7 @@ const comfortStates = [
     title: "Passive balance",
     headline: "Shade and mass settle the room first.",
     description: "Tree canopy, deep overhangs, glazing and thermal mass hold a stable comfort band while the active system remains almost completely at rest.",
-    image: "/images/courtyard.jpg",
+    image: "/images/courtyard.webp",
     temperature: "22.1°",
     load: 6,
     readings: [["OUTSIDE", "28.6 °C"], ["SOLAR LOAD", "−38%"], ["PLANT", "STANDBY"]],
@@ -34,7 +34,7 @@ const comfortStates = [
     title: "Active trim",
     headline: "Only the last degree is mechanical.",
     description: "When weather closes the house, quiet low-speed conditioning and humidity control maintain the room without fighting the architecture.",
-    image: "/images/forest-rain.jpg",
+    image: "/images/forest-rain.webp",
     temperature: "21.7°",
     load: 34,
     readings: [["HUMIDITY", "58%"], ["GLAZING", "CLOSED"], ["SUPPLY", "LOW / ACTIVE"]],
@@ -46,7 +46,7 @@ const comfortStates = [
     title: "Quiet night",
     headline: "Comfort lowers its voice.",
     description: "Airflow reduces, bedrooms cool gently and the courtyard remains present. The home settles without fan noise, bright interfaces or temperature chasing.",
-    image: "/images/forest-evening.jpg",
+    image: "/images/forest-evening.webp",
     temperature: "21.4°",
     load: 12,
     readings: [["OUTSIDE", "16.3 °C"], ["ACOUSTIC", "24 dBA"], ["AIR", "SILENT / LOW"]],
@@ -69,7 +69,7 @@ export function ClimateStudy() {
       </div>
 
       <div className="climate-study-stage">
-        <img key={state.id} src={state.image} alt={`Forest House courtyard during ${state.title.toLowerCase()}`} />
+        <img decoding="async" key={state.id} src={state.image} alt={`Forest House courtyard during ${state.title.toLowerCase()}`} />
         <div className={`climate-study-field is-${state.id}`} aria-hidden="true"><i /><i /><i /><span /><span /><span /></div>
         <p className="climate-study-location">COURTYARD / LIVING EDGE / ZONE 06</p>
         <div className="climate-study-readout" aria-live="polite">

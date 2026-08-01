@@ -11,7 +11,7 @@ const securityStates = [
     primary: "SECURE",
     headline: "The house closes without looking closed.",
     description: "Access, openings and life-safety systems move to an unoccupied profile while the architecture remains calm and entirely itself.",
-    image: "/images/security-away.jpg",
+    image: "/images/security-away.webp",
     status: "SITE / ARMED",
     readings: [["SHELL", "LOCKED"], ["PRESENCE", "00"], ["RECORDING", "LOCAL"]],
     events: ["Access schedule set", "Openings verified", "Remote audit active"],
@@ -24,7 +24,7 @@ const securityStates = [
     primary: "WELCOME",
     headline: "Protection becomes hospitality.",
     description: "A known arrival is verified once. The gate, entry and path lighting respond together without exposing security as a separate ritual.",
-    image: "/images/service-security.jpg",
+    image: "/images/service-security.webp",
     status: "ENTRY / VERIFIED",
     readings: [["IDENTITY", "TRUSTED"], ["GATE", "RELEASE / 8 S"], ["PATH", "ARRIVAL"]],
     events: ["Credential matched", "Approach clear", "Entry scene released"],
@@ -37,7 +37,7 @@ const securityStates = [
     primary: "AT HOME",
     headline: "The shell is secure. Life stays free.",
     description: "Perimeter and access layers remain active while interior movement, late arrivals and family routines continue without alarms or friction.",
-    image: "/images/security-night.jpg",
+    image: "/images/security-night.webp",
     status: "SHELL / ACTIVE",
     readings: [["PERIMETER", "ARMED"], ["INTERIOR", "FREE"], ["PATH", "LOW / READY"]],
     events: ["Outer shell active", "Interior zones open", "Sleep profile normal"],
@@ -50,7 +50,7 @@ const securityStates = [
     primary: "CLEAR",
     headline: "Awareness without illumination.",
     description: "Local sensors share context at the property edge. Only correlated activity becomes an event, keeping the home dark, quiet and undisturbed.",
-    image: "/images/security-perimeter.jpg",
+    image: "/images/security-perimeter.webp",
     status: "BOUNDARY / AWARE",
     readings: [["ZONES", "12 CLEAR"], ["EVENTS", "00"], ["LIGHT", "SAFETY / 4%"]],
     events: ["Boundary stable", "Motion uncorrelated", "Recording on edge"],
@@ -73,7 +73,7 @@ export function SecurityStudy() {
       </div>
 
       <div className="security-study-stage">
-        <img key={state.id} src={state.image} alt={`Mountainside residence in ${state.title.toLowerCase()} state`} />
+        <img decoding="async" key={state.id} src={state.image} alt={`Mountainside residence in ${state.title.toLowerCase()} state`} />
         <div className={`security-study-boundaries is-${state.id}`} aria-hidden="true"><i /><i /><i /><b /><span /></div>
         <p className="security-study-location">ENTRY APPROACH / PROTECTION ZONE 02</p>
         <div className="security-study-readout" aria-live="polite">

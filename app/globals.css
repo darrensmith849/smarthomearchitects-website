@@ -383,7 +383,7 @@ html[data-nav-surface="light"] .site-header:not(.nav-open) .mobile-nav summary {
 .response-grid article > span { font-family:var(--font-geist-mono),monospace; font-size: 11px; letter-spacing: .14em; text-transform:uppercase; color:var(--amber); }
 .response-grid h3 { margin:85px 0 15px; font-size: 34px; font-weight:460; letter-spacing: -.045em; }
 .response-grid p { max-width:520px; font-size: 13px; line-height:1.7; color:var(--muted); }
-.project-quote { min-height:740px; padding:100px max(9vw,40px); display:flex; flex-direction:column; justify-content:center; color:#fff; background:#111 url('/images/hero.jpg') center/cover; position:relative; }
+.project-quote { min-height:740px; padding:100px max(9vw,40px); display:flex; flex-direction:column; justify-content:center; color:#fff; background:#111 url('/images/hero.webp') center/cover; position:relative; }
 .project-quote::before { content:""; position:absolute; inset:0; background:rgba(4,5,6,.74); }
 .project-quote > * { position:relative; }
 .project-quote blockquote { max-width:1100px; margin:0; font-size: clamp(64px, 7.6vw, 118px); line-height:.94; letter-spacing: -.06em; font-weight:440; }

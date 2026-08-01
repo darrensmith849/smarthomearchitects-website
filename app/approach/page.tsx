@@ -19,7 +19,7 @@ export default function ApproachPage() {
   return (
     <>
       <section className="approach-hero">
-        <img src="/images/courtyard.jpg" alt="Architecture and landscape in quiet balance" />
+        <img decoding="async" src="/images/courtyard.webp" alt="Architecture and landscape in quiet balance" />
         <div className="approach-hero-overlay" />
         <div>
           <p className="eyebrow eyebrow-light">Our approach</p>
@@ -57,7 +57,7 @@ export default function ApproachPage() {
       </section>
 
       <section className="collaboration section-pad">
-        <div className="collaboration-image"><img src="/images/hero.jpg" alt="A resolved smart home interior at dusk" /></div>
+        <div className="collaboration-image"><img loading="lazy" decoding="async" src="/images/hero.webp" alt="A resolved smart home interior at dusk" /></div>
         <div className="collaboration-copy">
           <p className="eyebrow">Designed with the team</p>
           <h2>At the table<br />from day one.</h2>

@@ -83,7 +83,7 @@ export function NetworkingStudy() {
 
       <div className={`network-study-console is-${mode.id}`}>
         <div className="network-study-visual">
-          <img src="/images/hero.jpg" alt="Connected coastal home with its private network topology revealed" />
+          <img decoding="async" src="/images/hero.webp" alt="Connected coastal home with its private network topology revealed" />
           <div className="network-grid" aria-hidden="true" />
           <div className="network-route route-fibre" aria-hidden="true"><i /><i /></div>
           <div className="network-route route-cell" aria-hidden="true"><i /><i /></div>

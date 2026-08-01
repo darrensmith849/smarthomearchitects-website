@@ -52,7 +52,6 @@ export function AudioAtelier() {
     const context = canvas.getContext("2d");
     if (!context) return;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let frame = 0;
     let request = 0;
 
     const draw = (time = 0) => {
@@ -144,7 +143,7 @@ export function AudioAtelier() {
       <main className="audio-atelier-stage">
         {view === "salon" ? (
           <section className="audio-salon-view">
-            <img src="/images/audio-atelier-salon.jpg" alt="Double-height private listening salon opening to an internal courtyard" />
+            <img decoding="async" src="/images/audio-atelier-salon.webp" alt="Double-height private listening salon opening to an internal courtyard" />
             <div className="audio-salon-wash" />
             <div className="audio-salon-copy"><p>ARCHITECTURAL AUDIO / SALON A01</p><h1>Every seat<br />at the centre.</h1><span>Reference sound · concealed intelligence</span></div>
             <div className="audio-now-playing"><i className="audio-play">▶</i><div><span>NOW PLAYING / LOSSLESS</span><strong>Evening Study No. 04</strong><small>Private library · 24-bit / 96 kHz</small></div><div className="audio-equalizer" aria-hidden="true">{Array.from({ length: 13 }, (_, index) => <i key={index} style={{ "--bar-delay": `${index * -.11}s`, "--bar-height": `${35 + (index * 17) % 62}%` } as CSSProperties} />)}</div></div>

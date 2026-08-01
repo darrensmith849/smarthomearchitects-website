@@ -47,9 +47,13 @@ export function WaterLandscapeAtelier() {
     return () => window.clearTimeout(timer);
   }, [cycling, cycleIndex]);
 
-  useEffect(() => {
+  // Same shape as the security observatory: the selected node follows the
+  // cycle, but a click can also set it directly.
+  const [renderedIndex, setRenderedIndex] = useState(cycleIndex);
+  if (cycleIndex !== renderedIndex) {
+    setRenderedIndex(cycleIndex);
     if (cycleIndex >= 0) setSelectedNode(cycleSteps[cycleIndex]);
-  }, [cycleIndex]);
+  }
 
   const chooseMode = (id: (typeof waterModes)[number]["id"]) => {
     const next = waterModes.find((item) => item.id === id) ?? waterModes[0];
@@ -76,7 +80,7 @@ export function WaterLandscapeAtelier() {
       <main className="water-stage">
         {view === "garden" ? (
           <section className="water-garden-view">
-            <img src="/images/water-landscape-atelier.jpg" alt="Water-wise indigenous garden surrounding a long natural swimming pool" />
+            <img decoding="async" src="/images/water-landscape-atelier.webp" alt="Water-wise indigenous garden surrounding a long natural swimming pool" />
             <div className="water-garden-wash" />
             <div className="water-garden-copy"><p>WATER / LANDSCAPE / RESILIENCE</p><h1>Every drop<br />has a purpose.</h1><span>Fynbos estate · Water loop W01</span></div>
             <div className="water-garden-status"><div className="water-mini-tank"><i /></div><div><span>RAIN RESERVE / LIVE</span><strong>{tankLevel}% stored</strong><small>28.4 kL available · mains support 3%</small></div></div>

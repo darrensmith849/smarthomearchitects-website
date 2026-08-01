@@ -100,7 +100,7 @@ export function AtlasProductPage({ product }: { product: Product }) {
         </div>
         <div className="atlas-hero-object">
           <div className="atlas-object-halo" aria-hidden="true"><i /><i /><i /></div>
-          <img src="/images/atlas-core-isolated.png" alt="Atlas Core fanless local-first control processor in satin graphite" />
+          <img decoding="async" src="/images/atlas-core-isolated.webp" alt="Atlas Core fanless local-first control processor in satin graphite" />
           <div className="atlas-hero-status"><span>SYSTEM / LOCAL</span><b><i />READY</b><dl><div><dt>RUNTIME</dt><dd>12D 08H</dd></div><div><dt>SCENES</dt><dd>128 LIVE</dd></div><div><dt>HEALTH</dt><dd>NORMAL</dd></div></dl></div>
           <div className="atlas-dimension dimension-width"><i /><span>320 MM</span><i /></div><div className="atlas-dimension dimension-height"><i /><span>68 MM</span><i /></div>
         </div>
@@ -119,7 +119,7 @@ export function AtlasProductPage({ product }: { product: Product }) {
           <div className="atlas-topology-stage" aria-label="Live Atlas Core system topology">
             <div className="atlas-topology-links" aria-hidden="true">{topologyNodes.map((_, index) => <i key={index} style={{ "--link-angle": `${index * 45 - 135}deg` } as CSSProperties} />)}</div>
             <div className="atlas-topology-cloud"><i /><span>CARE PATH</span><b>{mode.id === "internet" ? "OFFLINE" : "BY CONSENT"}</b></div>
-            <div className="atlas-topology-core"><img src="/images/atlas-core-isolated.png" alt="" /><span>ATLAS CORE</span><b>{mode.label}</b><i /></div>
+            <div className="atlas-topology-core"><img loading="lazy" decoding="async" src="/images/atlas-core-isolated.webp" alt="" /><span>ATLAS CORE</span><b>{mode.label}</b><i /></div>
             {topologyNodes.map((item) => <div className="atlas-topology-node" key={item.id} style={{ left: `${item.x}%`, top: `${item.y}%` }}><i /><span>{item.name}</span><b>{item.protocol}</b></div>)}
           </div>
           <aside className="atlas-continuity-readout" aria-live="polite">
@@ -149,7 +149,7 @@ export function AtlasProductPage({ product }: { product: Product }) {
       </section>
 
       <section className="atlas-installation">
-        <div className="atlas-install-object"><div className="atlas-install-grid" /><img src="/images/atlas-core-isolated.png" alt="Atlas Core isolated product view" /><div className="atlas-install-line line-w"><i /><span>320 MM / WIDTH</span><i /></div><div className="atlas-install-line line-d"><i /><span>240 MM / DEPTH</span><i /></div><div className="atlas-install-line line-h"><i /><span>68 MM</span><i /></div><p><span>PASSIVE THERMAL ENVELOPE</span><b>0 dBA / NO MOVING PARTS</b></p></div>
+        <div className="atlas-install-object"><div className="atlas-install-grid" /><img loading="lazy" decoding="async" src="/images/atlas-core-isolated.webp" alt="Atlas Core isolated product view" /><div className="atlas-install-line line-w"><i /><span>320 MM / WIDTH</span><i /></div><div className="atlas-install-line line-d"><i /><span>240 MM / DEPTH</span><i /></div><div className="atlas-install-line line-h"><i /><span>68 MM</span><i /></div><p><span>PASSIVE THERMAL ENVELOPE</span><b>0 dBA / NO MOVING PARTS</b></p></div>
         <div className="atlas-install-copy"><div className="section-label"><span>03</span><span>Installation architecture</span></div><p className="eyebrow">One core. Scaled to the residence.</p><h2>Engineered for<br />the quiet rack.</h2><p>Atlas occupies a dedicated ventilated shelf, with every bus, network and power path labelled back to the project record. The same core scales through software and distributed I/O rather than a stack of unrelated processors.</p><div className="atlas-deployment-profiles">{[["A", "Apartment", "Up to 16 rooms · single control cabinet"], ["V", "Villa", "Up to 48 rooms · distributed building buses"], ["E", "Estate", "Multiple structures · one resilient project record"]].map(([index, title, copy]) => <article key={index}><span>{index}</span><div><strong>{title}</strong><p>{copy}</p></div><i /></article>)}</div></div>
       </section>
 

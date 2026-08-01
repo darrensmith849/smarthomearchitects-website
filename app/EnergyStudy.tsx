@@ -77,7 +77,7 @@ export function EnergyStudy() {
 
       <div className={`energy-study-console is-${mode.id}`}>
         <div className="energy-study-visual">
-          <img src="/images/energy-cutaway.jpg" alt="Architectural cutaway showing roof solar panels, grid entry, inverters, battery storage and protected household circuits" />
+          <img decoding="async" src="/images/energy-cutaway.webp" alt="Architectural cutaway showing roof solar panels, grid entry, inverters, battery storage and protected household circuits" />
           <div className={`energy-cutaway-label label-solar ${solarActive ? "is-active" : ""}`}><i /><span>01 / ROOF ARRAY</span><strong>{mode.id === "harvest" ? "8.4 kW" : mode.id === "peak" ? "0.6 kW" : mode.id === "reserve" ? "DORMANT" : "2.1 kW"}</strong></div>
           <div className={`energy-cutaway-label label-grid ${gridActive ? "is-active" : ""} ${mode.id === "reserve" ? "is-fault" : ""}`}><i /><span>02 / UTILITY ENTRY</span><strong>{mode.id === "reserve" ? "OFFLINE" : mode.id === "harvest" ? "STANDBY" : mode.id === "peak" ? "0.3 kW" : "1.1 kW"}</strong></div>
           <div className={`energy-cutaway-label label-battery ${batteryActive ? "is-active" : ""}`}><i /><span>03 / STORAGE + INVERTER</span><strong>{mode.id === "harvest" ? "+3.8 kW" : mode.id === "peak" ? "−4.9 kW" : mode.id === "reserve" ? "52% RESERVE" : "64% HOLD"}</strong></div>

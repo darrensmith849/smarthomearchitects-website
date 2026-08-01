@@ -10,7 +10,7 @@ const audioModes = [
     title: "Noise floor",
     headline: "Quiet begins before music.",
     description: "Low background noise, silent ventilation and stable electronics create the contrast that lets detail arrive without excessive volume.",
-    image: "/images/city-morning.jpg",
+    image: "/images/city-morning.webp",
     primary: "26",
     unit: "dBA",
     status: "SYSTEM / DORMANT",
@@ -23,7 +23,7 @@ const audioModes = [
     title: "Nearfield focus",
     headline: "A private field, not a loud room.",
     description: "One listening position receives clear, balanced sound at modest level while adjacent spaces remain visually and acoustically calm.",
-    image: "/images/city-focus.jpg",
+    image: "/images/city-focus.webp",
     primary: "58",
     unit: "dBA",
     status: "FOCUS / SEAT 02",
@@ -36,7 +36,7 @@ const audioModes = [
     title: "Reference listening",
     headline: "The room becomes the instrument.",
     description: "Time alignment, room correction and low-frequency control build a stable image across the seating area without calling attention to the speakers.",
-    image: "/images/service-audio.jpg",
+    image: "/images/service-audio.webp",
     primary: "74",
     unit: "dBA",
     status: "SOUND FIELD / LOCKED",
@@ -49,7 +49,7 @@ const audioModes = [
     title: "Night containment",
     headline: "Music stays in the room.",
     description: "Bass trims, boundary-aware equalisation and lower listening level preserve the programme while protecting bedrooms and neighbouring spaces.",
-    image: "/images/city-night.jpg",
+    image: "/images/city-night.webp",
     primary: "48",
     unit: "dBA",
     status: "BOUNDARY / PROTECTED",
@@ -73,7 +73,7 @@ export function AudioStudy() {
       </div>
 
       <div className="audio-study-stage">
-        <img key={mode.id} src={mode.image} alt={`City Penthouse listening room in ${mode.title.toLowerCase()} mode`} />
+        <img decoding="async" key={mode.id} src={mode.image} alt={`City Penthouse listening room in ${mode.title.toLowerCase()} mode`} />
         <div className={`audio-study-field is-${mode.id}`} aria-hidden="true"><i /><i /><i /><i /><b /></div>
         <div className={`audio-study-spectrum is-${mode.id}`} aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /><i /></div>
         <p className="audio-study-location">LISTENING ROOM / ACOUSTIC ZONE 04</p>

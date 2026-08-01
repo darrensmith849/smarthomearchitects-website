@@ -40,7 +40,7 @@ export function HeroVideo() {
       loop
       playsInline
       preload="none"
-      poster="/images/hero.jpg"
+      poster="/images/hero.webp"
       aria-hidden="true"
     >
       <source src="/video/home-hero-loop.webm" type="video/webm" />

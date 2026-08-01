@@ -11,7 +11,7 @@ export default function VistaHousePage() {
   return (
     <>
       <section className="project-hero">
-        <img src="/images/courtyard.jpg" alt="The sunlit courtyard of Courtyard House" />
+        <img decoding="async" src="/images/courtyard.webp" alt="The sunlit courtyard of Courtyard House" />
         <div className="project-overlay" />
         <div className="project-title">
           <p className="eyebrow eyebrow-light">Residence 01 · Cape Town</p>
@@ -30,7 +30,7 @@ export default function VistaHousePage() {
       </section>
 
       <section className="project-strip">
-        <div className="project-image-main"><img src="/images/hero.jpg" alt="Living spaces settling into evening" /></div>
+        <div className="project-image-main"><img loading="lazy" decoding="async" src="/images/hero.webp" alt="Living spaces settling into evening" /></div>
         <div className="project-caption"><span>Evening scene · 18:42</span><p>One gesture lowers the sheers, warms the room and carries music from kitchen to terrace.</p></div>
       </section>
 
@@ -66,7 +66,7 @@ export default function VistaHousePage() {
       </section>
 
       <section className="next-project">
-        <img src="/images/hero.jpg" alt="A coastal residence at blue hour" />
+        <img loading="lazy" decoding="async" src="/images/hero.webp" alt="A coastal residence at blue hour" />
         <div />
         <p className="eyebrow eyebrow-light">Next residence</p>
         <h2>Atlantic House</h2>

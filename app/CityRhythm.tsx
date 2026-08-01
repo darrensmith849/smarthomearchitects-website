@@ -9,7 +9,7 @@ const cityMoments = [
     time: "07:12",
     name: "First silence",
     line: "Clear glass and quiet circuitry let the room wake to daylight alone.",
-    image: "/images/city-morning.jpg",
+    image: "/images/city-morning.webp",
     status: "SYSTEM / RESTING",
     readings: [["AUDIO", "QUIET"], ["GLAZING", "CLEAR"], ["ROOM", "26 dBA"]],
   },
@@ -19,7 +19,7 @@ const cityMoments = [
     time: "14:20",
     name: "Private focus",
     line: "Glare and exposure recede while the courtyard remains present.",
-    image: "/images/city-focus.jpg",
+    image: "/images/city-focus.webp",
     status: "PRIVACY / BALANCED",
     readings: [["AUDIO", "NEARFIELD"], ["GLAZING", "42%"], ["NOISE", "28 dBA"]],
   },
@@ -29,7 +29,7 @@ const cityMoments = [
     time: "21:10",
     name: "Deep listening",
     line: "The room becomes the instrument—immersive, warm and precisely contained.",
-    image: "/images/service-audio.jpg",
+    image: "/images/service-audio.webp",
     status: "SOUND FIELD / LIVE",
     readings: [["SOURCE", "VINYL / PHONO"], ["LEVEL", "−28 dB"], ["ZONES", "04 LINKED"]],
   },
@@ -39,7 +39,7 @@ const cityMoments = [
     time: "23:28",
     name: "Quiet secure",
     line: "Sound sleeps, glass darkens and layered light keeps the room beautifully usable.",
-    image: "/images/city-night.jpg",
+    image: "/images/city-night.webp",
     status: "SHELL / SECURE",
     readings: [["AUDIO", "OFF"], ["PRIVACY", "NIGHT"], ["READING", "68%"]],
   },
@@ -62,7 +62,7 @@ export function CityRhythm() {
 
       <div className="city-rhythm-console">
         <div className="city-rhythm-visual">
-          <img className="city-rhythm-image" key={moment.id} src={moment.image} alt={`City Penthouse listening room during ${moment.name.toLowerCase()}`} />
+          <img decoding="async" className="city-rhythm-image" key={moment.id} src={moment.image} alt={`City Penthouse listening room during ${moment.name.toLowerCase()}`} />
           <div className="city-rhythm-scan" aria-hidden="true" />
           <div className={`city-rhythm-soundfield ${moment.id === "listening" ? "is-live" : ""}`} aria-hidden="true"><i /><i /><i /><b /></div>
           <p className="city-rhythm-zone">LISTENING ROOM / ZONE 04</p>

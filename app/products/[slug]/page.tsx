@@ -50,7 +50,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <Link className="button button-dark" href="/contact">Specify {product.name} <span>↗</span></Link>
         </div>
         <div className="product-detail-image">
-          <img src={product.image} alt={`${product.name} ${product.category}`} />
+          <img decoding="async" src={product.image} alt={`${product.name} ${product.category}`} />
           <ProductTelemetry slug={product.slug} number={product.number} name={product.name} />
           <div className="image-corner-meta"><span>{product.category}</span><span>{product.dimensions}</span></div>
         </div>
@@ -87,7 +87,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <p>We sample every visible finish against the interior material board under the project lighting before final sign-off.</p>
           </div>
           <div className="finish-product">
-            <img src={product.image} alt={`${product.name} in its studio finish`} />
+            <img loading="lazy" decoding="async" src={product.image} alt={`${product.name} in its studio finish`} />
           </div>
           <div className="finish-list">
             {product.finishes.map((finish) => (

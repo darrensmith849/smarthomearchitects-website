@@ -118,7 +118,7 @@ export function VeilProductPage({ product }: { product: Product }) {
         <div className={`veil-hero-object ${revealed ? "is-revealed" : "is-concealed"}`}>
           <div className="veil-object-grid" aria-hidden="true" />
           <div className="veil-finished-plane" aria-hidden="true"><i /><span>PAINT / PLASTER / SILENCE</span></div>
-          <img src="/images/veil-isolated.png" alt="Veil invisible loudspeaker exploded into its acoustic face, planar array and sealed backbox" />
+          <img decoding="async" src="/images/veil-isolated.webp" alt="Veil invisible loudspeaker exploded into its acoustic face, planar array and sealed backbox" />
           <div className="veil-object-readout"><span>ENGINEERING VIEW</span><strong>{revealed ? "REVEALED" : "CONCEALED"}</strong><i /></div>
           <button type="button" onClick={() => setRevealed((value) => !value)} aria-pressed={revealed}>
             <span>{revealed ? "Finish the wall" : "Reveal the engineering"}</span><b>{revealed ? "−" : "+"}</b>
@@ -188,7 +188,7 @@ export function VeilProductPage({ product }: { product: Product }) {
           <div className="veil-stud stud-left"><span>FRAMING</span></div>
           <div className="veil-stud stud-right" />
           <div className="veil-wall-cavity" />
-          <div className="veil-install-product"><img src="/images/veil-isolated.png" alt="Veil exploded speaker installation assembly" /></div>
+          <div className="veil-install-product"><img loading="lazy" decoding="async" src="/images/veil-isolated.webp" alt="Veil exploded speaker installation assembly" /></div>
           <div className="veil-board-layer"><span>SUBSTRATE / 12.5 MM</span></div>
           <div className="veil-skim-layer"><span>MINERAL SKIM / 2 MM</span></div>
           <div className="veil-paint-layer"><i /><span>FINISHED ARCHITECTURAL PLANE</span></div>
@@ -247,7 +247,7 @@ export function VeilProductPage({ product }: { product: Product }) {
         </div>
         <div className="veil-anatomy-body">
           <div className="veil-anatomy-object">
-            <img src="/images/veil-isolated.png" alt="Veil acoustic assembly with five engineered layers" />
+            <img loading="lazy" decoding="async" src="/images/veil-isolated.webp" alt="Veil acoustic assembly with five engineered layers" />
             {veilLayers.map((layer, index) => <span className={`veil-callout callout-${index + 1}`} key={layer[1]}><i />{layer[0]}</span>)}
             <div className="veil-object-scale"><i /><span>420 MM</span><i /></div>
           </div>

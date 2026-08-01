@@ -20,7 +20,7 @@ const scenes: Scene[] = [
     time: "06:28",
     name: "First light",
     line: "The house begins softly, before the day asks for anything.",
-    image: "/images/scene-morning.jpg",
+    image: "/images/scene-morning.webp",
     values: { lighting: "2,400 K / 18%", shading: "EAST / 26%", climate: "21.2 °C", audio: "QUIET" },
   },
   {
@@ -28,7 +28,7 @@ const scenes: Scene[] = [
     time: "18:42",
     name: "Welcome",
     line: "A warm arrival, composed around the room already waiting.",
-    image: "/images/scene-welcome.jpg",
+    image: "/images/scene-welcome.webp",
     values: { lighting: "2,700 K / 42%", shading: "PRIVACY / 48%", climate: "22.0 °C", audio: "FAVOURITES / −28 dB" },
   },
   {
@@ -36,7 +36,7 @@ const scenes: Scene[] = [
     time: "20:08",
     name: "At table",
     line: "The room narrows its focus: people, food, and a slower evening.",
-    image: "/images/scene-dinner.jpg",
+    image: "/images/scene-dinner.webp",
     values: { lighting: "2,300 K / 31%", shading: "GARDEN / OPEN", climate: "21.6 °C", audio: "DINING / −36 dB" },
   },
   {
@@ -44,7 +44,7 @@ const scenes: Scene[] = [
     time: "23:10",
     name: "Goodnight",
     line: "The house becomes protective, calm and quietly aware.",
-    image: "/images/scene-night.jpg",
+    image: "/images/scene-night.webp",
     values: { lighting: "2,200 K / 4%", shading: "SHELL / SECURE", climate: "19.4 °C", audio: "OFF" },
   },
 ];
@@ -110,7 +110,7 @@ export function SceneExperience() {
         </div>
 
         <div className="scene-lab-room">
-          <img className="scene-room-image" key={scene.id} src={scene.image} alt={`The coastal living room at ${scene.name.toLowerCase()}`} />
+          <img decoding="async" className="scene-room-image" key={scene.id} src={scene.image} alt={`The coastal living room at ${scene.name.toLowerCase()}`} />
           <div className="scene-room-grid" aria-hidden="true"><i /><i /><i /><i /></div>
 
           <p className="scene-room-label">LIVING / GROUND FLOOR</p>

@@ -94,7 +94,7 @@ export function AuraProductPage({ product }: { product: Product }) {
       <section className="aura-core-hero">
         <div className="aura-hero-object">
           <div className="aura-hero-field" aria-hidden="true"><i /><i /><i /><i /></div>
-          <img src="/images/aura-isolated.png" alt="Aura camera-free presence and environmental sensor in chalk white" />
+          <img decoding="async" src="/images/aura-isolated.webp" alt="Aura camera-free presence and environmental sensor in chalk white" />
           <div className="aura-dimension dimension-diameter"><i /><span>Ø 82 MM</span><i /></div><div className="aura-dimension dimension-depth"><i /><span>18 MM</span><i /></div>
           <div className="aura-hero-reading"><span>LOCAL INTERPRETATION</span><b><i />PRESENT / STILL</b><p>0 images · 0 recordings · 0 cloud calls</p></div>
         </div>
@@ -116,7 +116,7 @@ export function AuraProductPage({ product }: { product: Product }) {
             <div className="aura-room-wall wall-top" /><div className="aura-room-wall wall-right" /><div className="aura-room-wall wall-bottom" /><div className="aura-room-wall wall-left" />
             <div className="aura-room-window"><i /><i /><i /></div>
             <div className="aura-room-bed"><i /><b /></div><div className="aura-room-desk"><i /><b /></div><div className="aura-room-chair"><i /></div>
-            <div className="aura-ceiling-sensor"><img src="/images/aura-isolated.png" alt="" /><span>AURA / 01</span></div>
+            <div className="aura-ceiling-sensor"><img loading="lazy" decoding="async" src="/images/aura-isolated.webp" alt="" /><span>AURA / 01</span></div>
             <div className="aura-radar-field"><i /><i /><i /><i /><b /></div>
             <div className={`aura-presence-point${scenario.id === "vacant" ? " is-vacant" : ""}`}><i /><b /><span>{scenario.state}</span></div>
             <div className="aura-room-caption"><span>ROOM B03 / LIVE MODEL</span><b>NO OPTICAL SENSOR</b></div>
@@ -129,7 +129,7 @@ export function AuraProductPage({ product }: { product: Product }) {
       <section className="aura-privacy-story section-pad">
         <div className="aura-privacy-copy"><div className="section-label"><span>02</span><span>Privacy architecture</span></div><p className="eyebrow">Context without surveillance</p><h2>It understands<br />a room. Never you.</h2><p>Raw signals are interpreted inside Aura and published as restrained room states. There is no optical path, microphone, identity model or household recording to protect later.</p><div className="aura-privacy-switch" role="tablist" aria-label="Aura data view"><button type="button" role="tab" aria-selected={privacyView === "signals"} className={privacyView === "signals" ? "is-active" : ""} onClick={() => setPrivacyView("signals")}><span>01</span>Signals</button><button type="button" role="tab" aria-selected={privacyView === "meaning"} className={privacyView === "meaning" ? "is-active" : ""} onClick={() => setPrivacyView("meaning")}><span>02</span>Meaning</button></div></div>
         <div className={`aura-privacy-diagram is-${privacyView}`}>
-          <div className="aura-privacy-sensor"><img src="/images/aura-isolated.png" alt="Aura sensor" /><i /><i /><i /></div>
+          <div className="aura-privacy-sensor"><img loading="lazy" decoding="async" src="/images/aura-isolated.webp" alt="Aura sensor" /><i /><i /><i /></div>
           <div className="aura-privacy-inputs"><span>ROOM INPUTS</span>{[["RADAR", "0.8 MM"], ["DAYLIGHT", "312 LX"], ["COMFORT", "21.8 °C"], ["AIR TREND", "STABLE"]].map(([label, value]) => <div key={label}><i /><b>{label}</b><strong>{value}</strong></div>)}</div>
           <div className="aura-privacy-output"><span>PUBLISHED MEANING</span><strong>{privacyView === "signals" ? "ENCRYPTED SIGNAL SET" : "PRESENT / STILL"}</strong><p>{privacyView === "signals" ? "Temporary sensor values · no personal content" : "One useful room state · identity remains unknown"}</p></div>
           <div className="aura-never-captured"><span>NEVER CAPTURED</span><div>{["IMAGE", "AUDIO", "IDENTITY", "CLOUD VIDEO"].map((item) => <p key={item}><i>×</i>{item}<b>NONE</b></p>)}</div></div>
@@ -141,7 +141,7 @@ export function AuraProductPage({ product }: { product: Product }) {
         <div className="aura-coverage-console">
           <div className={`aura-coverage-plan room-${room.id}`}>
             <div className="aura-plan-grid" /><div className="aura-plan-boundary"><span>{room.name.toUpperCase()} / {room.label}</span><i /><i /><i /><i /></div>
-            {Array.from({ length: room.sensors }, (_, index) => <div className={`aura-plan-sensor sensor-${index + 1}`} key={index}><img src="/images/aura-isolated.png" alt="" /><i /><i /><i /><span>A0{index + 1}</span></div>)}
+            {Array.from({ length: room.sensors }, (_, index) => <div className={`aura-plan-sensor sensor-${index + 1}`} key={index}><img loading="lazy" decoding="async" src="/images/aura-isolated.webp" alt="" /><i /><i /><i /><span>A0{index + 1}</span></div>)}
             <div className="aura-plan-furniture"><i /><i /><i /><b /></div><div className="aura-plan-scale"><i /><span>{room.width.toFixed(1)} M</span><i /></div>
           </div>
           <aside className="aura-planner-controls"><div><span>ROOM / COVERAGE</span><b>{coverage.toFixed(1)} M RADIUS</b></div><strong>{ceilingHeight.toFixed(1)}<sup>M</sup></strong><h3>Finished ceiling height</h3><label><span>HEIGHT / 2.4—4.0 M</span><b>{ceilingHeight.toFixed(1)} M</b><input type="range" min="2.4" max="4" step="0.1" value={ceilingHeight} onChange={(event) => setCeilingHeight(Number(event.target.value))} /></label><div className="aura-room-profiles"><span>ROOM PROFILE</span>{roomProfiles.map((item) => <button type="button" key={item.id} className={item.id === room.id ? "is-active" : ""} onClick={() => setRoomId(item.id)}><i />{item.name}<b>{item.sensors} × AURA</b></button>)}</div><div className="aura-mount-choice"><span>MOUNTING</span><div>{(["flush", "surface"] as const).map((item) => <button type="button" key={item} className={mount === item ? "is-active" : ""} onClick={() => setMount(item)}>{item}</button>)}</div></div><dl><div><dt>DIAMETER</dt><dd>Ø 82 MM</dd></div><div><dt>VISIBLE DEPTH</dt><dd>{mount === "flush" ? "2" : "18"} MM</dd></div><div><dt>DESIGN RADIUS</dt><dd>{coverage.toFixed(1)} M</dd></div><div><dt>SENSORS</dt><dd>{room.sensors}</dd></div></dl></aside>

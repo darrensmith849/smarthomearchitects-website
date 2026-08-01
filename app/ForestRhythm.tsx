@@ -6,25 +6,25 @@ const forestMoments = [
   {
     id: "dawn", index: "01", time: "06:42", name: "Open the house",
     line: "Cool garden air and first light arrive before mechanical comfort is needed.",
-    image: "/images/forest-dawn.jpg",
+    image: "/images/forest-dawn.webp",
     readings: [["AIR", "NATURAL / OPEN"], ["COMFORT", "20.8 °C"], ["LIGHT", "11%"]],
   },
   {
     id: "midday", index: "02", time: "12:18", name: "Shade and breathe",
     line: "The tree canopy, glazing and thermal mass do the quiet work first.",
-    image: "/images/courtyard.jpg",
+    image: "/images/courtyard.webp",
     readings: [["SHADE", "NORTH / 38%"], ["COMFORT", "22.1 °C"], ["CO₂", "612 PPM"]],
   },
   {
     id: "rain", index: "03", time: "15:36", name: "Receive the weather",
     line: "The courtyard drinks in the rain while the living spaces remain settled.",
-    image: "/images/forest-rain.jpg",
+    image: "/images/forest-rain.webp",
     readings: [["GLAZING", "CLOSED"], ["HUMIDITY", "58%"], ["IRRIGATION", "PAUSED"]],
   },
   {
     id: "evening", index: "04", time: "19:18", name: "Gather",
     line: "Warm circulation light frames the garden without turning night into day.",
-    image: "/images/forest-evening.jpg",
+    image: "/images/forest-evening.webp",
     readings: [["LIGHT", "2,400 K / 34%"], ["COMFORT", "21.4 °C"], ["GARDEN", "LOW / ON"]],
   },
 ];
@@ -42,7 +42,7 @@ export function ForestRhythm() {
       </div>
 
       <div className="forest-rhythm-visual">
-        <img className="forest-rhythm-image" key={moment.id} src={moment.image} alt={`Forest House courtyard during ${moment.name.toLowerCase()}`} />
+        <img decoding="async" className="forest-rhythm-image" key={moment.id} src={moment.image} alt={`Forest House courtyard during ${moment.name.toLowerCase()}`} />
         <div className="forest-rhythm-map" aria-hidden="true"><i /><i /><i /><i /></div>
         <p className="forest-rhythm-location">COURTYARD / LIVING EDGE</p>
         <div className="forest-rhythm-readout" aria-live="polite">

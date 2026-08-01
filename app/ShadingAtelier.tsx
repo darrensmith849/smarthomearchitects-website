@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useEffect, useState, type CSSProperties } from "react";
 
 const shadeStates = [
-  { id: "open", name: "Open view", short: "Open", image: "/images/scene-morning.jpg", position: 0, openness: "100%", description: "The pocket disappears and the architecture opens completely to the horizon.", metrics: [["INTERIOR", "780 LX"], ["GLARE", "0.46 DGP"], ["SOLAR GAIN", "100%"], ["VIEW", "100%"]] },
-  { id: "filtered", name: "Filtered view", short: "Filter", image: "/images/shading-atelier-filtered.jpg", position: 100, openness: "5%", description: "A woven solar textile keeps the ocean legible while glare and heat fall away.", metrics: [["INTERIOR", "520 LX"], ["GLARE", "0.32 DGP"], ["SOLAR GAIN", "58%"], ["VIEW", "82%"]] },
-  { id: "privacy", name: "Soft privacy", short: "Privacy", image: "/images/shading-atelier-privacy.jpg", position: 100, openness: "1%", description: "A luminous privacy layer admits daylight while dissolving the exterior into silhouettes.", metrics: [["INTERIOR", "340 LX"], ["GLARE", "0.22 DGP"], ["SOLAR GAIN", "32%"], ["VIEW", "18%"]] },
-  { id: "blackout", name: "Blackout", short: "Blackout", image: "/images/shading-atelier-blackout.jpg", position: 100, openness: "0%", description: "Opaque textile closes the aperture as warm task and ambient light restore the room.", metrics: [["INTERIOR", "260 LX"], ["GLARE", "0.05 DGP"], ["SOLAR GAIN", "3%"], ["VIEW", "0%"]] },
+  { id: "open", name: "Open view", short: "Open", image: "/images/scene-morning.webp", position: 0, openness: "100%", description: "The pocket disappears and the architecture opens completely to the horizon.", metrics: [["INTERIOR", "780 LX"], ["GLARE", "0.46 DGP"], ["SOLAR GAIN", "100%"], ["VIEW", "100%"]] },
+  { id: "filtered", name: "Filtered view", short: "Filter", image: "/images/shading-atelier-filtered.webp", position: 100, openness: "5%", description: "A woven solar textile keeps the ocean legible while glare and heat fall away.", metrics: [["INTERIOR", "520 LX"], ["GLARE", "0.32 DGP"], ["SOLAR GAIN", "58%"], ["VIEW", "82%"]] },
+  { id: "privacy", name: "Soft privacy", short: "Privacy", image: "/images/shading-atelier-privacy.webp", position: 100, openness: "1%", description: "A luminous privacy layer admits daylight while dissolving the exterior into silhouettes.", metrics: [["INTERIOR", "340 LX"], ["GLARE", "0.22 DGP"], ["SOLAR GAIN", "32%"], ["VIEW", "18%"]] },
+  { id: "blackout", name: "Blackout", short: "Blackout", image: "/images/shading-atelier-blackout.webp", position: 100, openness: "0%", description: "Opaque textile closes the aperture as warm task and ambient light restore the room.", metrics: [["INTERIOR", "260 LX"], ["GLARE", "0.05 DGP"], ["SOLAR GAIN", "3%"], ["VIEW", "0%"]] },
 ] as const;
 
 export function ShadingAtelier() {
@@ -54,7 +54,7 @@ export function ShadingAtelier() {
       </div>
 
       <section className="shading-atelier-stage">
-        <img key={state.id} src={state.image} alt={`Ocean-facing living room with shades in the ${state.name.toLowerCase()} state`} />
+        <img decoding="async" key={state.id} src={state.image} alt={`Ocean-facing living room with shades in the ${state.name.toLowerCase()} state`} />
         <div className="shading-atelier-wash" />
         <div className="shading-atelier-copy">
           <p>DAYLIGHT / PRIVACY / VIEW</p>

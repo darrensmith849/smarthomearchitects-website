@@ -61,7 +61,7 @@ export function ProductCollection({ compact = false }: { compact?: boolean }) {
       {products.map((product) => (
         <Link className="product-card" href={`/products/${product.slug}`} key={product.slug}>
           <div className="product-image-wrap">
-            <img src={product.image} alt={`${product.name} ${product.category}`} />
+            <img loading="lazy" decoding="async" src={product.image} alt={`${product.name} ${product.category}`} />
             <span className="product-index">{product.number}</span>
             <span className="card-arrow" aria-hidden="true">↗</span>
           </div>

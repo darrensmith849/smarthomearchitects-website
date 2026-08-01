@@ -8,7 +8,7 @@ const moments = [
     time: "06:28",
     name: "First light",
     line: "The ocean arrives before the household does.",
-    image: "/images/scene-morning.jpg",
+    image: "/images/scene-morning.webp",
     data: ["EAST LIGHT / 18%", "AIR / 21.2 °C", "FIRE / RESTING"],
   },
   {
@@ -16,7 +16,7 @@ const moments = [
     time: "18:42",
     name: "Welcome",
     line: "The house receives you at the pace of the evening.",
-    image: "/images/scene-welcome.jpg",
+    image: "/images/scene-welcome.webp",
     data: ["LIVING / 42%", "AIR / 22.0 °C", "FIRE / ON"],
   },
   {
@@ -24,7 +24,7 @@ const moments = [
     time: "20:08",
     name: "At table",
     line: "The room holds the conversation and leaves the view alone.",
-    image: "/images/scene-dinner.jpg",
+    image: "/images/scene-dinner.webp",
     data: ["WARMTH / 2,300 K", "GARDEN / OPEN", "AUDIO / −36 dB"],
   },
   {
@@ -32,7 +32,7 @@ const moments = [
     time: "23:10",
     name: "Goodnight",
     line: "The calm remains. The house quietly takes over the rest.",
-    image: "/images/scene-night.jpg",
+    image: "/images/scene-night.webp",
     data: ["PATHS / 4%", "SHELL / SECURE", "AIR / 19.4 °C"],
   },
 ];
@@ -56,7 +56,7 @@ export function AtlanticRhythm() {
         </div>
       </div>
       <div className="atlantic-rhythm-visual">
-        <img className="atlantic-rhythm-image" key={moment.id} src={moment.image} alt={`Atlantic House at ${moment.name.toLowerCase()}`} />
+        <img decoding="async" className="atlantic-rhythm-image" key={moment.id} src={moment.image} alt={`Atlantic House at ${moment.name.toLowerCase()}`} />
         <div className="atlantic-rhythm-grid" aria-hidden="true"><i /><i /><i /></div>
         <div className="atlantic-rhythm-panel" aria-live="polite">
           <div><span>ATLANTIC HOUSE / LIVE</span><b>{moment.time}</b></div>

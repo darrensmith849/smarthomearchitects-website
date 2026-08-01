@@ -51,9 +51,13 @@ export function SecurityObservatory() {
     return () => window.clearTimeout(timer);
   }, [simulating, arrivalStep]);
 
-  useEffect(() => {
+  // The plan selection follows the arrival sequence, but is also set directly
+  // by clicking a zone, so it stays state rather than becoming derived.
+  const [renderedStep, setRenderedStep] = useState(arrivalStep);
+  if (arrivalStep !== renderedStep) {
+    setRenderedStep(arrivalStep);
     if (arrivalStep >= 0) setSelectedZone(arrivalSteps[arrivalStep].zone);
-  }, [arrivalStep]);
+  }
 
   const chooseMode = (id: (typeof securityModes)[number]["id"]) => {
     setModeId(id); setSimulating(false); setArrivalStep(-1);
@@ -85,7 +89,7 @@ export function SecurityObservatory() {
       <main className="security-stage">
         {view === "arrival" ? (
           <section className="security-arrival-view">
-            <img src="/images/security-observatory-arrival.jpg" alt="Serene illuminated entrance courtyard at blue hour" />
+            <img decoding="async" src="/images/security-observatory-arrival.webp" alt="Serene illuminated entrance courtyard at blue hour" />
             <div className="security-arrival-wash" />
             <div className="security-arrival-copy"><p>SECURITY / PRIVACY / ARRIVAL</p><h1>Protected<br />by design.</h1><span>Cape estate · Boundary P01</span></div>
             <div className="security-arrival-status"><i /><div><span>ESTATE STATUS</span><strong>Everything is calm.</strong><small>{mode.points} discreet points · processing remains on site</small></div></div>

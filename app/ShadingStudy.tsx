@@ -10,7 +10,7 @@ const shadingStates = [
     title: "Open view",
     headline: "Let the horizon into the room.",
     description: "With soft morning light and low solar load, every sheer disappears into its pocket. The architecture receives the full view without unnecessary intervention.",
-    image: "/images/shading-open.jpg",
+    image: "/images/shading-open.webp",
     readings: [["OPENNESS", "100%"], ["GLARE", "LOW"], ["UV INDEX", "1.8"]],
   },
   {
@@ -20,7 +20,7 @@ const shadingStates = [
     title: "Glare control",
     headline: "Filter the light. Keep the view.",
     description: "Only the brightest zones move. A fine woven sheer softens contrast at the glass while the coastline remains clear through the unprotected openings.",
-    image: "/images/service-shading.jpg",
+    image: "/images/service-shading.webp",
     readings: [["RIGHT SHEER", "42%"], ["VIEW", "PRESERVED"], ["GLARE", "CONTROLLED"]],
   },
   {
@@ -30,7 +30,7 @@ const shadingStates = [
     title: "Solar protection",
     headline: "Reduce heat before cooling begins.",
     description: "Sun-facing zones lower in coordinated heights, cutting floor glare and peak heat gain while the weave keeps the ocean softly present.",
-    image: "/images/shading-solar.jpg",
+    image: "/images/shading-solar.webp",
     readings: [["WEST", "72%"], ["SEAWARD", "52%"], ["HEAT GAIN", "−42%"]],
   },
   {
@@ -40,7 +40,7 @@ const shadingStates = [
     title: "Night privacy",
     headline: "Close the view in. Keep the room alive.",
     description: "The façade becomes a softly illuminated boundary. Layered interior light remains generous enough for reading while the home is protected from outside view.",
-    image: "/images/shading-privacy.jpg",
+    image: "/images/shading-privacy.webp",
     readings: [["SHELL", "PRIVATE"], ["TASK LIGHT", "320 LX"], ["CCT", "2700 K"]],
   },
 ];
@@ -80,7 +80,7 @@ export function ShadingStudy() {
         </div>
 
         <div className="shading-study-visual">
-          <img key={state.id} src={state.image} alt={`Coastal living room in the ${state.title.toLowerCase()} shading state`} />
+          <img decoding="async" key={state.id} src={state.image} alt={`Coastal living room in the ${state.title.toLowerCase()} shading state`} />
           <div className={`shading-study-map is-${state.id}`} aria-hidden="true"><i /><i /><i /><i /><i /></div>
           <div className="shading-study-live"><span>SHADE POSITION / LIVE</span><b>{state.title.toUpperCase()}</b></div>
           <p>GLAZING LINE / 05 COORDINATED ZONES</p>
