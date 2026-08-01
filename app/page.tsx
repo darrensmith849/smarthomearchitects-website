@@ -145,10 +145,11 @@ export default function Home() {
             ["04", "Care", "We monitor only what matters, maintain the system and keep it beautifully current."],
           ].map(([n, title, copy]) => (
             <div className="process-row" key={n}>
-              <span>{n}</span><h3>{title}</h3><p>{copy}</p><i aria-hidden="true">↗</i>
+              <span>{n}</span><h3>{title}</h3><p>{copy}</p>
             </div>
           ))}
         </div>
+        <div className="center-action"><Link className="text-link" href="/approach">See the full approach <span>→</span></Link></div>
       </section>
 
       <ConsultationCta />
