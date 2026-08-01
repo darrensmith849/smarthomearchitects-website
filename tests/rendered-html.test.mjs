@@ -1,87 +1,86 @@
 import assert from "node:assert/strict";
-import { access, readFile, readdir } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
+import { glob } from "node:fs/promises";
 import test from "node:test";
 
-const developmentPreviewMeta =
-  /<meta(?=[^>]*\bname=["']codex-preview["'])(?=[^>]*\bcontent=["']development["'])[^>]*>/i;
-const templateRoot = new URL("../", import.meta.url);
-const previewRoot = new URL("../app/_sites-preview/", import.meta.url);
+const root = new URL("../", import.meta.url);
 
-async function render() {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
+/** The Worker expects bindings the site never reads on a page render, so a
+ *  404-ing ASSETS stub is enough to exercise every HTML route. */
+const ENV = { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } };
+const CTX = { waitUntil() {}, passThroughOnException() {} };
 
-  return worker.fetch(
-    new Request("http://localhost/", {
-      headers: { accept: "text/html" },
-    }),
-    {
-      ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
-      },
-    },
-    {
-      waitUntil() {},
-      passThroughOnException() {},
-    },
-  );
+let cached;
+async function get(path) {
+  if (!cached) {
+    const url = new URL("dist/server/index.js", root);
+    url.searchParams.set("test", `${process.pid}-${Date.now()}`);
+    cached = (await import(url.href)).default;
+  }
+  return cached.fetch(new Request(`http://localhost${path}`, { headers: { accept: "text/html" } }), ENV, CTX);
 }
 
-test("server-renders the starter loading skeleton", async () => {
-  const response = await render();
+async function appSources() {
+  const files = [];
+  for await (const f of glob("app/**/*.{ts,tsx,css}", { cwd: root })) files.push(f);
+  return Promise.all(files.map(async (f) => [f, await readFile(new URL(f, root), "utf8")]));
+}
+
+test("the homepage server-renders", async () => {
+  const response = await get("/");
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, developmentPreviewMeta);
-  assert.match(html, /<title>Your site is taking shape<\/title>/i);
-  assert.match(html, /Codex is working/);
-  assert.match(html, /Your site is taking shape/);
-  assert.match(html, /Codex is building the first version/);
-  assert.match(html, /react-loading-skeleton/);
-  assert.match(html, /role="status"/);
+  assert.match(html, /<title>Smart Home Architects — Technology, beautifully resolved<\/title>/i);
+  assert.match(html, /A home that notices/);
+  assert.match(html, /property="og:image"/);
 });
 
-test("keeps the loading skeleton scoped and disposable", async () => {
-  const [preview, css, page, layout, packageJson, files] = await Promise.all([
-    readFile(new URL("SkeletonPreview.tsx", previewRoot), "utf8"),
-    readFile(new URL("preview.css", previewRoot), "utf8"),
-    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../package.json", import.meta.url), "utf8"),
-    readdir(previewRoot),
-  ]);
+test("every route in the sitemap renders", async () => {
+  const sitemap = await get("/sitemap.xml");
+  assert.equal(sitemap.status, 200);
 
-  assert.deepEqual(files.sort(), ["SkeletonPreview.tsx", "preview.css"]);
-  assert.match(preview, /from "react-loading-skeleton"/);
-  assert.match(preview, /baseColor="#eceae7"/);
-  assert.match(preview, /highlightColor="#f9f8f6"/);
-  assert.match(preview, /duration=\{2\.8\}/);
-  assert.match(preview, /sites-skeleton-search-placeholder/);
-  assert.match(packageJson, /"react-loading-skeleton": "3\.5\.0"/);
+  const paths = [...(await sitemap.text()).matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map((m) => new URL(m[1]).pathname);
 
-  const shellIndex = preview.indexOf('className="sites-skeleton-shell"');
-  const statusIndex = preview.indexOf('className="sites-skeleton-status"');
-  assert.ok(shellIndex >= 0 && statusIndex > shellIndex);
-  assert.match(css, /position:\s*fixed/);
-  assert.match(css, /inset:\s*0/);
-  assert.match(css, /opacity:\s*0\.52/);
-  assert.match(css, /prefers-reduced-motion:\s*reduce/);
-  assert.doesNotMatch(css, /#020617|canvas|pets|progress/i);
-  assert.doesNotMatch(
-    preview,
-    /loading-spinner|status-mark|status-progress|canvas|cookie|random/i,
-  );
+  // Guards against the sitemap silently emptying and this test passing vacuously.
+  assert.ok(paths.length > 30, `sitemap listed only ${paths.length} routes`);
 
-  assert.match(page, /export const metadata:\s*Metadata/);
-  assert.match(page, /"codex-preview": "development"/);
-  assert.match(page, /<SkeletonPreview \/>/);
-  assert.match(layout, /title:\s*"Starter Project"/);
-  assert.doesNotMatch(layout, /codex-preview|_sites-preview|themeColor|\bViewport\b/);
-  assert.doesNotMatch(css, /(^|\s)(html|body)\s*\{/m);
+  const broken = [];
+  for (const path of paths) {
+    const response = await get(path);
+    if (response.status !== 200) broken.push(`${response.status} ${path}`);
+  }
+  assert.deepEqual(broken, []);
+});
 
-  await assert.rejects(
-    access(new URL("public/_sites-preview", templateRoot)),
-  );
+test("every referenced image exists on disk", async () => {
+  const sources = await appSources();
+  const referenced = new Set();
+  for (const [, source] of sources) {
+    for (const m of source.matchAll(/\/images\/[A-Za-z0-9._-]+\.[a-z]{3,4}/g)) referenced.add(m[0]);
+  }
+
+  assert.ok(referenced.size > 20, `only found ${referenced.size} image references`);
+
+  const missing = [];
+  for (const ref of referenced) {
+    await access(new URL(`public${ref}`, root)).catch(() => missing.push(ref));
+  }
+  assert.deepEqual(missing, [], "referenced images with no file — a rename probably missed a call site");
+});
+
+test("every image carries alt text", async () => {
+  const sources = await appSources();
+  const missing = [];
+  for (const [file, source] of sources) {
+    for (const m of source.matchAll(/<img\b[^>]*?\/?>/gs)) {
+      if (!/\balt=/.test(m[0])) {
+        const line = source.slice(0, m.index).split("\n").length;
+        missing.push(`${file}:${line}`);
+      }
+    }
+  }
+  assert.deepEqual(missing, []);
 });
