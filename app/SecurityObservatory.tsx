@@ -23,9 +23,9 @@ const markerPositions = [
 ] as const;
 
 const sensorPoints = [
-  { x: 7, y: 19, kind: "boundary" }, { x: 7, y: 48, kind: "boundary" }, { x: 8, y: 80, kind: "boundary" },
+  { x: 7, y: 19, kind: "boundary" }, { x: 7, y: 48, kind: "boundary" }, { x: 8, y: 62, kind: "boundary" },
   { x: 27, y: 70, kind: "path" }, { x: 45, y: 60, kind: "path" }, { x: 60, y: 46, kind: "entry" },
-  { x: 70, y: 20, kind: "envelope" }, { x: 91, y: 24, kind: "envelope" }, { x: 92, y: 76, kind: "envelope" },
+  { x: 72, y: 28, kind: "envelope" }, { x: 91, y: 33, kind: "envelope" }, { x: 92, y: 76, kind: "envelope" },
   { x: 68, y: 84, kind: "garden" }, { x: 42, y: 88, kind: "garden" },
 ] as const;
 
@@ -106,7 +106,7 @@ export function SecurityObservatory() {
               <button type="button" className={`security-plan-zone zone-arrival${selectedZone === "arrival" ? " is-selected" : ""}`} onClick={() => setSelectedZone("arrival")}><span>CONTROLLED ROUTE</span><b>ARRIVAL</b></button>
               <button type="button" className={`security-plan-zone zone-court${selectedZone === "court" ? " is-selected" : ""}`} onClick={() => setSelectedZone("court")}><span>PRIVATE EXTERIOR</span><b>COURT</b></button>
               <button type="button" className={`security-plan-zone zone-house${selectedZone === "house" ? " is-selected" : ""}`} onClick={() => setSelectedZone("house")}><span>NO CLOUD VISION</span><b>RESIDENCE</b></button>
-              <div className="security-plan-pool"><i /><span>REFLECTING COURT</span></div>
+              <div className="security-plan-pool"><i /></div><span className="security-pool-caption">REFLECTING COURT</span>
               <div className="security-plan-garden">{Array.from({ length: 9 }, (_, index) => <i key={index} />)}</div>
               <div className="security-arrival-path" />
               {sensorPoints.map((point, index) => <div className={`security-sensor sensor-${point.kind}`} key={index} style={{ left: `${point.x}%`, top: `${point.y}%` }}><i /><b /><span>{index + 1}</span></div>)}
