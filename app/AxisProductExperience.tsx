@@ -77,7 +77,7 @@ export function AxisProductExperience({ product }: { product: Product }) {
             <p>{scene.gesture}</p>
             <strong>{scene.name}</strong>
             <p>{scene.description}</p>
-            <dl key={scene.id}>{scene.signals.map(([label, value], index) => <div key={label} style={{ animationDelay: `${index * 90}ms` }}><dt>{label}</dt><dd>{value}</dd><i /></div>)}</dl>
+            <dl key={scene.id}>{scene.signals.map(([label, value], index) => <div key={label} style={{ animationDelay: `${index * 90}ms` }}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
           </div>
         </div>
 

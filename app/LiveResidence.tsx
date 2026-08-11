@@ -172,7 +172,7 @@ export function LiveResidence() {
               <p>CONTROL LANGUAGE</p>
               <div className="designer-text-options">{(["scenes","hybrid","minimal"] as const).map((type) => <button type="button" key={type} className={controlType === type ? "is-active" : ""} onClick={() => setControlType(type)}>{type}</button>)}</div>
             </div>
-            <div className="designer-toggle-row"><span>ENGRAVING</span><button type="button" className={engraving ? "is-on" : ""} onClick={() => setEngraving((value) => !value)} aria-pressed={engraving}><i /></button></div>
+            <div className="designer-toggle-row"><span>ENGRAVING</span><button type="button" aria-label="Engraving" className={engraving ? "is-on" : ""} onClick={() => setEngraving((value) => !value)} aria-pressed={engraving}><i /></button></div>
             <label className="designer-slider"><span>BACKLIGHT</span><b>{backlight}%</b><input type="range" min="0" max="100" value={backlight} onChange={(event) => setBacklight(Number(event.target.value))} /></label>
             <div className="designer-control-group mount-group"><p>MOUNTING DETAIL</p><div className="designer-text-options">{(["shadow","flush","floating"] as const).map((type) => <button type="button" key={type} className={mount === type ? "is-active" : ""} onClick={() => setMount(type)}>{type}</button>)}</div></div>
             <div className="designer-control-group assignment-editor">

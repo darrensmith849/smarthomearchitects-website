@@ -74,7 +74,7 @@ export function ShadingAtelier() {
             {shadeStates.map((item, index) => <button type="button" key={item.id} className={item.id === state.id ? "is-active" : ""} onClick={() => chooseState(item.id)} aria-pressed={item.id === state.id}><span><i className={`shade-swatch swatch-${item.id}`} /><b>{item.short}</b></span><em>{item.openness}</em><small>0{index + 1}</small></button>)}
           </div>
 
-          <div className="shade-auto-row"><span>AUTOMATIC SOLAR RESPONSE</span><button type="button" className={automatic ? "is-on" : ""} onClick={() => setAutomatic((value) => !value)} aria-pressed={automatic}><i /></button></div>
+          <div className="shade-auto-row"><span>AUTOMATIC SOLAR RESPONSE</span><button type="button" aria-label="Automatic solar response" className={automatic ? "is-on" : ""} onClick={() => setAutomatic((value) => !value)} aria-pressed={automatic}><i /></button></div>
           <label className="shade-setpoint"><span>GLARE SETPOINT</span><b>{setpoint} LX</b><input type="range" min="300" max="900" step="10" value={setpoint} onChange={(event) => setSetpoint(Number(event.target.value))} /></label>
           <div className="shade-schedule"><span>PRIVACY SCHEDULE</span><div>{["18:00","18:30","19:00"].map((time) => <button type="button" key={time} className={privacyTime === time ? "is-active" : ""} onClick={() => setPrivacyTime(time)}>{time}</button>)}</div></div>
 
