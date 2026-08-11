@@ -100,7 +100,7 @@ export function WaterLandscapeAtelier() {
               <div className="water-pipe pipe-mains-tank">{Array.from({ length: 3 }, (_, index) => <i key={index} />)}</div>
               <div className="water-roof-form"><i /><i /><i /><span>412 M²</span></div>
               <div className="water-home-form"><i /><i /><i /><b /></div>
-              <div className="water-pool-form"><i /><i /><span>BIO-FILTER EDGE</span></div>
+              <div className="water-pool-form"><i /><i /></div><span className="water-pool-caption">BIO-FILTER EDGE</span>
               <div className="water-garden-form">{Array.from({ length: 8 }, (_, index) => <i key={index} />)}</div>
               {waterNodes.map((item, index) => <button type="button" key={item.id} className={`water-map-node node-${item.id}${selectedNode === item.id ? " is-selected" : ""}${cycleIndex === index ? " is-cycle-active" : ""}`} style={{ left: `${item.x}%`, top: `${item.y}%` }} onClick={() => { setSelectedNode(item.id); setCycling(false); }}><i /><span>{item.name}</span><b>{item.id === "tank" ? `${tankLevel}%` : item.status}</b></button>)}
               <div className="water-node-detail"><span>SELECTED / {selectedNode.toUpperCase()}</span><strong>{node.name}</strong><p>{node.detail}</p></div>
