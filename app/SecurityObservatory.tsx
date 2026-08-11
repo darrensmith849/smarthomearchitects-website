@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useExperienceExit } from "./nav-return";
 import { useEffect, useState, type CSSProperties } from "react";
 
 const securityModes = [
@@ -32,6 +33,7 @@ type LayerName = "boundary" | "arrival" | "garden" | "interior";
 type PlanZone = "boundary" | "arrival" | "court" | "house";
 
 export function SecurityObservatory() {
+  const exit = useExperienceExit();
   const [view, setView] = useState<"arrival" | "estate">("arrival");
   const [modeId, setModeId] = useState<(typeof securityModes)[number]["id"]>("home");
   const [privacy, setPrivacy] = useState<"private" | "balanced" | "verified">("private");
@@ -83,7 +85,7 @@ export function SecurityObservatory() {
           <button type="button" role="tab" aria-selected={view === "arrival"} className={view === "arrival" ? "is-active" : ""} onClick={() => setView("arrival")}><span>01</span>Arrival</button>
           <button type="button" role="tab" aria-selected={view === "estate"} className={view === "estate" ? "is-active" : ""} onClick={() => setView("estate")}><span>02</span>Estate intelligence</button>
         </div>
-        <div className="security-links"><Link href="/experience/audio-atelier">Audio atelier</Link><Link className="security-exit" href="/" aria-label="Close Security Observatory">×</Link></div>
+        <div className="security-links"><Link href="/experience/audio-atelier">Audio atelier</Link><Link className="security-exit" href={exit.href} onClick={exit.onClick} aria-label="Close Security Observatory">×</Link></div>
       </header>
 
       <main className="security-stage">

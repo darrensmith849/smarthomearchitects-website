@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useExperienceExit } from "./nav-return";
 import { useEffect, useState, type CSSProperties } from "react";
 
 const waterModes = [
@@ -25,6 +26,7 @@ type WaterNodeId = (typeof waterNodes)[number]["id"];
 type GardenZone = "fynbos" | "olive grove" | "roof herbs" | "orchard";
 
 export function WaterLandscapeAtelier() {
+  const exit = useExperienceExit();
   const [view, setView] = useState<"garden" | "system">("garden");
   const [modeId, setModeId] = useState<(typeof waterModes)[number]["id"]>("balanced");
   const [tankLevel, setTankLevel] = useState(78);
@@ -74,7 +76,7 @@ export function WaterLandscapeAtelier() {
           <button type="button" role="tab" aria-selected={view === "garden"} className={view === "garden" ? "is-active" : ""} onClick={() => setView("garden")}><span>01</span>Garden</button>
           <button type="button" role="tab" aria-selected={view === "system"} className={view === "system" ? "is-active" : ""} onClick={() => setView("system")}><span>02</span>Water system</button>
         </div>
-        <div className="water-links"><Link href="/experience/security-observatory">Security observatory</Link><Link className="water-exit" href="/" aria-label="Close Water and Landscape Atelier">×</Link></div>
+        <div className="water-links"><Link href="/experience/security-observatory">Security observatory</Link><Link className="water-exit" href={exit.href} onClick={exit.onClick} aria-label="Close Water and Landscape Atelier">×</Link></div>
       </header>
 
       <main className="water-stage">

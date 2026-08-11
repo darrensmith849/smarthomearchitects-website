@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useExperienceExit } from "./nav-return";
 import { useEffect, useState, type CSSProperties } from "react";
 
 const shadeStates = [
@@ -11,6 +12,7 @@ const shadeStates = [
 ] as const;
 
 export function ShadingAtelier() {
+  const exit = useExperienceExit();
   const [stateId, setStateId] = useState<(typeof shadeStates)[number]["id"]>("filtered");
   const [automatic, setAutomatic] = useState(true);
   const [setpoint, setSetpoint] = useState(520);
@@ -50,7 +52,7 @@ export function ShadingAtelier() {
       <div className="shading-atelier-topbar">
         <Link className="shading-atelier-brand" href="/"><i /><span>Smart Home Architects</span></Link>
         <div className="shading-atelier-title"><span>03</span><b>Shading atelier</b></div>
-        <div className="shading-atelier-links"><Link href="/experience/live-residence">Lighting studio</Link><Link className="shading-atelier-exit" href="/" aria-label="Close Shading Atelier">×</Link></div>
+        <div className="shading-atelier-links"><Link href="/experience/live-residence">Lighting studio</Link><Link className="shading-atelier-exit" href={exit.href} onClick={exit.onClick} aria-label="Close Shading Atelier">×</Link></div>
       </div>
 
       <section className="shading-atelier-stage">

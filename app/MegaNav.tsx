@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NavSurface } from "./NavSurface";
+import { clearNavReopen, peekNavReopen, rememberNavReturn } from "./nav-return";
+import { categoryPages, projectPages, servicePages, studioPages, systemPages } from "./site-map";
 
 const groups = [
   {
@@ -80,22 +82,80 @@ const groups = [
   },
 ] as const;
 
+/**
+ * Art for the panel's preview pane, keyed by destination.
+ *
+ * Almost every page the panel links to already declares its own hero image in
+ * the site map, so this reads from there rather than keeping a second copy that
+ * would drift the first time a page was re-shot. The exceptions are listed
+ * below: the six experience routes, whose art belongs to the component that
+ * renders them, and the four index pages, which have no site-map entry.
+ */
+const byRoute = (prefix: string, pages: readonly { slug: string; image: string }[]) =>
+  Object.fromEntries(pages.map((page) => [`${prefix}/${page.slug}`, page.image]));
+
+const previews: Record<string, string> = {
+  ...byRoute("/services", servicePages),
+  ...byRoute("/systems", systemPages),
+  ...byRoute("/studio", studioPages),
+  ...byRoute("/products", categoryPages),
+  ...byRoute("/projects", projectPages),
+  "/experience/live-residence": "/images/scene-studio-relax.webp",
+  "/experience/shading-atelier": "/images/shading-atelier-filtered.webp",
+  "/experience/climate-atelier": "/images/climate-atelier-pavilion.webp",
+  "/experience/audio-atelier": "/images/audio-atelier-salon.webp",
+  "/experience/security-observatory": "/images/security-observatory-arrival.webp",
+  "/experience/water-landscape-atelier": "/images/water-landscape-atelier.webp",
+  "/products": "/images/axis.webp",
+  "/projects": "/images/hero.webp",
+  "/approach": "/images/courtyard.webp",
+  "/professionals": "/images/service-shading.webp",
+};
+
 export function MegaNav() {
   const pathname = usePathname();
   const [active, setActive] = useState<string | null>(null);
+  // Which link the pointer or keyboard focus is on, so the preview pane can
+  // follow it. Null means nothing is hovered and the pane rests on the group.
+  const [hovered, setHovered] = useState<number | null>(null);
   const group = groups.find((item) => item.id === active);
+
+  const openGroup = (id: string | null) => {
+    setActive(id);
+    setHovered(null);
+  };
 
   // Close the panel on navigation. Adjusting during render rather than in an
   // effect avoids rendering the open panel once against the new page first.
+  // The one case that does not close is a visitor returning from an experience
+  // page they opened from here: that reopens the group they chose it from, so
+  // closing an experience puts them back on the list instead of the homepage.
   const [renderedPath, setRenderedPath] = useState(pathname);
   if (pathname !== renderedPath) {
     setRenderedPath(pathname);
-    setActive(null);
+    setActive(peekNavReopen(pathname));
+    setHovered(null);
   }
+
+  // Spending the entry is the side effect, so it happens after the render that
+  // read it — and it sets no state of its own.
+  useEffect(() => clearNavReopen(pathname), [pathname]);
+
+  // The preview swaps on hover, so the art has to be in cache before the
+  // pointer arrives or the first pass over the list flickers through blanks.
+  useEffect(() => {
+    if (!group) return;
+    group.links.forEach(([, href]) => {
+      const source = previews[href];
+      if (!source) return;
+      const image = new Image();
+      image.src = source;
+    });
+  }, [group]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActive(null);
+      if (event.key === "Escape") openGroup(null);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -115,7 +175,7 @@ export function MegaNav() {
               type="button"
               key={item.id}
               aria-expanded={active === item.id}
-              onClick={() => setActive(active === item.id ? null : item.id)}
+              onClick={() => openGroup(active === item.id ? null : item.id)}
             >
               {item.label}<span aria-hidden="true">{active === item.id ? "−" : "+"}</span>
             </button>
@@ -129,7 +189,7 @@ export function MegaNav() {
             {groups.map((item) => (
               <div className="mobile-nav-group" key={item.id}>
                 <span>{item.label}</span>
-                {item.links.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
+                {item.links.map(([label, href]) => <Link href={href} key={href} onClick={() => rememberNavReturn(item.id, pathname)}>{label}</Link>)}
               </div>
             ))}
             <Link className="mobile-project-link" href="/contact">Start a project ↗</Link>
@@ -143,9 +203,15 @@ export function MegaNav() {
               <h2>{group.label}</h2>
               <p>{group.description}</p>
             </div>
-            <div className="mega-links">
+            <div className="mega-links" onMouseLeave={() => setHovered(null)}>
               {group.links.map(([label, href, note], index) => (
-                <Link href={href} key={href}>
+                <Link
+                  href={href}
+                  key={href}
+                  onMouseEnter={() => setHovered(index)}
+                  onFocus={() => setHovered(index)}
+                  onClick={() => rememberNavReturn(group.id, pathname)}
+                >
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <strong>{label}</strong>
                   <small>{note}</small>
@@ -153,15 +219,33 @@ export function MegaNav() {
                 </Link>
               ))}
             </div>
-            <Link className="mega-feature" href={group.links[0][1]}>
-              <img loading="lazy" decoding="async" src={group.image} alt="" />
-              <div><span>Explore {group.label}</span><i aria-hidden="true">↗</i></div>
-            </Link>
+            {(() => {
+              // At rest the pane shows the group; on hover it previews whatever
+              // the pointer is over, and the link follows so the image is not
+              // advertising somewhere the click will not go.
+              const featured = hovered === null ? null : group.links[hovered];
+              const href = featured ? featured[1] : group.links[0][1];
+              const image = (featured && previews[featured[1]]) || group.image;
+              return (
+                <Link
+                  className="mega-feature"
+                  href={href}
+                  onClick={() => rememberNavReturn(group.id, pathname)}
+                >
+                  {/* Keyed so React swaps the element and the fade restarts. */}
+                  <img key={image} decoding="async" src={image} alt="" />
+                  <div>
+                    <span>Explore {featured ? featured[0] : group.label}</span>
+                    <i aria-hidden="true">↗</i>
+                  </div>
+                </Link>
+              );
+            })()}
             <div className="mega-panel-base"><span>40-page architecture</span><span>South Africa · SAST</span></div>
           </div>
         )}
       </header>
-      {group && <button className="nav-scrim" aria-label="Close navigation" onClick={() => setActive(null)} />}
+      {group && <button className="nav-scrim" aria-label="Close navigation" onClick={() => openGroup(null)} />}
     </>
   );
 }

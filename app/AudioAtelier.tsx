@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useExperienceExit } from "./nav-return";
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 
 const audioModes = [
@@ -26,6 +27,7 @@ const focusPresets = [
 type ZoneName = "salon" | "courtyard" | "bar" | "gallery";
 
 export function AudioAtelier() {
+  const exit = useExperienceExit();
   const [view, setView] = useState<"salon" | "field">("salon");
   const [modeId, setModeId] = useState<(typeof audioModes)[number]["id"]>("reference");
   const [level, setLevel] = useState(46);
@@ -137,7 +139,7 @@ export function AudioAtelier() {
           <button type="button" role="tab" aria-selected={view === "salon"} className={view === "salon" ? "is-active" : ""} onClick={() => setView("salon")}><span>01</span>Salon</button>
           <button type="button" role="tab" aria-selected={view === "field"} className={view === "field" ? "is-active" : ""} onClick={() => setView("field")}><span>02</span>Sound field</button>
         </div>
-        <div className="audio-atelier-links"><Link href="/experience/climate-atelier">Climate atelier</Link><Link className="audio-atelier-exit" href="/" aria-label="Close Audio Atelier">×</Link></div>
+        <div className="audio-atelier-links"><Link href="/experience/climate-atelier">Climate atelier</Link><Link className="audio-atelier-exit" href={exit.href} onClick={exit.onClick} aria-label="Close Audio Atelier">×</Link></div>
       </header>
 
       <main className="audio-atelier-stage">

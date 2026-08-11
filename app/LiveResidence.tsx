@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useExperienceExit } from "./nav-return";
 import { useEffect, useState, type CSSProperties } from "react";
 import { SceneAudioElement, SceneAudioTransport, useSceneAudio } from "./SceneAudio";
 
@@ -31,6 +32,7 @@ const assignmentScenes: Record<string, string> = {
 };
 
 export function LiveResidence() {
+  const exit = useExperienceExit();
   const [mode, setMode] = useState<"scenes" | "designer">("scenes");
   const [sceneId, setSceneId] = useState("relax");
   const scene = lightingScenes.find((item) => item.id === sceneId) ?? lightingScenes[1];
@@ -109,7 +111,7 @@ export function LiveResidence() {
           <button type="button" role="tab" aria-selected={mode === "scenes"} className={mode === "scenes" ? "is-active" : ""} onClick={() => setMode("scenes")}><span>01</span>Lighting scenes</button>
           <button type="button" role="tab" aria-selected={mode === "designer"} className={mode === "designer" ? "is-active" : ""} onClick={showDesigner}><span>02</span>Keypad designer</button>
         </div>
-        <Link className="control-suite-exit" href="/" aria-label="Close interactive experience">×</Link>
+        <Link className="control-suite-exit" href={exit.href} onClick={exit.onClick} aria-label="Close interactive experience">×</Link>
       </div>
 
       {mode === "scenes" ? (
