@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState, type CSSProperties } from "react";
+import { SceneAudioElement, SceneAudioTransport, useSceneAudio } from "./SceneAudio";
 
 const lightingScenes = [
   { id: "bright", name: "Bright", image: "/images/scene-morning.webp", level: 94, warmth: 18, time: "10:20", description: "Clear vertical light for working, choosing materials and seeing colour accurately.", metrics: [["DOWNLIGHT", "92%"], ["PENDANT", "76%"], ["ACCENT", "42%"]] },
@@ -48,6 +49,7 @@ export function LiveResidence() {
   const [projectName, setProjectName] = useState("Residence 01");
   const [roomName, setRoomName] = useState("Living gallery");
   const [roomCommand, setRoomCommand] = useState("WELCOME / SCENE RECALLED");
+  const music = useSceneAudio();
   const finish = finishes[finishIndex];
   const totalButtons = columns * buttons;
   const selectedIndex = Math.min(selectedButton, totalButtons - 1);
@@ -72,10 +74,18 @@ export function LiveResidence() {
 
   const pressKeypadButton = (label: string, index: number) => {
     setSelectedButton(index);
+    // Music recalls a scene like the others and, being the Music button, also
+    // brings the room up to sound. Calling play() inside the click keeps the
+    // browser's autoplay gate satisfied.
+    if (label === "Music") music.play();
     const targetScene = assignmentScenes[label];
     if (targetScene) chooseScene(targetScene, label);
     else setRoomCommand(`${label.toUpperCase()} / COMMAND SENT`);
   };
+
+  // The transport only lives on the room view, so the sound leaves with it
+  // rather than playing on from a screen with no way to stop it.
+  const showDesigner = () => { music.stop(); setMode("designer"); };
 
   const roomStyle = {
     "--room-level": `${1 + Math.max(0, level - scene.level) / 285}`,
@@ -92,11 +102,12 @@ export function LiveResidence() {
   } as CSSProperties;
   return (
     <div className={`residence-control-suite mode-${mode}`}>
+      <SceneAudioElement audio={music} />
       <div className="control-suite-topbar">
         <button className="control-suite-brand" type="button" onClick={() => setMode("scenes")}><i /><span>Smart Home Architects</span></button>
         <div className="control-suite-switch" role="tablist" aria-label="Interactive experience">
           <button type="button" role="tab" aria-selected={mode === "scenes"} className={mode === "scenes" ? "is-active" : ""} onClick={() => setMode("scenes")}><span>01</span>Lighting scenes</button>
-          <button type="button" role="tab" aria-selected={mode === "designer"} className={mode === "designer" ? "is-active" : ""} onClick={() => setMode("designer")}><span>02</span>Keypad designer</button>
+          <button type="button" role="tab" aria-selected={mode === "designer"} className={mode === "designer" ? "is-active" : ""} onClick={showDesigner}><span>02</span>Keypad designer</button>
         </div>
         <Link className="control-suite-exit" href="/" aria-label="Close interactive experience">×</Link>
       </div>
@@ -115,13 +126,14 @@ export function LiveResidence() {
           <div className="lighting-screen-status"><span>LOCAL / LIVE</span><b>{scene.time}</b></div>
 
           <aside className="room-keypad-control" aria-label="Configured wall control">
-            <div className="room-keypad-head"><span>WALL CONTROL / LIVE</span><button type="button" onClick={() => setMode("designer")}>EDIT</button></div>
+            <div className="room-keypad-head"><span>WALL CONTROL / LIVE</span><button type="button" onClick={showDesigner}>EDIT</button></div>
             <div className={`room-keypad-plate mount-${mount} type-${controlType}`}>
               <div className="configured-keypad-surface">
                 {Array.from({ length: totalButtons }, (_, index) => <button type="button" key={index} className={selectedIndex === index ? "is-selected" : ""} aria-label={`Recall ${assignments[index]}`} aria-pressed={selectedIndex === index} onClick={() => pressKeypadButton(assignments[index], index)}><i />{engraving && controlType !== "minimal" ? <span>{controlType === "hybrid" && index % 3 === 1 ? index % 2 ? "+" : "−" : assignments[index]}</span> : null}<b /></button>)}
               </div>
             </div>
             <p><i /><span>{roomCommand}</span></p>
+            <SceneAudioTransport audio={music} />
           </aside>
 
           <aside className="lighting-control-panel" aria-label="Lighting scene controls">
@@ -138,7 +150,7 @@ export function LiveResidence() {
           <div className="lighting-screen-footer">
             <div><span>ACTIVE SCENE</span><strong>{scene.name}</strong></div>
             <dl>{scene.metrics.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-            <button type="button" onClick={() => setMode("designer")}><span>DESIGN THE WALL CONTROL</span><b>→</b></button>
+            <button type="button" onClick={showDesigner}><span>DESIGN THE WALL CONTROL</span><b>→</b></button>
           </div>
         </section>
       ) : (

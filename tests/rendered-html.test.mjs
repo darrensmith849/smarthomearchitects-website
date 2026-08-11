@@ -55,20 +55,25 @@ test("every route in the sitemap renders", async () => {
   assert.deepEqual(broken, []);
 });
 
-test("every referenced image exists on disk", async () => {
+test("every referenced media file exists on disk", async () => {
   const sources = await appSources();
   const referenced = new Set();
   for (const [, source] of sources) {
-    for (const m of source.matchAll(/\/images\/[A-Za-z0-9._-]+\.[a-z]{3,4}/g)) referenced.add(m[0]);
+    for (const m of source.matchAll(/\/(?:images|video|audio)\/[A-Za-z0-9._-]+\.[a-z0-9]{2,4}/g)) referenced.add(m[0]);
   }
 
-  assert.ok(referenced.size > 20, `only found ${referenced.size} image references`);
+  assert.ok(referenced.size > 20, `only found ${referenced.size} media references`);
+  // The <source> fallbacks are the ones most likely to rot, because the page
+  // still plays when only the first of the pair resolves.
+  for (const family of ["/video/", "/audio/"]) {
+    assert.ok([...referenced].some((r) => r.startsWith(family)), `nothing referenced under ${family}`);
+  }
 
   const missing = [];
   for (const ref of referenced) {
     await access(new URL(`public${ref}`, root)).catch(() => missing.push(ref));
   }
-  assert.deepEqual(missing, [], "referenced images with no file — a rename probably missed a call site");
+  assert.deepEqual(missing, [], "referenced media with no file — a rename probably missed a call site");
 });
 
 test("every image carries alt text", async () => {
