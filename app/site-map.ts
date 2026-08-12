@@ -287,7 +287,15 @@ export function canonicalFor(href: string) {
   return canonicalAliases[href] ?? href;
 }
 
-export const pageCount = architectureLinks.length;
+/**
+ * Distinct pages — the inventory minus the aliases, which are second addresses
+ * for a body that is already counted. This is what the sitemap advertises and
+ * what the "N-page architecture" line in the nav and footer claims, so the two
+ * cannot drift from each other or from the routes that actually exist.
+ */
+export const canonicalLinks = architectureLinks.filter((item) => canonicalFor(item.href) === item.href);
+
+export const pageCount = canonicalLinks.length;
 
 export function getService(slug: string) { return servicePages.find((page) => page.slug === slug); }
 export function getSystemPage(slug: string) { return systemPages.find((page) => page.slug === slug); }

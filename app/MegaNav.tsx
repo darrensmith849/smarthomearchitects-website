@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NavSurface } from "./NavSurface";
 import { clearNavReopen, peekNavReopen, rememberNavReturn } from "./nav-return";
-import { categoryPages, projectPages, servicePages, studioPages, systemPages } from "./site-map";
+import { categoryPages, pageCount, projectPages, servicePages, studioPages, systemPages } from "./site-map";
 
 const groups = [
   {
@@ -241,7 +241,7 @@ export function MegaNav() {
                 </Link>
               );
             })()}
-            <div className="mega-panel-base"><span>40-page architecture</span><span>South Africa · SAST</span></div>
+            <div className="mega-panel-base"><span>{pageCount}-page architecture</span><span>South Africa · SAST</span></div>
           </div>
         )}
       </header>

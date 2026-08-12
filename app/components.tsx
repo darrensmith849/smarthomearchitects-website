@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LocalTime } from "./LocalTime";
 import { products } from "./data";
+import { pageCount } from "./site-map";
 import { MegaNav } from "./MegaNav";
 
 export function SiteHeader() {
@@ -49,7 +50,7 @@ export function SiteFooter() {
       </div>
       <div className="footer-base">
         <span>© {new Date().getFullYear()} Smart Home Architects</span>
-        <span>40 pages · One connected point of view</span>
+        <span>{pageCount} pages · One connected point of view</span>
       </div>
     </footer>
   );
