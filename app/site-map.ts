@@ -269,6 +269,24 @@ export const architectureLinks: LinkItem[] = [
   { label: "For professionals", href: "/professionals" },
 ];
 
+/**
+ * Routes that render another page's body and point their canonical at it.
+ *
+ * They stay in architectureLinks because they are real, reachable pages that
+ * the navigation links to — but a sitemap should only advertise canonical
+ * URLs, so it filters these out. Keeping the mapping here rather than in each
+ * route means the page that declares the canonical and the sitemap that has to
+ * respect it read from one place, and cannot disagree.
+ */
+export const canonicalAliases: Record<string, string> = {
+  "/services/whole-home": "/",
+};
+
+/** The URL a crawler should be pointed at for a given route. */
+export function canonicalFor(href: string) {
+  return canonicalAliases[href] ?? href;
+}
+
 export const pageCount = architectureLinks.length;
 
 export function getService(slug: string) { return servicePages.find((page) => page.slug === slug); }

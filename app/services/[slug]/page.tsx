@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ServiceTemplate } from "../../page-templates";
 import { WholeHomeStory } from "../../WholeHomeStory";
-import { getService, servicePages } from "../../site-map";
+import { canonicalAliases, getService, servicePages } from "../../site-map";
 
 /**
  * Whole home is the one service that is not a discipline alongside the others —
@@ -19,9 +19,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!page) return {};
   // One body at two addresses is duplicate content. The menu entry keeps its
   // own title so the tab and search snippet still read "Whole home", but the
-  // canonical sends every ranking signal to the homepage.
-  if (page.slug === WHOLE_HOME) {
-    return { title: page.title, description: page.intro, alternates: { canonical: "/" } };
+  // canonical sends every ranking signal to the homepage. The target comes
+  // from canonicalAliases, which is also what keeps this route out of the
+  // sitemap — one fact, read by both.
+  const canonical = canonicalAliases[`/services/${page.slug}`];
+  if (canonical) {
+    return { title: page.title, description: page.intro, alternates: { canonical } };
   }
   return { title: page.title, description: page.intro };
 }

@@ -48,11 +48,23 @@ test("every route in the sitemap renders", async () => {
   assert.ok(paths.length > 30, `sitemap listed only ${paths.length} routes`);
 
   const broken = [];
+  // A sitemap should only advertise canonical URLs. A page that names a
+  // different canonical is disclaiming itself, so listing it asks a crawler to
+  // index something the page says is not the address to index.
+  const disclaimed = [];
   for (const path of paths) {
     const response = await get(path);
-    if (response.status !== 200) broken.push(`${response.status} ${path}`);
+    if (response.status !== 200) {
+      broken.push(`${response.status} ${path}`);
+      continue;
+    }
+    const canonical = (await response.text()).match(/rel="canonical" href="([^"]*)"/)?.[1];
+    if (canonical && new URL(canonical, "http://localhost").pathname !== path) {
+      disclaimed.push(`${path} -> ${canonical}`);
+    }
   }
   assert.deepEqual(broken, []);
+  assert.deepEqual(disclaimed, [], "sitemap lists a URL whose canonical points elsewhere");
 });
 
 test("every referenced media file exists on disk", async () => {

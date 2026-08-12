@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { headers } from "next/headers";
-import { architectureLinks } from "./site-map";
+import { architectureLinks, canonicalFor } from "./site-map";
 
 /**
  * The host is read from the request, matching how layout.tsx builds
@@ -19,9 +19,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     requestHeaders.get("x-forwarded-proto") ?? (host.includes("localhost") ? "http" : "https");
   const baseUrl = `${protocol}://${host}`;
 
-  return architectureLinks.map((item) => ({
-    url: `${baseUrl}${item.href}`,
-    changeFrequency: item.href === "/" ? "weekly" : "monthly",
-    priority: item.href === "/" ? 1 : 0.7,
-  }));
+  // Only canonical URLs belong here. /services/whole-home renders the
+  // homepage's body and names "/" as its canonical, so listing it too would
+  // ask a crawler to index a page that disclaims itself.
+  return architectureLinks
+    .filter((item) => canonicalFor(item.href) === item.href)
+    .map((item) => ({
+      url: `${baseUrl}${item.href}`,
+      changeFrequency: item.href === "/" ? "weekly" : "monthly",
+      priority: item.href === "/" ? 1 : 0.7,
+    }));
 }
