@@ -1,0 +1,72 @@
+name: Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A newer push makes an in-flight run irrelevant.
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # package.json requires >=22.13.
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # Builds, then checks rendered routes, media references and alt text.
+      # The build output is what the server below serves, so this runs first.
+      - run: npm test
+
+      # ~95 MB, and it does not change between runs — key on the lockfile so a
+      # dependency bump refetches and nothing else does.
+      - name: Cache Playwright browser
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Playwright browser
+        run: |
+          npx playwright install-deps chromium
+          npx playwright install chromium --only-shell
+
+      # The audit measures rendered pages, so it needs something serving them.
+      # Production output rather than the dev server: it is what ships, and it
+      # does not hold a file watcher open for the rest of the job.
+      - name: Start production server
+        run: |
+          nohup npx vinext start --port 3000 > /tmp/server.log 2>&1 &
+          for _ in $(seq 1 60); do
+            curl -sf -o /dev/null http://localhost:3000/ && break
+            sleep 2
+          done
+          if ! curl -sf -o /dev/null http://localhost:3000/; then
+            echo "::error::production server did not come up"
+            cat /tmp/server.log
+            exit 1
+          fi
+
+      - name: Contrast audit
+        run: npm run audit:contrast
+        env:
+          BASE_URL: http://localhost:3000
+
+      - name: Server log
+        if: failure()
+        run: cat /tmp/server.log || true
