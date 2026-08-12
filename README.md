@@ -89,8 +89,26 @@ actions tied to the current ChatGPT user. Leave public content anonymous.
 
 - `npm run dev`: start local development
 - `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
+- `npm test`: build, then check the rendered routes, media references and alt text
+- `npm run audit:contrast`: WCAG AA colour-contrast sweep over every route
 - `npm run db:generate`: generate Drizzle migrations after schema changes
+
+### Contrast audit
+
+`npm run audit:contrast` needs a dev server already running and a one-time
+browser download:
+
+```bash
+npx playwright install chromium --only-shell
+npm run dev                 # in another shell
+npm run audit:contrast      # exits non-zero if anything fails
+```
+
+It opens each route, settles transitions, then clicks through the tabs and view
+switches — most of this site's small type lives in panels a default render never
+shows. Failures are grouped by the CSS rule that set the colour, naming the
+ancestor when the value was inherited, because that is the line you have to
+edit. Point it elsewhere with `BASE_URL=… npm run audit:contrast`.
 
 ## Learn More
 
