@@ -88,6 +88,31 @@ test("every referenced media file exists on disk", async () => {
   assert.deepEqual(missing, [], "referenced media with no file — a rename probably missed a call site");
 });
 
+test("every experience page offers its own way home", async () => {
+  const sitemap = await get("/sitemap.xml");
+  const experiences = [...(await sitemap.text()).matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map((m) => new URL(m[1]).pathname)
+    .filter((path) => path.startsWith("/experience/"));
+
+  assert.ok(experiences.length >= 6, `expected the experience routes, found ${experiences.length}`);
+
+  // These are full-screen takeovers: CSS hides the site header, so the only
+  // way out is the chrome each one draws itself. Live Residence shipped with
+  // its wordmark as a button that reset an internal tab, which left a visitor
+  // who landed there directly with nothing that looked like an exit.
+  // Match "-brand" rather than "brand": the site header is still in the DOM on
+  // these pages, hidden by CSS, and it carries class="brand" with an href="/".
+  // Matching loosely finds that one and passes while the visible wordmark is
+  // a dead button — the first version of this test did exactly that.
+  const stranded = [];
+  for (const path of experiences) {
+    const html = await (await get(path)).text();
+    const brand = html.match(/<a[^>]*class="[^"]*-brand[^"]*"[^>]*>/);
+    if (!brand || !/href="\/"/.test(brand[0])) stranded.push(path);
+  }
+  assert.deepEqual(stranded, [], "experience page whose own wordmark does not go home");
+});
+
 test("every image carries alt text", async () => {
   const sources = await appSources();
   const missing = [];

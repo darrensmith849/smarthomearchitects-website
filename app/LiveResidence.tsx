@@ -106,7 +106,11 @@ export function LiveResidence() {
     <div className={`residence-control-suite mode-${mode}`}>
       <SceneAudioElement audio={music} />
       <div className="control-suite-topbar">
-        <button className="control-suite-brand" type="button" onClick={() => setMode("scenes")}><i /><span>Smart Home Architects</span></button>
+        {/* The wordmark goes home, as it does in the other five experiences and
+            everywhere else on the site. It used to be a button that reset the
+            mode to "scenes" — which the 01 tab beside it already does, so the
+            one control a visitor reaches for to leave appeared to do nothing. */}
+        <Link className="control-suite-brand" href="/"><i /><span>Smart Home Architects</span></Link>
         <div className="control-suite-switch" role="tablist" aria-label="Interactive experience">
           <button type="button" role="tab" aria-selected={mode === "scenes"} className={mode === "scenes" ? "is-active" : ""} onClick={() => setMode("scenes")}><span>01</span>Lighting scenes</button>
           <button type="button" role="tab" aria-selected={mode === "designer"} className={mode === "designer" ? "is-active" : ""} onClick={showDesigner}><span>02</span>Keypad designer</button>
