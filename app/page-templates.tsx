@@ -11,12 +11,13 @@ import { LightingLayers } from "./LightingLayers";
 import { NetworkingStudy } from "./NetworkingStudy";
 import { SecurityStudy } from "./SecurityStudy";
 import { ShadingStudy } from "./ShadingStudy";
-import { ServicePage, projectPages, servicePages } from "./site-map";
+import { ServicePage, atelierByService, projectPages, servicePages } from "./site-map";
 import { SystemCanvas } from "./SystemCanvas";
 
 export function ServiceTemplate({ page }: { page: ServicePage }) {
   const currentIndex = servicePages.findIndex((item) => item.slug === page.slug);
   const next = servicePages[(currentIndex + 1) % servicePages.length];
+  const atelier = atelierByService[page.slug];
   const hasInteractiveStudy = page.slug === "lighting" || page.slug === "shading" || page.slug === "climate" || page.slug === "audio" || page.slug === "cinema" || page.slug === "security" || page.slug === "networking" || page.slug === "energy";
 
   return (
@@ -45,6 +46,11 @@ export function ServiceTemplate({ page }: { page: ServicePage }) {
         <div>
           <p className="eyebrow">{page.title}</p>
           <h2>{page.philosophy}</h2>
+          {atelier && (
+            <Link className="text-link service-atelier-link" href={atelier}>
+              Step into the {page.title.toLowerCase()} atelier <span aria-hidden="true">→</span>
+            </Link>
+          )}
         </div>
       </section>
 

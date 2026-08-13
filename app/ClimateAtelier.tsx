@@ -55,7 +55,7 @@ export function ClimateAtelier() {
           <button type="button" role="tab" aria-selected={view === "room"} className={view === "room" ? "is-active" : ""} onClick={() => setView("room")}><span>01</span>Room</button>
           <button type="button" role="tab" aria-selected={view === "section"} className={view === "section" ? "is-active" : ""} onClick={() => setView("section")}><span>02</span>Air section</button>
         </div>
-        <div className="climate-atelier-links"><Link href="/experience/shading-atelier">Shading atelier</Link><Link className="climate-atelier-exit" href={exit.href} onClick={exit.onClick} aria-label="Close Climate Atelier">×</Link></div>
+        <div className="climate-atelier-links"><Link href="/services/climate">Climate, in writing</Link><Link href="/experience/shading-atelier">Shading atelier</Link><Link className="climate-atelier-exit" href={exit.href} onClick={exit.onClick} aria-label="Close Climate Atelier">×</Link></div>
       </div>
 
       <section className="climate-atelier-stage">

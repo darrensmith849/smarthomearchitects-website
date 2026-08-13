@@ -52,7 +52,7 @@ export function ShadingAtelier() {
       <div className="shading-atelier-topbar">
         <Link className="shading-atelier-brand" href="/"><i /><span>Smart Home Architects</span></Link>
         <div className="shading-atelier-title"><span>03</span><b>Shading atelier</b></div>
-        <div className="shading-atelier-links"><Link href="/experience/live-residence">Lighting studio</Link><Link className="shading-atelier-exit" href={exit.href} onClick={exit.onClick} aria-label="Close Shading Atelier">×</Link></div>
+        <div className="shading-atelier-links"><Link href="/services/shading">Shading, in writing</Link><Link href="/experience/live-residence">Lighting studio</Link><Link className="shading-atelier-exit" href={exit.href} onClick={exit.onClick} aria-label="Close Shading Atelier">×</Link></div>
       </div>
 
       <section className="shading-atelier-stage">

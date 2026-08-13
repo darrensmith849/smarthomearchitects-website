@@ -270,6 +270,29 @@ export const architectureLinks: LinkItem[] = [
 ];
 
 /**
+ * Four subjects exist twice: as a written page under /services, and as a
+ * full-screen atelier you can operate. That is deliberate — the service page
+ * carries the argument and an embedded study, the atelier is the room itself —
+ * but the navigation used to list both in one flat run of fifteen, where
+ * "Shading atelier" and "Shading" read as the same thing said twice.
+ *
+ * They are two groups in the nav now, and each page links to its counterpart.
+ * The pairing lives here so the menu, the service template and the ateliers
+ * cannot disagree about which subjects have both.
+ */
+export const atelierByService: Record<string, string> = {
+  shading: "/experience/shading-atelier",
+  climate: "/experience/climate-atelier",
+  audio: "/experience/audio-atelier",
+  security: "/experience/security-observatory",
+};
+
+/** The written page for an atelier route, for the link back out. */
+export const serviceByAtelier: Record<string, string> = Object.fromEntries(
+  Object.entries(atelierByService).map(([slug, path]) => [path, `/services/${slug}`]),
+);
+
+/**
  * Routes that render another page's body and point their canonical at it.
  *
  * They stay in architectureLinks because they are real, reachable pages that

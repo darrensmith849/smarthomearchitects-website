@@ -12,22 +12,31 @@ const groups = [
     id: "experience",
     label: "Experience",
     index: "01",
-    description: "The systems that shape everyday life.",
+    description: "Rooms you can operate, not read about.",
     image: "/images/scene-welcome.webp",
     links: [
-      ["Live residence", "/experience/live-residence", "Explore the home in motion"],
+      ["Live residence", "/experience/live-residence", "Operate the home in motion"],
       ["Shading atelier", "/experience/shading-atelier", "Compose daylight, privacy and view"],
       ["Climate atelier", "/experience/climate-atelier", "See comfort, air and silence"],
       ["Audio atelier", "/experience/audio-atelier", "Place sound through the room"],
       ["Security observatory", "/experience/security-observatory", "Explore privacy in layers"],
       ["Water & landscape atelier", "/experience/water-landscape-atelier", "Follow every drop through the estate"],
+    ],
+  },
+  {
+    id: "disciplines",
+    label: "Disciplines",
+    index: "02",
+    description: "How each system is designed, in writing.",
+    image: "/images/service-lighting.webp",
+    links: [
       ["Whole home", "/services/whole-home", "One connected experience"],
       ["Lighting", "/services/lighting", "Light in rhythm with the day"],
-      ["Shading", "/services/shading", "Daylight and privacy"],
-      ["Climate", "/services/climate", "Comfort and air"],
-      ["Audio", "/services/audio", "Architectural sound"],
+      ["Shading", "/services/shading", "Daylight and privacy · has an atelier"],
+      ["Climate", "/services/climate", "Comfort and air · has an atelier"],
+      ["Audio", "/services/audio", "Architectural sound · has an atelier"],
       ["Cinema", "/services/cinema", "Private immersion"],
-      ["Security", "/services/security", "Discreet protection"],
+      ["Security", "/services/security", "Discreet protection · has an observatory"],
       ["Networking", "/services/networking", "Invisible infrastructure"],
       ["Energy", "/services/energy", "Resilience and control"],
     ],
@@ -35,7 +44,7 @@ const groups = [
   {
     id: "intelligence",
     label: "Intelligence",
-    index: "02",
+    index: "03",
     description: "How the invisible layer is designed.",
     image: "/images/atlas.webp",
     links: [
@@ -50,7 +59,7 @@ const groups = [
   {
     id: "collection",
     label: "Collection",
-    index: "03",
+    index: "04",
     description: "Objects worth seeing. Systems designed not to be.",
     image: "/images/axis.webp",
     links: [
@@ -68,7 +77,7 @@ const groups = [
   {
     id: "studio",
     label: "Studio",
-    index: "04",
+    index: "05",
     description: "The thinking, people and homes behind the work.",
     image: "/images/courtyard.webp",
     links: [

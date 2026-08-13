@@ -1260,3 +1260,7 @@ body:has(.water-atelier){overflow:hidden;background:#111615}body:has(.water-atel
   margin: 0 -5px;
   background: rgba(20, 24, 21, .78);
 }
+
+/* The written page's way into the room it describes. Sits under the philosophy
+   statement, where a reader has just been told what the system is for. */
+.service-atelier-link{margin-top:34px}
