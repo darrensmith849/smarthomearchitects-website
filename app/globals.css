@@ -1279,3 +1279,52 @@ body:has(.water-atelier){overflow:hidden;background:#111615}body:has(.water-atel
 /* The written page's way into the room it describes. Sits under the philosophy
    statement, where a reader has just been told what the system is for. */
 .service-atelier-link{margin-top:34px}
+
+/* System architecture — the layer stack */
+.architecture-lab{position:relative;isolation:isolate;min-height:100svh;display:grid;grid-template-columns:.9fr 1.05fr .95fr;gap:56px;align-items:center;padding:150px max(5.5vw,30px) 90px;background:var(--night);color:#fff;overflow:hidden}
+.architecture-lab-copy{position:relative;z-index:3;max-width:430px}
+.architecture-lab-copy h1{margin:22px 0 26px;font-size:clamp(54px,5.6vw,86px);line-height:.9;letter-spacing:-.075em;font-weight:440}
+.architecture-lab-copy>p:last-child{margin:0;font-size:16px;line-height:1.7;color:var(--on-dark)}
+.architecture-stack{position:relative;z-index:3;display:flex;flex-direction:column;gap:14px;perspective:1400px}
+.architecture-slab{position:relative;display:grid;grid-template-columns:44px 1fr;grid-template-rows:auto auto;column-gap:16px;align-items:baseline;width:100%;min-height:104px;padding:22px 24px;border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);background:rgba(255,255,255,.03);color:#fff;text-align:left;cursor:pointer;transform:translateZ(calc(var(--slab) * -14px));transition:background .45s ease,border-color .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+.architecture-slab:hover{background:rgba(255,255,255,.06)}
+.architecture-slab.is-active{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.34);transform:translateZ(0) translateX(10px)}
+.architecture-slab>span{grid-row:1/3;font-family:var(--font-geist-mono),monospace;font-size:11px;letter-spacing:.14em;color:var(--amber-text)}
+.architecture-slab strong{font-size:26px;font-weight:450;letter-spacing:-.03em}
+.architecture-slab small{grid-column:2;font-size:11px;letter-spacing:.02em;color:var(--on-dark)}
+.architecture-slab>i{position:absolute;right:22px;top:50%;width:7px;height:7px;margin-top:-3px;border-radius:50%;background:rgba(255,255,255,.22);transition:background .4s ease,box-shadow .4s ease}
+.architecture-slab.is-active>i{background:var(--amber);box-shadow:0 0 14px rgba(216,137,99,.7)}
+.architecture-stack-foot{display:flex;align-items:center;gap:12px;margin:6px 0 0;font-family:var(--font-geist-mono),monospace;font-size:11px;letter-spacing:.14em;color:var(--on-dark)}
+.architecture-stack-foot i{flex:1;height:1px;background:rgba(255,255,255,.18)}
+.architecture-readout{position:relative;z-index:3;padding:30px 30px 34px;border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);background:rgba(255,255,255,.04)}
+.architecture-readout-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:15px;border-bottom:1px solid rgba(255,255,255,.16);font-family:var(--font-geist-mono),monospace;font-size:11px;letter-spacing:.14em;color:var(--on-dark)}
+.architecture-readout-head b{font-weight:500;color:#fff}
+.architecture-readout h2{margin:24px 0 14px;font-size:29px;line-height:1.05;letter-spacing:-.045em;font-weight:450}
+.architecture-readout>p{margin:0 0 22px;font-size:13px;line-height:1.75;color:var(--on-dark)}
+.architecture-readout ul{margin:0 0 24px;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.architecture-readout li{position:relative;padding-left:19px;font-size:13px;color:var(--on-dark)}
+.architecture-readout li:before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--amber)}
+.architecture-readout dl{display:flex;flex-direction:column;gap:0;margin:0;padding-top:6px;border-top:1px solid rgba(255,255,255,.16)}
+.architecture-readout dl div{display:flex;justify-content:space-between;align-items:center;min-height:42px;border-bottom:1px solid rgba(255,255,255,.1)}
+.architecture-readout dt{font-family:var(--font-geist-mono),monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark)}
+.architecture-readout dd{margin:0;font-family:var(--font-geist-mono),monospace;font-size:11px;letter-spacing:.1em;color:#fff}
+.architecture-rule{display:grid;grid-template-columns:.65fr 2.35fr;gap:45px;align-content:center;min-height:560px;background:var(--paper-deep)}
+.architecture-rule h2{max-width:1020px;margin:14px 0 22px;font-size:clamp(40px,4.4vw,66px);line-height:1.02;letter-spacing:-.055em;font-weight:450}
+.architecture-rule p:not(.eyebrow){max-width:620px;margin:0 0 26px;font-size:16px;line-height:1.7;color:var(--muted)}
+.architecture-notes{background:var(--paper)}
+.architecture-notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:52px}
+.architecture-notes-grid article{padding-top:22px;border-top:1px solid var(--line)}
+.architecture-notes-grid span{font-family:var(--font-geist-mono),monospace;font-size:11px;letter-spacing:.14em;color:var(--amber-text)}
+.architecture-notes-grid h3{margin:16px 0 11px;font-size:23px;font-weight:460;letter-spacing:-.03em}
+.architecture-notes-grid p{margin:0;font-size:13px;line-height:1.7;color:var(--muted)}
+@media (max-width:1050px){
+  .architecture-lab{grid-template-columns:1fr;gap:40px;min-height:0;padding:118px 22px 70px}
+  .architecture-rule{grid-template-columns:1fr;gap:24px;min-height:0}
+  .architecture-notes-grid{grid-template-columns:1fr;gap:30px}
+}
+@media (max-width:760px){
+  .architecture-lab{padding:104px 18px 60px}
+  .architecture-slab{min-height:92px;padding:18px;transform:none}
+  .architecture-slab.is-active{transform:translateX(6px)}
+  .architecture-readout{padding:24px 20px 26px}
+}

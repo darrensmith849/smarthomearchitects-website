@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { EditorialTemplate } from "../../page-templates";
 import { SceneExperience } from "../../SceneExperience";
+import { SystemArchitecture } from "../../SystemArchitecture";
 import { getSystemPage, systemPages } from "../../site-map";
 
 export function generateStaticParams() { return systemPages.map((page) => ({ slug: page.slug })); }
@@ -15,5 +16,6 @@ export default async function SystemPageRoute({ params }: { params: Promise<{ sl
   const page = getSystemPage((await params).slug);
   if (!page) notFound();
   if (page.slug === "scenes") return <SceneExperience />;
+  if (page.slug === "architecture") return <SystemArchitecture />;
   return <EditorialTemplate section="Intelligence" number={page.number} title={page.title} headline={page.headline} intro={page.intro} image={page.image} topics={page.topics} />;
 }
