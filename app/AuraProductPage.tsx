@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import type { Product } from "./data";
 import { ConsultationCta, ProductCollection } from "./components";
+import { ExplodeToggle, LayerList } from "./product-kit";
+import { useSequence } from "./use-sequence";
 
 const presenceScenarios = [
   { id: "reading", index: "01", name: "Still reading", state: "PRESENT / STILL", motion: "0.8 mm", lux: "312 lx", temperature: "21.8°C", humidity: "46%", air: "Stable", x: 36, y: 64, decision: "Task light and comfort hold", description: "Fine-motion radar sees the small rhythm of a seated reader. The room stays composed without asking for a wave or button press." },
@@ -65,6 +67,8 @@ type ScenarioId = (typeof presenceScenarios)[number]["id"];
 type RoomId = (typeof roomProfiles)[number]["id"];
 type AuraSpecGroup = keyof typeof auraSpecifications;
 
+const scenarioIds = presenceScenarios.map((item) => item.id);
+
 export function AuraProductPage({ product }: { product: Product }) {
   const [scenarioId, setScenarioId] = useState<ScenarioId>("reading");
   const [playing, setPlaying] = useState(false);
@@ -78,14 +82,7 @@ export function AuraProductPage({ product }: { product: Product }) {
   const room = roomProfiles.find((item) => item.id === roomId) ?? roomProfiles[0];
   const coverage = Math.max(4.8, 7 - Math.max(0, ceilingHeight - 2.7) * .85);
 
-  useEffect(() => {
-    if (!playing || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => setScenarioId((current) => {
-      const index = presenceScenarios.findIndex((item) => item.id === current);
-      return presenceScenarios[(index + 1) % presenceScenarios.length].id;
-    }), 3300);
-    return () => window.clearInterval(timer);
-  }, [playing]);
+  useSequence(scenarioIds, playing, 3300, setScenarioId);
 
   const auraStyle = { "--presence-x": `${scenario.x}%`, "--presence-y": `${scenario.y}%`, "--coverage-scale": `${coverage / 7}`, "--mount-offset": mount === "flush" ? "2px" : "18px" } as CSSProperties;
 
@@ -149,8 +146,8 @@ export function AuraProductPage({ product }: { product: Product }) {
       </section>
 
       <section className="aura-anatomy section-pad">
-        <div className="aura-anatomy-head"><div className="section-label"><span>04</span><span>Product anatomy</span></div><div><p className="eyebrow">Five camera-free layers</p><h2>Less hardware.<br />More context.</h2></div><button type="button" onClick={() => setExploded((value) => !value)} aria-pressed={exploded}><span>{exploded ? "Assemble Aura" : "Separate layers"}</span><b>{exploded ? "−" : "+"}</b></button></div>
-        <div className="aura-anatomy-body"><div className={`aura-exploded-object${exploded ? " is-exploded" : ""}`} aria-hidden="true"><div className="aura-disc-stack">{auraLayers.map(([index, title], layerIndex) => <div className={`aura-hardware-disc disc-${layerIndex + 1}`} key={index} style={{ "--aura-layer": layerIndex } as CSSProperties}><span>{index} / {title.toUpperCase()}</span><i /><b /></div>)}</div><div className="aura-anatomy-depth"><span>18 MM</span><i /></div></div><div className="aura-anatomy-list">{auraLayers.map(([index, title, copy]) => <article key={index}><span>{index}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div></div>
+        <div className="aura-anatomy-head"><div className="section-label"><span>04</span><span>Product anatomy</span></div><div><p className="eyebrow">Five camera-free layers</p><h2>Less hardware.<br />More context.</h2></div><ExplodeToggle exploded={exploded} onToggle={() => setExploded((value) => !value)} assembleLabel="Assemble Aura" separateLabel="Separate layers" /></div>
+        <div className="aura-anatomy-body"><div className={`aura-exploded-object${exploded ? " is-exploded" : ""}`} aria-hidden="true"><div className="aura-disc-stack">{auraLayers.map(([index, title], layerIndex) => <div className={`aura-hardware-disc disc-${layerIndex + 1}`} key={index} style={{ "--aura-layer": layerIndex } as CSSProperties}><span>{index} / {title.toUpperCase()}</span><i /><b /></div>)}</div><div className="aura-anatomy-depth"><span>18 MM</span><i /></div></div><LayerList layers={auraLayers} className="aura-anatomy-list" /></div>
       </section>
 
       <section className="aura-spec-library section-pad"><div className="aura-spec-head"><div className="section-label"><span>05</span><span>Specification library</span></div><h2>Everything sensed.<br />Nothing excessive.</h2><p>Indicative studio-series specifications. Final coverage, mounting and integration are confirmed against the reflected ceiling plan and room use.</p></div><div className="aura-spec-console"><div className="aura-spec-tabs" role="tablist" aria-label="Aura specification category">{(Object.keys(auraSpecifications) as AuraSpecGroup[]).map((group, index) => <button type="button" role="tab" aria-selected={group === specGroup} key={group} className={group === specGroup ? "is-active" : ""} onClick={() => setSpecGroup(group)}><span>0{index + 1}</span><b>{group}</b></button>)}</div><div className="aura-spec-table" key={specGroup}>{auraSpecifications[specGroup].map(([label, value], index) => <div key={label} style={{ animationDelay: `${index * 45}ms` }}><span>{label}</span><strong>{value}</strong></div>)}</div><div className="aura-spec-meta"><span>MODEL / AUR-02</span><span>REVISION / STUDIO 2026.2</span><span>PRIVACY / CAMERA-FREE</span></div></div></section>

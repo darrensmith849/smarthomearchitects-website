@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import type { Product } from "./data";
 import { ConsultationCta, ProductCollection } from "./components";
+import { ExplodeToggle, LayerList } from "./product-kit";
+import { useSequence } from "./use-sequence";
 
 const continuityModes = [
   { id: "normal", index: "01", name: "Normal", label: "PRIMARY / HEALTHY", latency: "24 ms", availability: "100%", power: "Mains + UPS", detail: "Every discipline resolves locally while the encrypted care path remains available by consent.", events: ["All room buses healthy", "Primary network path active", "Configuration backup current"] },
@@ -70,6 +72,8 @@ const specificationGroups = {
 type ContinuityId = (typeof continuityModes)[number]["id"];
 type SpecGroup = keyof typeof specificationGroups;
 
+const continuityIds = continuityModes.map((item) => item.id);
+
 export function AtlasProductPage({ product }: { product: Product }) {
   const [continuityId, setContinuityId] = useState<ContinuityId>("normal");
   const [testing, setTesting] = useState(false);
@@ -77,14 +81,7 @@ export function AtlasProductPage({ product }: { product: Product }) {
   const [specGroup, setSpecGroup] = useState<SpecGroup>("system");
   const mode = continuityModes.find((item) => item.id === continuityId) ?? continuityModes[0];
 
-  useEffect(() => {
-    if (!testing || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => setContinuityId((current) => {
-      const index = continuityModes.findIndex((item) => item.id === current);
-      return continuityModes[(index + 1) % continuityModes.length].id;
-    }), 3200);
-    return () => window.clearInterval(timer);
-  }, [testing]);
+  useSequence(continuityIds, testing, 3200, setContinuityId);
 
   return (
     <div className="atlas-product-page">
@@ -137,14 +134,14 @@ export function AtlasProductPage({ product }: { product: Product }) {
         <div className="atlas-anatomy-head">
           <div className="section-label"><span>02</span><span>Internal architecture</span></div>
           <div><p className="eyebrow">Six serviceable layers</p><h2>Built to think.<br />Designed to last.</h2></div>
-          <button type="button" onClick={() => setExploded((value) => !value)} aria-pressed={exploded}><span>{exploded ? "Assemble Atlas" : "Separate architecture"}</span><b>{exploded ? "−" : "+"}</b></button>
+          <ExplodeToggle exploded={exploded} onToggle={() => setExploded((value) => !value)} assembleLabel="Assemble Atlas" separateLabel="Separate architecture" />
         </div>
         <div className="atlas-anatomy-body">
           <div className={`atlas-exploded-model${exploded ? " is-exploded" : ""}`} aria-hidden="true">
             <div className="atlas-layer-stack">{atlasLayers.map(([index, title], layerIndex) => <div className={`atlas-hardware-layer layer-${layerIndex + 1}`} key={index} style={{ "--atlas-layer": layerIndex } as CSSProperties}><span>{index} / {title.toUpperCase()}</span><i /><i /><i /><b /></div>)}</div>
             <div className="atlas-model-axis"><span>68 MM</span><i /></div>
           </div>
-          <div className="atlas-layer-list">{atlasLayers.map(([index, title, copy]) => <article key={index}><span>{index}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div>
+          <LayerList layers={atlasLayers} className="atlas-layer-list" />
         </div>
       </section>
 
