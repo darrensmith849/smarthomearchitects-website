@@ -250,6 +250,7 @@ export const projectPages = [
 export const architectureLinks: LinkItem[] = [
   { label: "Home", href: "/" },
   { label: "Live Residence", href: "/experience/live-residence" },
+  { label: "Light Desk", href: "/experience/light-desk" },
   { label: "Shading Atelier", href: "/experience/shading-atelier" },
   { label: "Climate Atelier", href: "/experience/climate-atelier" },
   { label: "Audio Atelier", href: "/experience/audio-atelier" },

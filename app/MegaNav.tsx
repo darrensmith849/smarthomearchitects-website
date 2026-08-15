@@ -16,6 +16,7 @@ const groups = [
     image: "/images/scene-welcome.webp",
     links: [
       ["Live residence", "/experience/live-residence", "Operate the home in motion"],
+      ["Light desk", "/experience/light-desk", "Dim five circuits over one room"],
       ["Shading atelier", "/experience/shading-atelier", "Compose daylight, privacy and view"],
       ["Climate atelier", "/experience/climate-atelier", "See comfort, air and silence"],
       ["Audio atelier", "/experience/audio-atelier", "Place sound through the room"],
@@ -110,6 +111,7 @@ const previews: Record<string, string> = {
   ...byRoute("/products", categoryPages),
   ...byRoute("/projects", projectPages),
   "/experience/live-residence": "/images/scene-studio-relax.webp",
+  "/experience/light-desk": "/images/hero.webp",
   "/experience/shading-atelier": "/images/shading-atelier-filtered.webp",
   "/experience/climate-atelier": "/images/climate-atelier-pavilion.webp",
   "/experience/audio-atelier": "/images/audio-atelier-salon.webp",
