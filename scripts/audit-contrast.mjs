@@ -30,11 +30,14 @@ const BASE = process.env.BASE_URL ?? process.argv[2] ?? "http://localhost:3001";
 const VIEWPORT = { width: 1440, height: 900 };
 
 /** Controls that reveal another panel. Capped per page so one atelier with a
- *  long scene list cannot dominate the run. */
+ *  long scene list cannot dominate the run — but the cap has to clear the
+ *  densest page or it silently under-measures it. /products/veil carries 23
+ *  buttons, aura 22, atlas 15; at the old cap of 10 roughly half of each was
+ *  never measured. Raise this alongside any page that gets busier. */
 const TOGGLES =
   '[role="tab"], [aria-expanded], [class*="-switch"] button, [class*="-tabs"] button, ' +
   '[class*="-mode-buttons"] button, [class*="-view-switch"] button, [class*="-controls"] button';
-const MAX_TOGGLES = 10;
+const MAX_TOGGLES = 26;
 
 const SETTLE = `*,*::before,*::after{
   animation-duration:.001ms!important;animation-delay:0s!important;

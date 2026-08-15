@@ -11,6 +11,8 @@ import { LightingLayers } from "./LightingLayers";
 import { NetworkingStudy } from "./NetworkingStudy";
 import { SecurityStudy } from "./SecurityStudy";
 import { ShadingStudy } from "./ShadingStudy";
+import { countWord } from "./copy";
+import { products } from "./data";
 import { ServicePage, atelierByService, projectPages, servicePages } from "./site-map";
 import { SystemCanvas } from "./SystemCanvas";
 
@@ -192,7 +194,7 @@ export function CategoryTemplate({ page }: { page: { slug: string; title: string
       </section>
 
       <section className="category-products section-pad">
-        <div className="section-head"><div className="section-label"><span>02</span><span>Studio edit</span></div><h2>Three reference<br />objects.</h2><p>The final product schedule is curated around the architecture, regional requirements and integration set.</p></div>
+        <div className="section-head"><div className="section-label"><span>02</span><span>Studio edit</span></div><h2>{countWord(products.length)} reference<br />objects.</h2><p>The final product schedule is curated around the architecture, regional requirements and integration set.</p></div>
         <ProductCollection />
       </section>
 

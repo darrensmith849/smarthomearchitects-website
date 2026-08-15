@@ -52,7 +52,7 @@ export function LightingLayers() {
   return (
     <section className="lighting-study section-pad">
       <div className="lighting-study-intro">
-        <div className="section-label section-label-light"><span>02</span><span>Lighting laboratory</span></div>
+        <div className="section-label"><span>02</span><span>Lighting laboratory</span></div>
         <div>
           <p className="eyebrow eyebrow-light">One room · Four layers</p>
           <h2>Good light is never<br />just one light.</h2>

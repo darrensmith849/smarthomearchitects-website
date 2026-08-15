@@ -57,7 +57,7 @@ export function AxisProductExperience({ product }: { product: Product }) {
     <>
       <section className={`axis-scene-lab is-${scene.id}`}>
         <div className="axis-lab-intro">
-          <div className="section-label section-label-light"><span>01</span><span>Scene laboratory</span></div>
+          <div className="section-label"><span>01</span><span>Scene laboratory</span></div>
           <div><p className="eyebrow eyebrow-light">Four touch zones · Whole-room response</p><h2>Touch one line.<br />Move the room.</h2></div>
           <p>Axis is not a collection of switches. Each zone recalls a coordinated architectural state across light, shade, comfort, sound and security.</p>
         </div>
@@ -129,7 +129,7 @@ export function AxisProductExperience({ product }: { product: Product }) {
 
       <section className="axis-signal-path section-pad">
         <div className="axis-signal-intro">
-          <div className="section-label section-label-light"><span>04</span><span>Signal path</span></div>
+          <div className="section-label"><span>04</span><span>Signal path</span></div>
           <h2>One gesture.<br />Thirty-four milliseconds.</h2>
           <p>The response is processed locally. No cloud round trip, visible loading state or collection of unrelated commands.</p>
         </div>

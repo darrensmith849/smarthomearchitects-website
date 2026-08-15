@@ -88,6 +88,21 @@ test("every referenced media file exists on disk", async () => {
   assert.deepEqual(missing, [], "referenced media with no file — a rename probably missed a call site");
 });
 
+test("no product slug shadows a category slug", async () => {
+  // /products/[slug] resolves getProduct() before getCategoryPage(), and
+  // generateStaticParams concatenates both lists. A product named "shades"
+  // would quietly replace the shades category page while still returning 200
+  // and still sitting in the sitemap — every other assertion here would pass
+  // and the content would simply be wrong.
+  const sitemap = await get("/sitemap.xml");
+  const paths = [...(await sitemap.text()).matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map((m) => new URL(m[1]).pathname)
+    .filter((path) => path.startsWith("/products/"));
+
+  const duplicates = paths.filter((path, index) => paths.indexOf(path) !== index);
+  assert.deepEqual(duplicates, [], "a product and a category resolve to the same URL");
+});
+
 test("every experience page offers its own way home", async () => {
   const sitemap = await get("/sitemap.xml");
   const experiences = [...(await sitemap.text()).matchAll(/<loc>([^<]+)<\/loc>/g)]

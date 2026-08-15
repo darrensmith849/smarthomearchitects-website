@@ -73,7 +73,7 @@ export function NetworkingStudy() {
   return (
     <section className="network-study section-pad">
       <div className="network-study-intro">
-        <div className="section-label section-label-light"><span>02</span><span>Network observatory</span></div>
+        <div className="section-label"><span>02</span><span>Network observatory</span></div>
         <div>
           <p className="eyebrow eyebrow-light">One home · Every digital path</p>
           <h2>Always available.<br />Never demanding attention.</h2>

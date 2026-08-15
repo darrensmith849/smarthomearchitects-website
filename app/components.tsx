@@ -56,10 +56,16 @@ export function SiteFooter() {
   );
 }
 
-export function ProductCollection({ compact = false }: { compact?: boolean }) {
+/**
+ * The studio collection. `exclude` drops the product whose page you are
+ * already on — a related-products strip that links to itself is noise — and
+ * `limit` keeps that strip a strip rather than a wall as the collection grows.
+ */
+export function ProductCollection({ compact = false, exclude, limit }: { compact?: boolean; exclude?: string; limit?: number }) {
+  const shown = products.filter((product) => product.slug !== exclude).slice(0, limit ?? products.length);
   return (
     <div className={`product-grid${compact ? " product-grid-compact" : ""}`}>
-      {products.map((product) => (
+      {shown.map((product) => (
         <Link className="product-card" href={`/products/${product.slug}`} key={product.slug}>
           <div className="product-image-wrap">
             <img loading="lazy" decoding="async" src={product.image} alt={`${product.name} ${product.category}`} />

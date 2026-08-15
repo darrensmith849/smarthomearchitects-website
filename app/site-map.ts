@@ -1,3 +1,5 @@
+import { products } from "./data";
+
 export type LinkItem = { label: string; href: string; note?: string };
 
 export type ServicePage = {
@@ -259,9 +261,10 @@ export const architectureLinks: LinkItem[] = [
   ...systemPages.map((page) => ({ label: page.title, href: `/systems/${page.slug}` })),
   { label: "Collection", href: "/products" },
   ...categoryPages.map((page) => ({ label: page.title, href: `/products/${page.slug}` })),
-  { label: "Axis", href: "/products/axis" },
-  { label: "Aura", href: "/products/aura" },
-  { label: "Atlas Core", href: "/products/atlas" },
+  // Derived, not listed. Hand-listing these is how Veil came to be missing from
+  // the sitemap — and therefore from the "every sitemap route renders" test —
+  // for as long as it has existed.
+  ...products.map((product) => ({ label: product.name, href: `/products/${product.slug}` })),
   { label: "Projects", href: "/projects" },
   { label: "Courtyard House", href: "/projects/vista-house" },
   ...projectPages.map((page) => ({ label: page.title, href: `/projects/${page.slug}` })),

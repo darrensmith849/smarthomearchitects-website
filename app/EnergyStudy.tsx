@@ -67,7 +67,7 @@ export function EnergyStudy() {
   return (
     <section className="energy-study section-pad">
       <div className="energy-study-intro">
-        <div className="section-label section-label-light"><span>02</span><span>Energy observatory</span></div>
+        <div className="section-label"><span>02</span><span>Energy observatory</span></div>
         <div>
           <p className="eyebrow eyebrow-light">One home · Four energy conditions</p>
           <h2>Power moves.<br />Comfort remains.</h2>

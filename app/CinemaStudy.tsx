@@ -84,7 +84,7 @@ export function CinemaStudy() {
   return (
     <section ref={studyRef} className="cinema-study section-pad">
       <div className="cinema-study-intro">
-        <div className="section-label section-label-light"><span>02</span><span>Masking room</span></div>
+        <div className="section-label"><span>02</span><span>Masking room</span></div>
         <div><p className="eyebrow eyebrow-light">One room · Every intended frame</p><h2>The room edits<br />itself out.</h2></div>
         <p>A great private cinema is a sequence of physical decisions: proportion, silence, masking, calibration and one effortless beginning.</p>
       </div>

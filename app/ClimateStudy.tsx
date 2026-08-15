@@ -60,7 +60,7 @@ export function ClimateStudy() {
   return (
     <section className="climate-study section-pad">
       <div className="climate-study-intro">
-        <div className="section-label section-label-light"><span>02</span><span>Comfort laboratory</span></div>
+        <div className="section-label"><span>02</span><span>Comfort laboratory</span></div>
         <div>
           <p className="eyebrow eyebrow-light">One courtyard · Four strategies</p>
           <h2>Comfort is a field.<br />Not a number.</h2>

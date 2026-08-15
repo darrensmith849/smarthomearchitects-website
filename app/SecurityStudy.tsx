@@ -64,7 +64,7 @@ export function SecurityStudy() {
   return (
     <section className="security-study section-pad">
       <div className="security-study-intro">
-        <div className="section-label section-label-light"><span>02</span><span>Protection laboratory</span></div>
+        <div className="section-label"><span>02</span><span>Protection laboratory</span></div>
         <div>
           <p className="eyebrow eyebrow-light">One residence · Four boundaries</p>
           <h2>Four layers.<br />Zero theatre.</h2>

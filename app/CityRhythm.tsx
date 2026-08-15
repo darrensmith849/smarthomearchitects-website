@@ -52,7 +52,7 @@ export function CityRhythm() {
   return (
     <section className="city-rhythm section-pad">
       <div className="city-rhythm-intro">
-        <div className="section-label section-label-light"><span>02</span><span>Sound + privacy</span></div>
+        <div className="section-label"><span>02</span><span>Sound + privacy</span></div>
         <div>
           <p className="eyebrow eyebrow-light">A day at City Penthouse</p>
           <h2>Music when you want it.<br />Silence when you don&apos;t.</h2>

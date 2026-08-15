@@ -111,7 +111,7 @@ export function AtlasProductPage({ product }: { product: Product }) {
 
       <section className={`atlas-continuity mode-${mode.id}`} id="atlas-continuity">
         <div className="atlas-continuity-head">
-          <div className="section-label section-label-light"><span>01</span><span>Local continuity laboratory</span></div>
+          <div className="section-label"><span>01</span><span>Local continuity laboratory</span></div>
           <div><p className="eyebrow eyebrow-light">The home remains itself</p><h2>Remove the cloud.<br />Nothing changes.</h2></div>
           <p>Atlas treats the internet as a useful service—not the place where the house lives. Test each continuity state to see what remains available.</p>
         </div>
@@ -154,7 +154,7 @@ export function AtlasProductPage({ product }: { product: Product }) {
       </section>
 
       <section className="atlas-spec-library section-pad">
-        <div className="atlas-spec-head"><div className="section-label section-label-light"><span>04</span><span>Specification library</span></div><h2>Every interface.<br />Every condition.</h2><p>Indicative studio-series specifications. Final engineering, gateways and service scope are confirmed against the project architecture.</p></div>
+        <div className="atlas-spec-head"><div className="section-label"><span>04</span><span>Specification library</span></div><h2>Every interface.<br />Every condition.</h2><p>Indicative studio-series specifications. Final engineering, gateways and service scope are confirmed against the project architecture.</p></div>
         <div className="atlas-spec-console">
           <div className="atlas-spec-tabs" role="tablist" aria-label="Atlas specification category">{(Object.keys(specificationGroups) as SpecGroup[]).map((group, index) => <button type="button" role="tab" aria-selected={group === specGroup} key={group} className={group === specGroup ? "is-active" : ""} onClick={() => setSpecGroup(group)}><span>0{index + 1}</span><b>{group}</b></button>)}</div>
           <div className="atlas-spec-table" key={specGroup}>{specificationGroups[specGroup].map(([label, value], index) => <div key={label} style={{ animationDelay: `${index * 45}ms` }}><span>{label}</span><strong>{value}</strong></div>)}</div>

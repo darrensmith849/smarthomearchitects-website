@@ -28,10 +28,14 @@ const telemetry: Record<string, Signal[]> = {
 const cadences = [3900, 6200, 4700, 7100];
 
 export function ProductTelemetry({ slug, number, name }: { slug: string; number: string; name: string }) {
-  const signals = telemetry[slug] ?? telemetry.axis;
+  // No entry means no readout. This used to fall back to Axis's signals, which
+  // showed one product's telemetry on another's page. The early return sits
+  // below the hooks so they are still called in the same order every render.
+  const signals = telemetry[slug];
   const [active, setActive] = useState(0);
 
   useEffect(() => {
+    if (!signals) return;
     let index = 0;
     let elapsed = 0;
     let timer: ReturnType<typeof setTimeout>;
@@ -49,7 +53,9 @@ export function ProductTelemetry({ slug, number, name }: { slug: string; number:
 
     advance();
     return () => clearTimeout(timer);
-  }, [signals.length]);
+  }, [signals]);
+
+  if (!signals) return null;
 
   return (
     <div className="product-system-overlay" aria-hidden="true">

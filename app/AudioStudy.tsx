@@ -64,7 +64,7 @@ export function AudioStudy() {
   return (
     <section className="audio-study section-pad">
       <div className="audio-study-intro">
-        <div className="section-label section-label-light"><span>02</span><span>Sound laboratory</span></div>
+        <div className="section-label"><span>02</span><span>Sound laboratory</span></div>
         <div>
           <p className="eyebrow eyebrow-light">One room · Four sound fields</p>
           <h2>Great sound has<br />no visible source.</h2>

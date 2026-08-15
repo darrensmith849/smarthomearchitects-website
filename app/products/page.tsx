@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ConsultationCta, ProductCollection } from "../components";
+import { countWord } from "../copy";
+import { products } from "../data";
 
 export const metadata: Metadata = {
   title: "The Collection",
@@ -33,7 +35,7 @@ export default function ProductsPage() {
       <section className="all-products section-pad">
         <div className="section-head collection-head">
           <div className="section-label"><span>02</span><span>Studio series · 2026</span></div>
-          <h2>Three objects.<br />One calm system.</h2>
+          <h2>{countWord(products.length)} objects.<br />One calm system.</h2>
         </div>
         <ProductCollection />
       </section>
