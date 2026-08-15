@@ -68,7 +68,11 @@ export function ProductCollection({ compact = false, exclude, limit }: { compact
       {shown.map((product) => (
         <Link className="product-card" href={`/products/${product.slug}`} key={product.slug}>
           <div className="product-image-wrap">
-            <img loading="lazy" decoding="async" src={product.image} alt={`${product.name} ${product.category}`} />
+            {product.image
+              ? <img loading="lazy" decoding="async" src={product.image} alt={`${product.name} ${product.category}`} />
+              /* Drawn rather than photographed. The diagram is decorative; the
+                 name and category beneath it already carry the meaning. */
+              : <span className={`product-card-drawn drawn-${product.slug}`} role="img" aria-label={`${product.name} ${product.category}`} />}
             <span className="product-index">{product.number}</span>
             <span className="card-arrow" aria-hidden="true">↗</span>
           </div>

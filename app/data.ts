@@ -6,7 +6,9 @@ export type Product = {
   line: string;
   description: string;
   longDescription: string;
-  image: string;
+  /** Optional: a product whose card is drawn rather than photographed
+   *  omits this, and ProductCollection renders a diagram tile instead. */
+  image?: string;
   accent: string;
   startingAt: string;
   dimensions: string;
@@ -217,6 +219,45 @@ export const products: Product[] = [
       { name: "Mineral paint", color: "#d6d0c4" },
       { name: "Acoustic clay", color: "#b8aa96" },
       { name: "Specialist finish", color: "#8b8277" },
+    ],
+  },
+  {
+    slug: "reveal",
+    number: "05",
+    name: "Reveal",
+    category: "Shading system",
+    line: "Keep the view. Edit the sun.",
+    description: "A concealed motorised shading system that reads the sun and moves before glare arrives.",
+    longDescription: "Reveal is specified into the ceiling before the plaster goes on. A silent tubular motor, a 1 mm pocket tolerance and a fabric chosen per facade let it hold the view for as long as the view is worth holding — then edit the sun without turning the room into a box.",
+    accent: "#8d7a5f",
+    startingAt: "Specified per opening",
+    dimensions: "Pocket 92 × 100 mm",
+    highlights: [
+      { value: "1 mm", label: "pocket tolerance" },
+      { value: "42%", label: "peak heat reduction" },
+      { value: "< 35 dB", label: "motor noise" },
+      { value: "18", label: "coordinated zones" },
+    ],
+    features: [
+      { title: "Read, then move", copy: "Sun position, facade orientation and interior lux decide the height, so the shade is already where it needs to be." },
+      { title: "Detailed into the ceiling", copy: "Pocket, side channel and service access are resolved in the drawing set, not on site." },
+      { title: "Quiet by specification", copy: "Tubular motors selected and mounted so the movement is heard as nothing at all." },
+    ],
+    specifications: [
+      { label: "Motor", value: "Silent tubular, 35 mm" },
+      { label: "Noise", value: "< 35 dB at 1 m" },
+      { label: "Pocket", value: "92 × 100 mm" },
+      { label: "Tolerance", value: "± 1 mm" },
+      { label: "Control", value: "Wired bus, local first" },
+      { label: "Fabric", value: "Sheer, dim-out, blackout" },
+      { label: "Max width", value: "4200 mm" },
+      { label: "Service", value: "Front access, no ceiling removal" },
+    ],
+    finishes: [
+      { name: "Anodised bronze", color: "#8d7a5f" },
+      { name: "Natural anodised", color: "#b9b4aa" },
+      { name: "Matt black", color: "#22221f" },
+      { name: "Powder white", color: "#e9e6de" },
     ],
   },
 ];
