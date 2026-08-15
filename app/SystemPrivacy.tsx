@@ -10,7 +10,12 @@ import { SectionLabel } from "./product-kit";
  * the page draws the boundary and puts every signal on one side of it.
  *
  * Two zones rather than a list, because the position of a thing relative to the
- * line is the whole point. Selecting a source moves its signals into the
+ * line is the whole point.
+ *
+ * `device` names generic hardware rather than the studio's own products,
+ * except where the product exists. Aura is real and can be clicked through to;
+ * the access and climate objects are not built yet, and naming them here would
+ * advertise something a visitor cannot go and look at. Selecting a source moves its signals into the
  * diagram; nothing about the layout is a four-state console.
  */
 const sources = [
@@ -28,7 +33,7 @@ const sources = [
     id: "entry",
     index: "02",
     label: "Entry and access",
-    device: "Threshold",
+    device: "Access hardware",
     inside: ["Credential match", "Door state", "Time of event", "Local event log"],
     crosses: ["An alert you asked for, when you asked for it"],
     never: ["A face database", "Continuous recording", "Third-party sharing"],
@@ -38,7 +43,7 @@ const sources = [
     id: "climate",
     index: "03",
     label: "Climate and air",
-    device: "Plenum",
+    device: "Sensors and plant",
     inside: ["Temperature and humidity", "CO₂ and particulates", "Plant run hours"],
     crosses: ["Aggregate energy totals, if you enable them"],
     never: ["Room-by-room occupancy history", "Anything tied to a person"],
